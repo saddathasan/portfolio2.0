@@ -16,7 +16,6 @@ export { ProjectCard } from "./ProjectCard";
 
 // Specialized Components
 export { BiographySection } from "./BiographySection";
-export { CertificatesList } from "./CertificatesList";
 export { ContactForm } from "./ContactForm";
 export { ContactInfo } from "./ContactInfo";
 export { ExperienceTimeline } from "./ExperienceTimeline";
