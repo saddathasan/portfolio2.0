@@ -143,7 +143,11 @@ function FooterActions({
 
 	return (
 		<div
-			className={cn("flex items-center flex-wrap", gapClasses[gap], className)}
+			className={cn(
+				"flex items-center flex-wrap",
+				gapClasses[gap],
+				className,
+			)}
 			{...props}>
 			{children}
 		</div>
@@ -214,7 +218,10 @@ function FooterContent({
 }) {
 	return (
 		<div
-			className={cn("flex flex-col md:flex-row md:items-center md:space-x-4 space-y-1 md:space-y-0", className)}
+			className={cn(
+				"flex flex-col md:flex-row md:items-center md:space-x-4 space-y-1 md:space-y-0",
+				className,
+			)}
 			{...props}>
 			{children}
 		</div>

@@ -22,8 +22,7 @@ export const GlobalFooter = () => {
 			case "/":
 				return {
 					title: "Ready to collaborate?",
-					description:
-						"Let's build something amazing together.",
+					description: "Let's build something amazing together.",
 					buttons: [
 						{
 							text: "View Work",
@@ -41,8 +40,7 @@ export const GlobalFooter = () => {
 			case "/experience":
 				return {
 					title: "Interested in my work?",
-					description:
-						"Download my resume or connect on LinkedIn.",
+					description: "Download my resume or connect on LinkedIn.",
 					buttons: [
 						{
 							text: "Resume",
@@ -62,8 +60,7 @@ export const GlobalFooter = () => {
 			case "/projects":
 				return {
 					title: "Want to see more?",
-					description:
-						"Check out my GitHub or get in touch.",
+					description: "Check out my GitHub or get in touch.",
 					buttons: [
 						{
 							text: "GitHub",
@@ -83,8 +80,7 @@ export const GlobalFooter = () => {
 			case "/about":
 				return {
 					title: "Get My Resume",
-					description:
-						"Download my resume or get in touch.",
+					description: "Download my resume or get in touch.",
 					buttons: [
 						{
 							text: "Resume",
@@ -103,8 +99,7 @@ export const GlobalFooter = () => {
 			case "/contact":
 				return {
 					title: "Looking for my resume?",
-					description:
-						"Download my resume or check LinkedIn.",
+					description: "Download my resume or check LinkedIn.",
 					buttons: [
 						{
 							text: "Resume",
@@ -124,8 +119,7 @@ export const GlobalFooter = () => {
 			default:
 				return {
 					title: "Let's Connect",
-					description:
-						"Ready to work together?",
+					description: "Ready to work together?",
 					buttons: [
 						{
 							text: "Contact",
