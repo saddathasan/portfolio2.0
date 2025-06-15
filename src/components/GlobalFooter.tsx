@@ -1,12 +1,23 @@
-import { Button } from "@/components/ui/button";
-import { Link, useRouterState } from "@tanstack/react-router";
-import { motion } from "framer-motion";
+import { FooterCallToAction } from "@/components/FooterCallToAction";
+import { useRouterState } from "@tanstack/react-router";
+
+type ButtonConfig = {
+	text: string;
+	variant: "default" | "outline";
+} & (
+	| { to: string; href?: never; external?: never }
+	| { href: string; external: boolean; to?: never }
+);
 
 export const GlobalFooter = () => {
 	const routerState = useRouterState();
 	const currentPath = routerState.location.pathname;
 
-	const getFooterContent = () => {
+	const getFooterContent = (): {
+		title: string;
+		description: string;
+		buttons: ButtonConfig[];
+	} => {
 		switch (currentPath) {
 			case "/":
 				return {
@@ -16,15 +27,13 @@ export const GlobalFooter = () => {
 					buttons: [
 						{
 							text: "View My Work",
-							href: "/projects",
-							variant: "default" as const,
-							isLink: true,
+							to: "/projects",
+							variant: "default",
 						},
 						{
 							text: "Get In Touch",
-							href: "/contact",
-							variant: "outline" as const,
-							isLink: true,
+							to: "/contact",
+							variant: "outline",
 						},
 					],
 				};
@@ -38,14 +47,14 @@ export const GlobalFooter = () => {
 						{
 							text: "Download Resume",
 							href: "/resume.pdf",
-							variant: "default" as const,
-							isLink: false,
+							variant: "default",
+							external: true,
 						},
 						{
 							text: "LinkedIn Profile",
 							href: "https://linkedin.com/in/saddathasan",
-							variant: "outline" as const,
-							isLink: false,
+							variant: "outline",
+							external: true,
 						},
 					],
 				};
@@ -59,14 +68,14 @@ export const GlobalFooter = () => {
 						{
 							text: "GitHub Profile",
 							href: "https://github.com/saddathasan",
-							variant: "outline" as const,
-							isLink: false,
+							variant: "outline",
+							external: true,
 						},
 						{
 							text: "Get In Touch",
 							href: "mailto:saddathasan94@gmail.com",
-							variant: "default" as const,
-							isLink: false,
+							variant: "default",
+							external: true,
 						},
 					],
 				};
@@ -80,14 +89,13 @@ export const GlobalFooter = () => {
 						{
 							text: "Download Resume",
 							href: "/resume.pdf",
-							variant: "default" as const,
-							isLink: false,
+							variant: "default",
+							external: true,
 						},
 						{
 							text: "Contact Me",
-							href: "/contact",
-							variant: "outline" as const,
-							isLink: true,
+							to: "/contact",
+							variant: "outline",
 						},
 					],
 				};
@@ -101,14 +109,14 @@ export const GlobalFooter = () => {
 						{
 							text: "Download Resume",
 							href: "/resume.pdf",
-							variant: "default" as const,
-							isLink: false,
+							variant: "default",
+							external: true,
 						},
 						{
 							text: "LinkedIn Profile",
 							href: "https://linkedin.com/in/saddathasan",
-							variant: "outline" as const,
-							isLink: false,
+							variant: "outline",
+							external: true,
 						},
 					],
 				};
@@ -121,15 +129,13 @@ export const GlobalFooter = () => {
 					buttons: [
 						{
 							text: "Get In Touch",
-							href: "/contact",
-							variant: "default" as const,
-							isLink: true,
+							to: "/contact",
+							variant: "default",
 						},
 						{
 							text: "View My Work",
-							href: "/projects",
-							variant: "outline" as const,
-							isLink: true,
+							to: "/projects",
+							variant: "outline",
 						},
 					],
 				};
@@ -139,41 +145,29 @@ export const GlobalFooter = () => {
 	const content = getFooterContent();
 
 	return (
-		<footer className="border-t bg-background/95 backdrop-blur sticky bottom-0 z-40">
-			<div className="container mx-auto flex h-16 items-center px-4">
-				<motion.div
-					initial={{ opacity: 0, y: 10 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.4 }}
-					className="flex items-center justify-between w-full">
-					<div className="flex items-center space-x-4">
-						<h2 className="text-sm font-bold">{content.title}</h2>
-						<span className="text-sm text-muted-foreground hidden sm:inline">
-							{content.description}
-						</span>
-					</div>
-					<div className="flex items-center gap-3">
-						{content.buttons.map((button, index) => (
-							<Button
-								key={index}
-								variant={button.variant}
-								size="sm"
-								asChild>
-								{button.isLink ? (
-									<Link to={button.href}>{button.text}</Link>
-								) : (
-									<a
-										href={button.href}
-										target="_blank"
-										rel="noopener noreferrer">
-										{button.text}
-									</a>
-								)}
-							</Button>
-						))}
-					</div>
-				</motion.div>
-			</div>
-		</footer>
+		<FooterCallToAction>
+			<FooterCallToAction.Content>
+				<FooterCallToAction.Title>
+					{content.title}
+				</FooterCallToAction.Title>
+				<FooterCallToAction.Description>
+					{content.description}
+				</FooterCallToAction.Description>
+			</FooterCallToAction.Content>
+
+			<FooterCallToAction.Actions>
+				{content.buttons.map((button, index) => (
+					<FooterCallToAction.Action
+						key={index}
+						variant={button.variant}
+						{...(button.to ? { to: button.to } : {})}
+						{...(button.href
+							? { href: button.href, external: button.external }
+							: {})}>
+						{button.text}
+					</FooterCallToAction.Action>
+				))}
+			</FooterCallToAction.Actions>
+		</FooterCallToAction>
 	);
 };

@@ -50,6 +50,20 @@ export default {
 					4: "hsl(var(--chart-4))",
 					5: "hsl(var(--chart-5))",
 				},
+				// Additional vibrant color utilities
+				vibrant: {
+					orange: "#FB8500",
+					yellow: "#FFB703",
+					teal: "#023047",
+					sky: "#8ECAE6",
+					blue: "#219EBC",
+				},
+				// Add vibrant colors as Tailwind utilities
+				"vibrant-orange": "#FB8500",
+				"vibrant-yellow": "#FFB703",
+				"vibrant-teal": "#023047",
+				"vibrant-sky": "#8ECAE6",
+				"vibrant-blue": "#219EBC",
 			},
 		},
 	},
