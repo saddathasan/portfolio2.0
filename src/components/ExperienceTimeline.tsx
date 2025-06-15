@@ -84,7 +84,7 @@ function TimelineLine({ className, ...props }: TimelineLineProps) {
 	return (
 		<div
 			className={cn(
-				"absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-accent to-primary opacity-60",
+				"absolute left-4 md:left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-accent to-primary opacity-60",
 				className,
 			)}
 			{...props}
@@ -97,7 +97,7 @@ function TimelineDot({ className, ...props }: TimelineDotProps) {
 	return (
 		<div
 			className={cn(
-				"absolute left-6 w-4 h-4 bg-gradient-to-br from-primary to-accent rounded-full border-4 border-background shadow-lg z-10",
+				"absolute left-2 md:left-6 w-4 h-4 bg-gradient-to-br from-primary to-accent rounded-full border-4 border-background shadow-lg z-10",
 				className,
 			)}
 			{...props}
@@ -126,19 +126,19 @@ function ExperienceItem({
 			<TimelineDot />
 
 			{/* Content Card */}
-			<div className="ml-16">
+			<div className="ml-8 md:ml-16">
 				<Card className="hover:shadow-lg transition-shadow duration-300">
 					<CardHeader>
 						<div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2">
 							<div className="flex-1">
-								<CardTitle className="text-xl font-bold text-primary">
+								<CardTitle className="text-lg md:text-xl font-bold text-primary">
 									{experience.role}
 								</CardTitle>
-								<CardDescription className="text-lg font-semibold text-foreground">
+								<CardDescription className="text-base md:text-lg font-semibold text-foreground">
 									{experience.company}
 								</CardDescription>
 							</div>
-							<div className="text-right">
+							<div className="md:text-right">
 								<Badge
 									variant="secondary"
 									className="mb-2">

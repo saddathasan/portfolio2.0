@@ -99,6 +99,62 @@
 	}
 }
 
+/* Mobile-specific improvements */
+@layer utilities {
+	/* Touch-friendly button sizing for mobile */
+	@media (max-width: 768px) {
+		button,
+		.btn {
+			min-height: 44px; /* iOS recommended touch target size */
+			min-width: 44px;
+		}
+
+		/* Improved text readability on mobile */
+		.text-xs {
+			font-size: 0.75rem;
+		}
+		.text-sm {
+			font-size: 0.875rem;
+		}
+		.text-base {
+			font-size: 1rem;
+		}
+
+		/* Better mobile spacing */
+		.container {
+			padding-left: 1rem;
+			padding-right: 1rem;
+		}
+
+		/* Mobile-first navigation */
+		.nav-mobile {
+			position: sticky;
+			top: 0;
+			z-index: 50;
+		}
+
+		/* Prevent horizontal scroll on mobile */
+		body {
+			overflow-x: hidden;
+		}
+
+		/* Improved form inputs for mobile */
+		input,
+		textarea,
+		select {
+			font-size: 16px; /* Prevents zoom on iOS */
+		}
+	}
+
+	/* Tablet improvements */
+	@media (min-width: 768px) and (max-width: 1024px) {
+		.container {
+			padding-left: 2rem;
+			padding-right: 2rem;
+		}
+	}
+}
+
 button:focus,
 button:focus-visible {
 	outline: 4px auto -webkit-focus-ring-color;

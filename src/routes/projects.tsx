@@ -16,15 +16,14 @@ export const Route = createFileRoute("/projects")({
 					</PageHeader.Description>
 				</PageHeader>
 
-				{/* Project Cards Grid - 3 per row, consistent sizing */}
-				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+				<div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-8 mb-16">
 					{projects.map((project, index) => (
-						<ProjectCard
-							key={project.id}
-							project={project}
-							index={index}
-							className="w-full h-full"
-						/>
+						<div key={project.id}>
+							<ProjectCard
+								project={project}
+								index={index}
+							/>
+						</div>
 					))}
 				</div>
 			</PageLayout.Main>

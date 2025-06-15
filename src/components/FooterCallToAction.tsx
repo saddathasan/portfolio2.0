@@ -61,8 +61,8 @@ function FooterCallToAction({
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.4 }}
 				{...props}>
-				<div className="container mx-auto flex h-16 items-center px-4">
-					<div className="flex items-center justify-between w-full">
+				<div className="container mx-auto px-4 py-3 md:py-0">
+					<div className="flex flex-col md:flex-row md:items-center md:justify-between md:h-16 gap-3 md:gap-0">
 						{children}
 					</div>
 				</div>
@@ -77,8 +77,8 @@ function FooterCallToAction({
 				className,
 			)}
 			{...props}>
-			<div className="container mx-auto flex h-16 items-center px-4">
-				<div className="flex items-center justify-between w-full">
+			<div className="container mx-auto px-4 py-3 md:py-0">
+				<div className="flex flex-col md:flex-row md:items-center md:justify-between md:h-16 gap-3 md:gap-0">
 					{children}
 				</div>
 			</div>
@@ -94,9 +94,9 @@ function FooterTitle({
 	...props
 }: FooterTitleProps) {
 	const sizeClasses = {
-		sm: "text-sm",
-		md: "text-base",
-		lg: "text-lg",
+		sm: "text-sm md:text-sm",
+		md: "text-sm md:text-base",
+		lg: "text-base md:text-lg",
 	};
 
 	return (
@@ -137,13 +137,13 @@ function FooterActions({
 }: FooterActionsProps) {
 	const gapClasses = {
 		sm: "gap-2",
-		md: "gap-3",
-		lg: "gap-4",
+		md: "gap-2 md:gap-3",
+		lg: "gap-3 md:gap-4",
 	};
 
 	return (
 		<div
-			className={cn("flex items-center", gapClasses[gap], className)}
+			className={cn("flex items-center flex-wrap", gapClasses[gap], className)}
 			{...props}>
 			{children}
 		</div>
@@ -214,7 +214,7 @@ function FooterContent({
 }) {
 	return (
 		<div
-			className={cn("flex items-center space-x-4", className)}
+			className={cn("flex flex-col md:flex-row md:items-center md:space-x-4 space-y-1 md:space-y-0", className)}
 			{...props}>
 			{children}
 		</div>

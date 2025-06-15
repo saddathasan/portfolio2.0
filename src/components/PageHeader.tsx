@@ -39,7 +39,7 @@ function PageHeaderTitle({
 	gradient = true,
 	...props
 }: PageHeaderTitleProps) {
-	const baseClasses = "text-4xl font-bold mb-4";
+	const baseClasses = "text-3xl md:text-4xl font-bold mb-4";
 	const gradientClasses = gradient
 		? "bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent"
 		: "";
@@ -73,7 +73,7 @@ function PageHeaderDescription({
 	return (
 		<p
 			className={cn(
-				"text-xl text-muted-foreground mx-auto",
+				"text-lg md:text-xl text-muted-foreground mx-auto",
 				maxWidthClasses[maxWidth],
 				className,
 			)}

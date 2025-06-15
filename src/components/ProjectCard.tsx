@@ -62,9 +62,7 @@ function ProjectCard({
 			{...props}>
 			<Card
 				className={cn(
-					"overflow-hidden hover:shadow-xl transition-all duration-300 h-full flex flex-col group border-border/50 hover:border-primary/20",
-					"min-h-[520px] max-h-[520px]", // Increased fixed height for larger cards
-					"w-full", // Full width of grid cell
+					"overflow-hidden hover:shadow-xl transition-all duration-300 h-full flex flex-col group border-border/50 hover:border-primary/20 min-h-[400px]",
 					className,
 				)}>
 				<ProjectCardHeader
@@ -92,16 +90,15 @@ function ProjectCardHeader({
 	return (
 		<div
 			className={cn(
-				"h-44 bg-gradient-to-br from-primary/20 via-accent/10 to-secondary/20 border-b flex items-center justify-center group-hover:from-primary/30 group-hover:to-accent/20 transition-all duration-300",
-				"flex-shrink-0", // Prevent shrinking
+				"h-32 bg-gradient-to-br from-primary/20 via-accent/10 to-secondary/20 border-b flex items-center justify-center group-hover:from-primary/30 group-hover:to-accent/20 transition-all duration-300",
 				className,
 			)}
 			{...props}>
 			<div className="text-center px-4">
-				<div className="text-lg font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-2 line-clamp-2 leading-tight">
+				<div className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-1 line-clamp-2">
 					{title}
 				</div>
-				<div className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
+				<div className="text-xs text-muted-foreground line-clamp-1">
 					{impact}
 				</div>
 			</div>
@@ -119,29 +116,27 @@ function ProjectCardContent({
 	...props
 }: ProjectCardContentProps) {
 	return (
-		<div className="flex flex-col h-full">
-			<CardHeader className="flex-1 pb-4 min-h-[140px] max-h-[140px] overflow-hidden">
-				<CardDescription className="text-sm leading-relaxed line-clamp-6">
+		<>
+			<CardHeader className="flex-1 pb-3">
+				<CardDescription className="text-sm leading-relaxed line-clamp-4">
 					{description}
 				</CardDescription>
 			</CardHeader>
 			<CardContent
-				className={cn("space-y-4 pt-0 flex-shrink-0", className)}
+				className={cn("space-y-4 pt-0", className)}
 				{...props}>
-				<div className="min-h-[60px]">
-					<TechBadgeList
-						technologies={technologies}
-						variant="outline"
-						size="sm"
-						gap="sm"
-					/>
-				</div>
+				<TechBadgeList
+					technologies={technologies}
+					variant="outline"
+					size="sm"
+					gap="sm"
+				/>
 				<ProjectCardActions
 					liveUrl={liveUrl}
 					sourceUrl={sourceUrl}
 				/>
 			</CardContent>
-		</div>
+		</>
 	);
 }
 
@@ -154,12 +149,12 @@ function ProjectCardActions({
 }: ProjectCardActionsProps) {
 	return (
 		<div
-			className={cn("flex gap-2 min-h-[40px]", className)}
+			className={cn("flex gap-2", className)}
 			{...props}>
 			{liveUrl && (
 				<Button
 					size="sm"
-					className="flex-1 text-xs"
+					className="flex-1"
 					asChild>
 					<a
 						href={liveUrl}
@@ -173,7 +168,7 @@ function ProjectCardActions({
 				<Button
 					variant="outline"
 					size="sm"
-					className="flex-1 text-xs"
+					className="flex-1"
 					asChild>
 					<a
 						href={sourceUrl}
@@ -184,7 +179,7 @@ function ProjectCardActions({
 				</Button>
 			)}
 			{!liveUrl && !sourceUrl && (
-				<div className="flex-1 text-center text-xs text-muted-foreground py-2 border border-border/50 rounded flex items-center justify-center">
+				<div className="flex-1 text-center text-sm text-muted-foreground py-2">
 					Enterprise/Confidential Project
 				</div>
 			)}

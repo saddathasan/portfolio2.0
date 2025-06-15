@@ -16,14 +16,6 @@ interface InfoCardProps {
 	animate?: boolean;
 	delay?: number;
 	hover?: boolean;
-	variant?:
-		| "default"
-		| "primary"
-		| "accent"
-		| "secondary"
-		| "vibrant-orange"
-		| "vibrant-blue"
-		| "vibrant-teal";
 }
 
 interface InfoCardHeaderProps {
@@ -76,45 +68,20 @@ function InfoCard({
 	animate = true,
 	delay = 0,
 	hover = true,
-	variant = "default",
 	...props
 }: InfoCardProps) {
-	const variantClasses = {
-		default: "",
-		primary:
-			"border-primary/20 bg-gradient-to-br from-primary/5 to-primary/10 shadow-primary/10",
-		accent: "border-accent/20 bg-gradient-to-br from-accent/5 to-accent/10 shadow-accent/10",
-		secondary:
-			"border-secondary/30 bg-gradient-to-br from-secondary/10 to-secondary/20 shadow-secondary/15",
-		"vibrant-orange":
-			"border-vibrant-orange/30 bg-gradient-to-br from-orange-50/80 to-orange-100/60 dark:from-orange-950/30 dark:to-orange-900/20 shadow-lg shadow-orange-200/30 dark:shadow-orange-900/20",
-		"vibrant-blue":
-			"border-vibrant-blue/30 bg-gradient-to-br from-blue-50/80 to-blue-100/60 dark:from-blue-950/30 dark:to-blue-900/20 shadow-lg shadow-blue-200/30 dark:shadow-blue-900/20",
-		"vibrant-teal":
-			"border-vibrant-teal/30 bg-gradient-to-br from-teal-50/80 to-teal-100/60 dark:from-teal-950/30 dark:to-teal-900/20 shadow-lg shadow-teal-200/30 dark:shadow-teal-900/20",
-	};
-
 	const cardClasses = cn(
-		variantClasses[variant],
-		hover &&
-			"hover:shadow-xl hover:shadow-current/25 hover:-translate-y-1 transition-all duration-300 hover:border-current/40",
+		hover && "hover:shadow-lg transition-shadow duration-300",
 		className,
 	);
 
 	if (animate) {
 		return (
 			<motion.div
-				initial={{ opacity: 0, y: 20, scale: 0.95 }}
-				whileInView={{ opacity: 1, y: 0, scale: 1 }}
-				transition={{
-					duration: 0.5,
-					delay,
-					type: "spring",
-					stiffness: 100,
-					damping: 15,
-				}}
+				initial={{ opacity: 0, y: 20 }}
+				whileInView={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.4, delay }}
 				viewport={{ once: true }}
-				whileHover={hover ? { y: -4, scale: 1.02 } : undefined}
 				{...props}>
 				<Card className={cardClasses}>{children}</Card>
 			</motion.div>

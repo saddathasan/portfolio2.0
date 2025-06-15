@@ -1,5 +1,4 @@
 import { BiographySection } from "@/components/BiographySection";
-import { CertificatesList } from "@/components/CertificatesList";
 import { ContentGrid } from "@/components/ContentGrid";
 import { InfoCard } from "@/components/InfoCard";
 import { PageHeader } from "@/components/PageHeader";
@@ -7,6 +6,7 @@ import { PageLayout } from "@/components/PageLayout";
 import { Section } from "@/components/Section";
 import { aboutInfo, certificates } from "@/data";
 import { createFileRoute } from "@tanstack/react-router";
+import { ExternalLink } from "lucide-react";
 
 export const Route = createFileRoute("/about")({
 	component: () => (
@@ -55,42 +55,30 @@ export const Route = createFileRoute("/about")({
 				<Section>
 					<Section.Header
 						size="md"
-						centered
-						className="mb-8">
-						<span className="bg-gradient-to-r from-vibrant-orange to-orange-600 bg-clip-text text-transparent font-bold">
-							Education
-						</span>
+						centered>
+						Education
 					</Section.Header>
 					<Section.Content maxWidth="2xl">
 						<InfoCard
 							animate
-							hover
-							variant="vibrant-orange">
-							<InfoCard.Header className="relative">
-								<div className="absolute -top-2 -right-2 w-4 h-4 bg-vibrant-orange/20 rounded-full animate-ping"></div>
+							hover>
+							<InfoCard.Header>
 								<InfoCard.Title
-									badge={aboutInfo.education.period}
-									badgeVariant="default">
-									<span className="bg-gradient-to-r from-vibrant-orange to-orange-600 bg-clip-text text-transparent font-bold">
-										{aboutInfo.education.degree}
-									</span>
+									badge={aboutInfo.education.period}>
+									{aboutInfo.education.degree}
 								</InfoCard.Title>
 								<InfoCard.Description>
-									<span className="font-semibold text-vibrant-orange dark:text-orange-400 text-base">
-										{aboutInfo.education.institution}
-									</span>
+									{aboutInfo.education.institution}
 								</InfoCard.Description>
 							</InfoCard.Header>
 							<InfoCard.Content>
-								<p className="text-sm text-foreground/80 mb-6 leading-relaxed font-medium">
+								<p className="text-sm text-muted-foreground mb-4">
 									{aboutInfo.education.description}
 								</p>
 								<InfoCard.Actions>
 									<InfoCard.Action
 										href={aboutInfo.education.link}
-										external
-										variant="default"
-										className="bg-gradient-to-r from-vibrant-orange to-orange-600 hover:from-orange-600 hover:to-vibrant-orange text-white border-none shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200">
+										external>
 										Visit BRAC University
 									</InfoCard.Action>
 								</InfoCard.Actions>
@@ -103,14 +91,51 @@ export const Route = createFileRoute("/about")({
 				<Section>
 					<Section.Header
 						size="md"
-						centered
-						className="mb-8">
-						<span className="bg-gradient-to-r from-vibrant-orange to-orange-600 bg-clip-text text-transparent font-bold">
-							Certifications
-						</span>
+						centered>
+						Certifications
 					</Section.Header>
-					<Section.Content maxWidth="3xl">
-						<CertificatesList certificates={certificates} />
+					<Section.Content>
+						<ContentGrid
+							columns={2}
+							staggerChildren>
+							{certificates.map((cert, index) => (
+								<ContentGrid.Item
+									key={index}
+									delay={index * 0.1}>
+									<InfoCard hover>
+										<InfoCard.Header>
+											<InfoCard.Title className="text-lg leading-tight">
+												{cert.name}
+											</InfoCard.Title>
+											<InfoCard.Description className="flex items-center justify-between">
+												<span>{cert.issuer}</span>
+												<span className="text-xs border border-border/50 bg-background px-2 py-1 rounded-md">
+													{cert.issuingDate}
+												</span>
+											</InfoCard.Description>
+										</InfoCard.Header>
+										<InfoCard.Content className="pt-0">
+											{cert.credentialId && (
+												<p className="text-sm text-muted-foreground mb-3">
+													Credential ID:{" "}
+													{cert.credentialId}
+												</p>
+											)}
+											<InfoCard.Actions>
+												<InfoCard.Action
+													href={cert.credentialUrl}
+													external
+													fullWidth
+													className="flex items-center gap-2">
+													<ExternalLink className="h-4 w-4" />
+													View Certificate
+												</InfoCard.Action>
+											</InfoCard.Actions>
+										</InfoCard.Content>
+									</InfoCard>
+								</ContentGrid.Item>
+							))}
+						</ContentGrid>
 					</Section.Content>
 				</Section>
 			</PageLayout.Main>

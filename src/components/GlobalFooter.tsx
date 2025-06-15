@@ -23,15 +23,15 @@ export const GlobalFooter = () => {
 				return {
 					title: "Ready to collaborate?",
 					description:
-						"Let's discuss how we can work together to build something amazing.",
+						"Let's build something amazing together.",
 					buttons: [
 						{
-							text: "View My Work",
+							text: "View Work",
 							to: "/projects",
 							variant: "default",
 						},
 						{
-							text: "Get In Touch",
+							text: "Contact",
 							to: "/contact",
 							variant: "outline",
 						},
@@ -42,16 +42,16 @@ export const GlobalFooter = () => {
 				return {
 					title: "Interested in my work?",
 					description:
-						"Download my full resume or connect with me on LinkedIn.",
+						"Download my resume or connect on LinkedIn.",
 					buttons: [
 						{
-							text: "Download Resume",
+							text: "Resume",
 							href: "/resume.pdf",
 							variant: "default",
 							external: true,
 						},
 						{
-							text: "LinkedIn Profile",
+							text: "LinkedIn",
 							href: "https://linkedin.com/in/saddathasan",
 							variant: "outline",
 							external: true,
@@ -63,16 +63,16 @@ export const GlobalFooter = () => {
 				return {
 					title: "Want to see more?",
 					description:
-						"Check out my GitHub profile or get in touch to discuss collaborations.",
+						"Check out my GitHub or get in touch.",
 					buttons: [
 						{
-							text: "GitHub Profile",
+							text: "GitHub",
 							href: "https://github.com/saddathasan",
 							variant: "outline",
 							external: true,
 						},
 						{
-							text: "Get In Touch",
+							text: "Contact",
 							href: "mailto:saddathasan94@gmail.com",
 							variant: "default",
 							external: true,
@@ -84,16 +84,16 @@ export const GlobalFooter = () => {
 				return {
 					title: "Get My Resume",
 					description:
-						"Download my detailed resume to learn more about my experience and skills.",
+						"Download my resume or get in touch.",
 					buttons: [
 						{
-							text: "Download Resume",
+							text: "Resume",
 							href: "/resume.pdf",
 							variant: "default",
 							external: true,
 						},
 						{
-							text: "Contact Me",
+							text: "Contact",
 							to: "/contact",
 							variant: "outline",
 						},
@@ -104,16 +104,16 @@ export const GlobalFooter = () => {
 				return {
 					title: "Looking for my resume?",
 					description:
-						"Download my detailed resume or check out my latest projects.",
+						"Download my resume or check LinkedIn.",
 					buttons: [
 						{
-							text: "Download Resume",
+							text: "Resume",
 							href: "/resume.pdf",
 							variant: "default",
 							external: true,
 						},
 						{
-							text: "LinkedIn Profile",
+							text: "LinkedIn",
 							href: "https://linkedin.com/in/saddathasan",
 							variant: "outline",
 							external: true,
@@ -125,15 +125,15 @@ export const GlobalFooter = () => {
 				return {
 					title: "Let's Connect",
 					description:
-						"Interested in working together? Let's discuss your next project.",
+						"Ready to work together?",
 					buttons: [
 						{
-							text: "Get In Touch",
+							text: "Contact",
 							to: "/contact",
 							variant: "default",
 						},
 						{
-							text: "View My Work",
+							text: "Projects",
 							to: "/projects",
 							variant: "outline",
 						},

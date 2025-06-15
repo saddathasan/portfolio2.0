@@ -63,9 +63,9 @@ function BiographyTitle({
 	...props
 }: BiographyTitleProps) {
 	const sizeClasses = {
-		sm: "text-xl",
-		md: "text-2xl",
-		lg: "text-3xl",
+		sm: "text-lg md:text-xl",
+		md: "text-xl md:text-2xl",
+		lg: "text-2xl md:text-3xl",
 	};
 
 	return (

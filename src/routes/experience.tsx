@@ -2,6 +2,7 @@ import { ExperienceTimeline } from "@/components/ExperienceTimeline";
 import { PageHeader } from "@/components/PageHeader";
 import { PageLayout } from "@/components/PageLayout";
 import { SkillsSidebar } from "@/components/SkillsSidebar";
+import { Badge } from "@/components/ui/badge";
 import { experiences, skillCategories } from "@/data";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -17,10 +18,41 @@ export const Route = createFileRoute("/experience")({
 					</PageHeader.Description>
 				</PageHeader>
 
-				{/* Two Column Layout */}
-				<div className="flex gap-8">
+				{/* Two Column Layout - Responsive */}
+				<div className="flex flex-col lg:flex-row gap-8">
 					<ExperienceTimeline experiences={experiences} />
 					<SkillsSidebar skillCategories={skillCategories} />
+				</div>
+
+				{/* Mobile Skills Section */}
+				<div className="lg:hidden mt-12">
+					<h3 className="text-xl font-semibold mb-6">
+						Technical Skills
+					</h3>
+					<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+						{skillCategories.map((category) => (
+							<div
+								key={category.title}
+								className="space-y-2">
+								<h4 className="font-medium text-primary">
+									{category.title}
+								</h4>
+								<p className="text-sm text-muted-foreground mb-3">
+									{category.description}
+								</p>
+								<div className="flex flex-wrap gap-1">
+									{category.skills.map((skill) => (
+										<Badge
+											key={skill}
+											variant="secondary"
+											className="text-xs">
+											{skill}
+										</Badge>
+									))}
+								</div>
+							</div>
+						))}
+					</div>
 				</div>
 			</PageLayout.Main>
 		</PageLayout.Container>

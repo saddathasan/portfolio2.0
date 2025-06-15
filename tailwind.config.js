@@ -58,12 +58,6 @@ export default {
 					sky: "#8ECAE6",
 					blue: "#219EBC",
 				},
-				// Add vibrant colors as Tailwind utilities
-				"vibrant-orange": "#FB8500",
-				"vibrant-yellow": "#FFB703",
-				"vibrant-teal": "#023047",
-				"vibrant-sky": "#8ECAE6",
-				"vibrant-blue": "#219EBC",
 			},
 		},
 	},

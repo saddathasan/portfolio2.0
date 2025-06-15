@@ -90,7 +90,7 @@ function NavigationLinks({
 }: NavigationLinksProps) {
 	return (
 		<div
-			className={cn("flex gap-6 flex-1 items-center", className)}
+			className={cn("flex gap-6 flex-1", className)}
 			{...props}>
 			{children}
 		</div>
@@ -109,8 +109,7 @@ function NavigationLink({
 		<Link
 			to={to}
 			className={cn(
-				"text-sm font-medium transition-all duration-300 hover:text-primary relative h-16 flex items-center",
-				"border-b-2 border-transparent",
+				"text-sm font-medium transition-all duration-300 hover:text-primary pb-4",
 				activeClassName,
 				className,
 			)}
