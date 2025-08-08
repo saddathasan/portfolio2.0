@@ -8,23 +8,8 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import type { Experience } from "@/types";
 import { motion } from "framer-motion";
-
-interface Experience {
-	id: string;
-	company: string;
-	role: string;
-	period: string;
-	type: string;
-	achievements: string[];
-	technologies: string[];
-	subExperiences?: {
-		company: string;
-		period: string;
-		achievements: string[];
-		technologies: string[];
-	}[];
-}
 
 interface ExperienceTimelineProps {
 	experiences: Experience[];

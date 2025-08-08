@@ -1,3 +1,4 @@
+import { SkipLink } from "@/components/Accessibility";
 import { GlobalFooter } from "@/components/GlobalFooter";
 import { ResponsiveNavigation } from "@/components/ResponsiveNavigation";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
@@ -6,6 +7,7 @@ import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 export const Route = createRootRoute({
 	component: () => (
 		<>
+			<SkipLink targetId="main-content">Skip to main content</SkipLink>
 			<ResponsiveNavigation
 				brand={{
 					children: "Saddat Hasan",
@@ -25,7 +27,10 @@ export const Route = createRootRoute({
 					},
 				]}
 			/>
-			<main className="min-h-[calc(100vh-8rem)] pb-4">
+			<main
+				id="main-content"
+				className="min-h-[calc(100vh-8rem)] pb-4"
+				tabIndex={-1}>
 				<Outlet />
 			</main>
 			<GlobalFooter />

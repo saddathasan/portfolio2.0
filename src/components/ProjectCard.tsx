@@ -7,18 +7,8 @@ import {
 	CardHeader,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import type { Project } from "@/types";
 import { motion } from "framer-motion";
-
-interface Project {
-	id: number;
-	title: string;
-	description: string;
-	technologies: string[];
-	liveUrl?: string | null;
-	sourceUrl?: string | null;
-	image?: string;
-	impact: string;
-}
 
 interface ProjectCardProps {
 	project: Project;

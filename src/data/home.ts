@@ -1,16 +1,4 @@
-export interface HeroInfo {
-	name: string;
-	title: string;
-	location: string;
-	description: string;
-	resumeUrl: string;
-	linkedinUrl: string;
-}
-
-export interface Stat {
-	value: string;
-	label: string;
-}
+import type { HeroInfo, Stat } from '@/types';
 
 export const heroInfo: HeroInfo = {
 	name: "Saddat Hasan",

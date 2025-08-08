@@ -1,5 +1,9 @@
 import { createRouter, RouterProvider } from "@tanstack/react-router";
+import { HelmetProvider } from "react-helmet-async";
 import { routeTree } from "./routeTree.gen";
+import { AppProvider } from "./context/AppContext";
+import { ErrorBoundary } from "./components/ErrorBoundary";
+import { AnnouncementProvider } from "./components/Accessibility";
 
 // Create a new router instance
 const router = createRouter({ routeTree });
@@ -12,5 +16,15 @@ declare module "@tanstack/react-router" {
 }
 
 export default function App() {
-	return <RouterProvider router={router} />;
+	return (
+		<HelmetProvider>
+			<ErrorBoundary>
+				<AppProvider>
+					<AnnouncementProvider>
+						<RouterProvider router={router} />
+					</AnnouncementProvider>
+				</AppProvider>
+			</ErrorBoundary>
+		</HelmetProvider>
+	);
 }
