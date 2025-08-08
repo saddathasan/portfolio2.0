@@ -47,12 +47,24 @@ interface HeroActionButtonProps {
 function HeroSection({ className, children, ...props }: HeroSectionProps) {
 	return (
 		<motion.section
-			className={cn("text-center mb-20", className)}
-			initial={{ opacity: 0, y: 20 }}
+			className={cn(
+				"relative text-center mb-24 px-4 py-16 overflow-hidden",
+				"before:absolute before:inset-0 before:bg-gradient-to-br before:from-primary/5 before:via-transparent before:to-accent/5",
+				"before:rounded-3xl before:blur-3xl before:-z-10",
+				className
+			)}
+			initial={{ opacity: 0, y: 30 }}
 			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.6 }}
+			transition={{ duration: 0.8, ease: "easeOut" }}
 			{...props}>
-			{children}
+			{/* Floating elements for visual interest */}
+			<div className="absolute top-10 left-10 w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-xl animate-pulse" />
+			<div className="absolute bottom-10 right-10 w-32 h-32 bg-gradient-to-br from-accent/15 to-primary/15 rounded-full blur-2xl animate-pulse delay-1000" />
+			<div className="absolute top-1/2 left-1/4 w-16 h-16 bg-gradient-to-br from-vibrant-blue/10 to-vibrant-pink/10 rounded-full blur-xl animate-bounce" />
+			
+			<div className="relative z-10">
+				{children}
+			</div>
 		</motion.section>
 	);
 }
@@ -61,10 +73,19 @@ function HeroSection({ className, children, ...props }: HeroSectionProps) {
 function HeroTitle({ children, className, ...props }: HeroTitleProps) {
 	return (
 		<motion.h1
-			className={cn("text-5xl md:text-7xl font-bold mb-4", className)}
-			initial={{ opacity: 0, y: 20 }}
-			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.6, delay: 0.1 }}
+			className={cn(
+				"text-5xl md:text-7xl lg:text-8xl font-extrabold mb-6",
+				"bg-gradient-to-r from-foreground via-primary to-accent bg-clip-text text-transparent",
+				"leading-tight tracking-tight",
+				className
+			)}
+			initial={{ opacity: 0, y: 30, scale: 0.9 }}
+			animate={{ opacity: 1, y: 0, scale: 1 }}
+			transition={{ 
+				duration: 0.8, 
+				delay: 0.2,
+				ease: [0.25, 0.46, 0.45, 0.94]
+			}}
 			{...props}>
 			{children}
 		</motion.h1>
@@ -79,21 +100,33 @@ function HeroSubtitle({
 	...props
 }: HeroSubtitleProps) {
 	const gradientClasses = gradient
-		? "bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
+		? "bg-gradient-to-r from-primary via-accent to-vibrant-blue bg-clip-text text-transparent"
 		: "text-primary";
 
 	return (
 		<motion.h2
 			className={cn(
-				"text-2xl md:text-3xl font-semibold mb-4",
+				"text-2xl md:text-4xl lg:text-5xl font-bold mb-6",
+				"relative inline-block",
 				gradientClasses,
 				className,
 			)}
-			initial={{ opacity: 0, y: 20 }}
-			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.6, delay: 0.2 }}
+			initial={{ opacity: 0, y: 20, rotateX: -15 }}
+			animate={{ opacity: 1, y: 0, rotateX: 0 }}
+			transition={{ 
+				duration: 0.7, 
+				delay: 0.4,
+				ease: "easeOut"
+			}}
 			{...props}>
 			{children}
+			{/* Animated underline */}
+			<motion.div
+				className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-primary to-accent rounded-full"
+				initial={{ width: 0 }}
+				animate={{ width: "100%" }}
+				transition={{ duration: 0.8, delay: 0.8 }}
+			/>
 		</motion.h2>
 	);
 }

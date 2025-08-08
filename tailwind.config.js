@@ -52,12 +52,19 @@ export default {
 				},
 				// Additional vibrant color utilities
 				vibrant: {
-					orange: "#FB8500",
-					yellow: "#FFB703",
-					teal: "#023047",
-					sky: "#8ECAE6",
-					blue: "#219EBC",
+					purple: "#8B5CF6",
+					emerald: "#10B981",
+					blue: "#3B82F6",
+					amber: "#F59E0B",
+					pink: "#EC4899",
+					indigo: "#6366F1",
+					cyan: "#06B6D4",
 				},
+				gradient: {
+					primary: "linear-gradient(135deg, #8B5CF6 0%, #10B981 100%)",
+					secondary: "linear-gradient(135deg, #3B82F6 0%, #EC4899 100%)",
+					accent: "linear-gradient(135deg, #F59E0B 0%, #6366F1 100%)",
+				}
 			},
 		},
 	},

@@ -38,31 +38,55 @@ export function TechBadgeList({
 
 	const badgeClasses = cn(
 		sizeClasses[size],
+		"font-semibold border-2 transition-all duration-300",
 		hoverable &&
-			"hover:bg-primary hover:text-primary-foreground transition-all duration-300 cursor-pointer shadow-md hover:shadow-lg",
+			"hover:bg-gradient-to-r hover:from-primary hover:to-accent hover:text-white hover:border-transparent hover:shadow-lg hover:shadow-primary/25 cursor-pointer transform hover:-translate-y-1",
+		!hoverable && "bg-gradient-to-r from-muted to-secondary border-border/50"
 	);
 
 	if (animated) {
 		return (
-			<div
+			<motion.div
 				className={containerClasses}
+				initial={{ opacity: 0, y: 20 }}
+				whileInView={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.6 }}
+				viewport={{ once: true }}
 				{...props}>
 				{technologies.map((tech, index) => (
 					<motion.div
 						key={tech}
-						initial={{ opacity: 0, scale: 0.8 }}
-						whileInView={{ opacity: 1, scale: 1 }}
-						whileHover={hoverable ? { scale: 1.05 } : {}}
-						transition={{ duration: 0.4, delay: index * 0.05 }}
-						viewport={{ once: true }}>
+						initial={{ opacity: 0, scale: 0.8, rotateY: -15 }}
+						whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
+						whileHover={hoverable ? { 
+							scale: 1.08, 
+							rotateY: 5,
+							z: 10
+						} : {}}
+						whileTap={hoverable ? { scale: 0.95 } : {}}
+						transition={{ 
+							duration: 0.5, 
+							delay: index * 0.08,
+							ease: "easeOut"
+						}}
+						viewport={{ once: true }}
+						className="perspective-1000">
 						<Badge
 							variant={variant}
-							className={badgeClasses}>
-							{tech}
+							className={cn(
+								badgeClasses,
+								"relative overflow-hidden",
+								hoverable && "group"
+							)}>
+							{/* Shimmer effect */}
+							{hoverable && (
+								<div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+							)}
+							<span className="relative z-10">{tech}</span>
 						</Badge>
 					</motion.div>
 				))}
-			</div>
+			</motion.div>
 		);
 	}
 

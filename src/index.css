@@ -4,60 +4,60 @@
 
 @layer base {
 	:root {
-		/* Light theme - vibrant yet professional */
-		--background: 0 0% 100%;
-		--foreground: 194 100% 14%; /* #023047 - deep teal for text */
-		--card: 0 0% 98%;
-		--card-foreground: 194 100% 14%;
+		/* Light theme - vibrant and sophisticated for full-stack engineer */
+		--background: 0 0% 99%; /* Slightly off-white for warmth */
+		--foreground: 220 25% 15%; /* Deep blue-gray for text */
+		--card: 0 0% 97%;
+		--card-foreground: 220 25% 15%;
 		--popover: 0 0% 100%;
-		--popover-foreground: 194 100% 14%;
-		--primary: 28 100% 49%; /* #FB8500 - vibrant orange */
+		--popover-foreground: 220 25% 15%;
+		--primary: 262 83% 58%; /* Vibrant purple #8B5CF6 */
 		--primary-foreground: 0 0% 100%;
-		--secondary: 45 100% 82%; /* #FFB703 - soft yellow */
-		--secondary-foreground: 194 100% 14%;
-		--muted: 197 80% 90%; /* Light sky blue */
-		--muted-foreground: 194 50% 35%;
-		--accent: 197 74% 63%; /* #8ECAE6 - sky blue */
-		--accent-foreground: 194 100% 14%;
+		--secondary: 204 94% 94%; /* Light blue background */
+		--secondary-foreground: 220 25% 15%;
+		--muted: 210 40% 96%; /* Very light blue-gray */
+		--muted-foreground: 220 15% 45%;
+		--accent: 142 76% 36%; /* Emerald green #10B981 */
+		--accent-foreground: 0 0% 100%;
 		--destructive: 0 84% 60%;
 		--destructive-foreground: 0 0% 98%;
-		--border: 197 30% 85%;
-		--input: 197 30% 94%;
-		--ring: 28 100% 49%;
-		--chart-1: 28 100% 49%; /* #FB8500 */
-		--chart-2: 45 100% 51%; /* #FFB703 */
-		--chart-3: 194 100% 14%; /* #023047 */
-		--chart-4: 197 74% 63%; /* #8ECAE6 */
-		--chart-5: 194 81% 43%; /* #219EBC */
-		--radius: 0.5rem;
+		--border: 220 13% 91%;
+		--input: 220 13% 95%;
+		--ring: 262 83% 58%;
+		--chart-1: 262 83% 58%; /* Purple */
+		--chart-2: 142 76% 36%; /* Emerald */
+		--chart-3: 217 91% 60%; /* Blue */
+		--chart-4: 45 93% 47%; /* Amber */
+		--chart-5: 339 82% 52%; /* Pink */
+		--radius: 0.75rem;
 	}
 
 	.dark {
-		/* Dark theme - maintaining vibrancy with proper contrast */
-		--background: 194 100% 8%; /* Very dark teal */
-		--foreground: 197 74% 90%; /* Light sky blue for text */
-		--card: 194 90% 12%;
-		--card-foreground: 197 74% 90%;
-		--popover: 194 100% 8%;
-		--popover-foreground: 197 74% 90%;
-		--primary: 28 100% 55%; /* Slightly brighter orange for dark mode */
-		--primary-foreground: 194 100% 8%;
-		--secondary: 194 50% 20%; /* Darker teal */
-		--secondary-foreground: 197 74% 85%;
-		--muted: 194 40% 18%;
-		--muted-foreground: 197 30% 70%;
-		--accent: 194 81% 43%; /* #219EBC - medium blue */
-		--accent-foreground: 0 0% 100%;
-		--destructive: 0 75% 50%;
+		/* Dark theme - sophisticated and vibrant for full-stack engineer */
+		--background: 220 27% 8%; /* Rich dark blue-gray */
+		--foreground: 210 40% 92%; /* Light blue-gray for text */
+		--card: 220 25% 11%;
+		--card-foreground: 210 40% 92%;
+		--popover: 220 27% 8%;
+		--popover-foreground: 210 40% 92%;
+		--primary: 262 83% 65%; /* Brighter purple for dark mode */
+		--primary-foreground: 220 27% 8%;
+		--secondary: 220 25% 15%; /* Darker blue-gray */
+		--secondary-foreground: 210 40% 85%;
+		--muted: 220 20% 18%;
+		--muted-foreground: 210 20% 65%;
+		--accent: 142 76% 45%; /* Brighter emerald for dark mode */
+		--accent-foreground: 220 27% 8%;
+		--destructive: 0 75% 55%;
 		--destructive-foreground: 0 0% 98%;
-		--border: 194 40% 20%;
-		--input: 194 40% 16%;
-		--ring: 28 100% 55%;
-		--chart-1: 28 100% 55%; /* Brighter orange */
-		--chart-2: 45 100% 60%; /* Brighter yellow */
-		--chart-3: 197 74% 63%; /* Sky blue */
-		--chart-4: 194 81% 50%; /* Medium blue */
-		--chart-5: 45 90% 70%; /* Light yellow */
+		--border: 220 20% 20%;
+		--input: 220 20% 16%;
+		--ring: 262 83% 65%;
+		--chart-1: 262 83% 65%; /* Brighter purple */
+		--chart-2: 142 76% 50%; /* Brighter emerald */
+		--chart-3: 217 91% 65%; /* Brighter blue */
+		--chart-4: 45 93% 55%; /* Brighter amber */
+		--chart-5: 339 82% 60%; /* Brighter pink */
 	}
 }
 
@@ -70,7 +70,7 @@
 		position: relative;
 	}
 
-	/* Subtle background gradients */
+	/* Dynamic background gradients for sophisticated look */
 	body::before {
 		content: "";
 		position: fixed;
@@ -79,23 +79,141 @@
 		width: 100%;
 		height: 100%;
 		background:
+			/* Primary purple gradient */
 			radial-gradient(
-				circle at 20% 20%,
-				hsla(var(--primary), 0.03) 0%,
+				ellipse 800px 600px at 15% 25%,
+				hsla(var(--primary), 0.08) 0%,
+				transparent 60%
+			),
+			/* Accent emerald gradient */
+			radial-gradient(
+				ellipse 600px 800px at 85% 75%,
+				hsla(var(--accent), 0.06) 0%,
+				transparent 55%
+			),
+			/* Blue accent gradient */
+			radial-gradient(
+				circle 400px at 70% 20%,
+				hsla(217, 91%, 60%, 0.04) 0%,
 				transparent 50%
 			),
-			radial-gradient(
-				circle at 80% 80%,
-				hsla(var(--accent), 0.03) 0%,
-				transparent 50%
-			),
-			radial-gradient(
-				circle at 40% 60%,
-				hsla(var(--secondary), 0.02) 0%,
-				transparent 50%
+			/* Subtle mesh pattern */
+			linear-gradient(
+				45deg,
+				hsla(var(--primary), 0.02) 0%,
+				transparent 25%,
+				hsla(var(--accent), 0.02) 50%,
+				transparent 75%
 			);
 		pointer-events: none;
 		z-index: -1;
+		animation: gradientShift 20s ease-in-out infinite;
+	}
+
+	/* Animated gradient shift */
+	@keyframes gradientShift {
+		0%, 100% {
+			opacity: 1;
+			transform: scale(1);
+		}
+		50% {
+			opacity: 0.8;
+			transform: scale(1.05);
+		}
+	}
+
+	/* Floating animation for decorative elements */
+	@keyframes float {
+		0%, 100% {
+			transform: translateY(0px) rotate(0deg);
+		}
+		33% {
+			transform: translateY(-10px) rotate(1deg);
+		}
+		66% {
+			transform: translateY(5px) rotate(-1deg);
+		}
+	}
+
+	/* Pulse glow effect */
+	@keyframes pulseGlow {
+		0%, 100% {
+			box-shadow: 0 0 20px hsla(var(--primary), 0.3);
+		}
+		50% {
+			box-shadow: 0 0 40px hsla(var(--primary), 0.6), 0 0 60px hsla(var(--accent), 0.3);
+		}
+	}
+
+	/* Shimmer effect */
+	@keyframes shimmer {
+		0% {
+			transform: translateX(-100%);
+		}
+		100% {
+			transform: translateX(100%);
+		}
+	}
+}
+
+@layer utilities {
+	/* Custom animations */
+	.animate-float {
+		animation: float 6s ease-in-out infinite;
+	}
+
+	.animate-pulse-glow {
+		animation: pulseGlow 3s ease-in-out infinite;
+	}
+
+	.animate-shimmer {
+		animation: shimmer 2s ease-in-out infinite;
+	}
+
+	/* Perspective utilities */
+	.perspective-1000 {
+		perspective: 1000px;
+	}
+
+	.perspective-500 {
+		perspective: 500px;
+	}
+
+	/* Glass morphism effect */
+	.glass {
+		background: rgba(255, 255, 255, 0.1);
+		backdrop-filter: blur(10px);
+		border: 1px solid rgba(255, 255, 255, 0.2);
+	}
+
+	.glass-dark {
+		background: rgba(0, 0, 0, 0.1);
+		backdrop-filter: blur(10px);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+	}
+
+	/* Gradient text utilities */
+	.text-gradient-primary {
+		background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+		-webkit-background-clip: text;
+		background-clip: text;
+		-webkit-text-fill-color: transparent;
+	}
+
+	.text-gradient-secondary {
+		background: linear-gradient(135deg, hsl(var(--accent)), hsl(217, 91%, 60%));
+		-webkit-background-clip: text;
+		background-clip: text;
+		-webkit-text-fill-color: transparent;
+	}
+
+	/* Modern shadows */
+	.shadow-glow {
+		box-shadow: 0 0 20px hsla(var(--primary), 0.3), 0 0 40px hsla(var(--accent), 0.1);
+	}
+
+	.shadow-glow-lg {
+		box-shadow: 0 0 30px hsla(var(--primary), 0.4), 0 0 60px hsla(var(--accent), 0.2);
 	}
 }
 

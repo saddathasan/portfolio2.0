@@ -36,22 +36,48 @@ function Section({
 	if (animate) {
 		return (
 			<motion.section
-				className={cn("mb-20", className)}
-				initial={{ opacity: 0, y: 30 }}
-				whileInView={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.6, delay }}
-				viewport={{ once: true }}
+				className={cn(
+					"relative mb-24 px-4 py-12 overflow-hidden",
+					"before:absolute before:inset-0 before:bg-gradient-to-br before:from-primary/3 before:via-transparent before:to-accent/3",
+					"before:rounded-2xl before:blur-3xl before:-z-10",
+					className
+				)}
+				initial={{ opacity: 0, y: 40, scale: 0.95 }}
+				whileInView={{ opacity: 1, y: 0, scale: 1 }}
+				transition={{ 
+					duration: 0.8, 
+					delay,
+					ease: [0.25, 0.46, 0.45, 0.94]
+				}}
+				viewport={{ once: true, margin: "-100px" }}
 				{...props}>
-				{children}
+				{/* Decorative elements */}
+				<div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-accent/10 to-primary/10 rounded-full blur-2xl" />
+				<div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-primary/10 to-vibrant-blue/10 rounded-full blur-xl" />
+				
+				<div className="relative z-10">
+					{children}
+				</div>
 			</motion.section>
 		);
 	}
 
 	return (
 		<section
-			className={cn("mb-20", className)}
+			className={cn(
+				"relative mb-24 px-4 py-12 overflow-hidden",
+				"before:absolute before:inset-0 before:bg-gradient-to-br before:from-primary/3 before:via-transparent before:to-accent/3",
+				"before:rounded-2xl before:blur-3xl before:-z-10",
+				className
+			)}
 			{...props}>
-			{children}
+			{/* Decorative elements */}
+			<div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-accent/10 to-primary/10 rounded-full blur-2xl" />
+			<div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-primary/10 to-vibrant-blue/10 rounded-full blur-xl" />
+			
+			<div className="relative z-10">
+				{children}
+			</div>
 		</section>
 	);
 }
@@ -66,26 +92,46 @@ function SectionHeader({
 	...props
 }: SectionHeaderProps) {
 	const sizeClasses = {
-		sm: "text-lg md:text-xl",
-		md: "text-xl md:text-2xl",
-		lg: "text-2xl md:text-3xl",
-		xl: "text-3xl md:text-4xl",
+		sm: "text-xl md:text-2xl",
+		md: "text-2xl md:text-3xl",
+		lg: "text-3xl md:text-4xl lg:text-5xl",
+		xl: "text-4xl md:text-5xl lg:text-6xl",
 	};
 
 	const baseClasses = cn(
-		"font-bold mb-12",
+		"relative font-black mb-16 leading-tight tracking-tight",
 		sizeClasses[size],
 		centered && "text-center",
 		gradient &&
-			"bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent",
+			"bg-gradient-to-r from-primary via-accent to-vibrant-blue bg-clip-text text-transparent",
 	);
 
 	return (
-		<h2
+		<motion.h2
 			className={cn(baseClasses, className)}
+			initial={{ opacity: 0, y: 20, rotateX: -10 }}
+			whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+			transition={{ 
+				duration: 0.7,
+				ease: "easeOut"
+			}}
+			viewport={{ once: true }}
 			{...props}>
 			{children}
-		</h2>
+			{/* Animated underline */}
+			{gradient && (
+				<motion.div
+					className={cn(
+						"absolute -bottom-4 h-1 bg-gradient-to-r from-primary via-accent to-vibrant-blue rounded-full",
+						centered ? "left-1/2 -translate-x-1/2" : "left-0"
+					)}
+					initial={{ width: 0 }}
+					whileInView={{ width: centered ? "60%" : "100%" }}
+					transition={{ duration: 0.8, delay: 0.3 }}
+					viewport={{ once: true }}
+				/>
+			)}
+		</motion.h2>
 	);
 }
 
