@@ -24,6 +24,7 @@ export const SudokuCell: React.FC<SudokuCellProps> = ({
 	isHighlighted = false,
 	isRowHighlighted = false,
 	isColumnHighlighted = false,
+	isGridHighlighted = false,
 	onSelect,
 }) => {
 	// Determine cell background color based on state
@@ -31,7 +32,7 @@ export const SudokuCell: React.FC<SudokuCellProps> = ({
 		if (isConflict) return CELL_COLORS.conflict;
 		if (isSelected) return CELL_COLORS.selected;
 		if (isHighlighted) return CELL_COLORS.highlighted;
-		if (isRowHighlighted || isColumnHighlighted) return CELL_COLORS.rowColumnHighlighted;
+		if (isRowHighlighted || isColumnHighlighted || isGridHighlighted) return CELL_COLORS.rowColumnHighlighted;
 		if (isHint) return CELL_COLORS.hint;
 		if (isInitial) return CELL_COLORS.prefilled;
 		if (!isInitial && value) return CELL_COLORS.userInput;

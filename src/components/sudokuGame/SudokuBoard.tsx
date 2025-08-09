@@ -42,6 +42,12 @@ export const SudokuBoard: React.FC<SudokuBoardProps> = ({
 						borderClasses.push('border-b-2 border-b-border');
 					}
 					
+					// Calculate if this cell is in the same 3x3 grid as the selected cell
+					const isInSameGrid = selectedCell !== null &&
+						Math.floor(selectedCell[0] / 3) === Math.floor(rowIndex / 3) &&
+						Math.floor(selectedCell[1] / 3) === Math.floor(colIndex / 3) &&
+						!(selectedCell[0] === rowIndex && selectedCell[1] === colIndex);
+					
 					return (
 						<div
 							key={`${rowIndex}-${colIndex}`}
@@ -70,6 +76,7 @@ export const SudokuBoard: React.FC<SudokuBoardProps> = ({
 									selectedCell[1] === colIndex &&
 									!(selectedCell[0] === rowIndex && selectedCell[1] === colIndex)
 								}
+								isGridHighlighted={isInSameGrid}
 								onSelect={() => onCellSelect(rowIndex, colIndex)}
 							/>
 						</div>

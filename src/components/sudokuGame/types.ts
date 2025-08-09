@@ -28,6 +28,7 @@ export interface SudokuCellProps {
 	isHighlighted?: boolean;
 	isRowHighlighted?: boolean;
 	isColumnHighlighted?: boolean;
+	isGridHighlighted?: boolean;
 	onSelect: () => void;
 }
 
