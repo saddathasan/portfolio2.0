@@ -20,7 +20,7 @@ export { ContactForm } from "./ContactForm";
 export { ContactInfo } from "./ContactInfo";
 export { ExperienceTimeline } from "./ExperienceTimeline";
 export { SkillsSidebar } from "./SkillsSidebar";
-export { SudokuGame } from "./SudokuGame";
+export { default as SudokuGame } from './sudokuGame';
 export { TechBadgeList } from "./TechBadgeList";
 
 // Global Components

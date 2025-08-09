@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { SudokuSolver, type SudokuGrid, type Difficulty } from '@/components/SudokuGame';
+import { SudokuSolver, type SudokuGrid, type Difficulty } from '@/components/sudokuGame';
 
 interface GameState {
 	grid: SudokuGrid;
@@ -14,6 +14,7 @@ interface GameState {
 	isComplete: boolean;
 	history: SudokuGrid[];
 	historyIndex: number;
+	hintCells: Set<string>;
 }
 
 interface UseSudokuReturn {
@@ -29,6 +30,7 @@ interface UseSudokuReturn {
 	isComplete: boolean;
 	progress: number;
 	canUndo: boolean;
+	hintCells: Set<string>;
 	
 	// Actions
 	selectCell: (row: number, col: number) => void;
@@ -61,6 +63,7 @@ export function useSudoku(): UseSudokuReturn {
 			isComplete: false,
 			history: [puzzle.map(row => [...row])],
 			historyIndex: 0,
+			hintCells: new Set(),
 		};
 	});
 
@@ -174,6 +177,7 @@ export function useSudoku(): UseSudokuReturn {
 			isComplete: false,
 			history: [puzzle.map(row => [...row])],
 			historyIndex: 0,
+			hintCells: new Set(),
 		}));
 	}, [gameState.difficulty]);
 
@@ -196,6 +200,7 @@ export function useSudoku(): UseSudokuReturn {
 			...prev,
 			grid: clearedGrid,
 			mistakes: 0,
+			hintCells: new Set(),
 		}));
 		
 		addToHistory(clearedGrid);
@@ -208,6 +213,10 @@ export function useSudoku(): UseSudokuReturn {
 			// Only give hint for empty cells that aren't initial
 			if (gameState.grid[row][col] === null && gameState.initialGrid[row][col] === null) {
 				const hintValue = gameState.solution[row][col];
+				setGameState(prev => ({
+					...prev,
+					hintCells: new Set([...prev.hintCells, `${row}-${col}`])
+				}));
 				setCellValue(row, col, hintValue);
 			}
 		} else {
@@ -216,6 +225,10 @@ export function useSudoku(): UseSudokuReturn {
 				for (let col = 0; col < 9; col++) {
 					if (gameState.grid[row][col] === null && gameState.initialGrid[row][col] === null) {
 						const hintValue = gameState.solution[row][col];
+						setGameState(prev => ({
+							...prev,
+							hintCells: new Set([...prev.hintCells, `${row}-${col}`])
+						}));
 						setCellValue(row, col, hintValue);
 						return;
 					}
@@ -315,6 +328,7 @@ export function useSudoku(): UseSudokuReturn {
 		isComplete: gameState.isComplete,
 		progress,
 		canUndo,
+		hintCells: gameState.hintCells,
 		
 		// Actions
 		selectCell,
