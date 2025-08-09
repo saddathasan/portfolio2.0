@@ -85,9 +85,9 @@ export class SudokuSolver {
 
 		// Remove numbers based on difficulty
 		const cellsToRemove = {
-			easy: 40,
-			medium: 50,
-			hard: 60,
+			easy: 48,
+			medium: 56,
+			hard: 64,
 		}[difficulty];
 
 		const positions = [];
