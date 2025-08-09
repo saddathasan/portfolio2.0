@@ -15,6 +15,7 @@ export interface SudokuBoardProps {
 	onCellSelect: (row: number, col: number) => void;
 	conflicts: Set<string>;
 	hintCells: Set<string>;
+	highlightedValue: number | null;
 }
 
 export interface SudokuCellProps {
@@ -24,6 +25,9 @@ export interface SudokuCellProps {
 	isSelected: boolean;
 	isConflict: boolean;
 	isHint?: boolean;
+	isHighlighted?: boolean;
+	isRowHighlighted?: boolean;
+	isColumnHighlighted?: boolean;
 	onSelect: () => void;
 }
 

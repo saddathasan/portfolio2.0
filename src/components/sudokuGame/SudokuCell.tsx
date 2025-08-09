@@ -10,6 +10,8 @@ const CELL_COLORS = {
 	empty: 'bg-muted/40 text-muted-foreground hover:bg-muted/50', // Empty cells
 	selected: 'bg-primary text-primary-foreground shadow-md scale-105', // Selected state
 	conflict: 'bg-destructive/20 text-destructive border-destructive/50', // Conflict state
+	highlighted: 'bg-teal-200 text-teal-800 hover:bg-teal-300', // Teal highlighting for same values
+	rowColumnHighlighted: 'bg-gray-500 text-purple-800 hover:bg-gray-600', // Light blue for row/column highlighting
 } as const;
 
 export const SudokuCell: React.FC<SudokuCellProps> = ({
@@ -19,12 +21,17 @@ export const SudokuCell: React.FC<SudokuCellProps> = ({
 	isSelected,
 	isConflict,
 	isHint = false,
+	isHighlighted = false,
+	isRowHighlighted = false,
+	isColumnHighlighted = false,
 	onSelect,
 }) => {
 	// Determine cell background color based on state
 	const getCellColor = () => {
 		if (isConflict) return CELL_COLORS.conflict;
 		if (isSelected) return CELL_COLORS.selected;
+		if (isHighlighted) return CELL_COLORS.highlighted;
+		if (isRowHighlighted || isColumnHighlighted) return CELL_COLORS.rowColumnHighlighted;
 		if (isHint) return CELL_COLORS.hint;
 		if (isInitial) return CELL_COLORS.prefilled;
 		if (!isInitial && value) return CELL_COLORS.userInput;

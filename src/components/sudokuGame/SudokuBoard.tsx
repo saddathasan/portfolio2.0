@@ -11,6 +11,7 @@ export const SudokuBoard: React.FC<SudokuBoardProps> = ({
 	onCellSelect,
 	conflicts,
 	hintCells,
+	highlightedValue,
 }) => {
 	return (
 		<motion.div
@@ -54,6 +55,21 @@ export const SudokuBoard: React.FC<SudokuBoardProps> = ({
 								}
 								isConflict={conflicts.has(`${rowIndex}-${colIndex}`)}
 								isHint={hintCells.has(`${rowIndex}-${colIndex}`)}
+								isHighlighted={
+									highlightedValue !== null && 
+									cell === highlightedValue &&
+									!(selectedCell?.[0] === rowIndex && selectedCell?.[1] === colIndex)
+								}
+								isRowHighlighted={
+									selectedCell !== null &&
+									selectedCell[0] === rowIndex &&
+									!(selectedCell[0] === rowIndex && selectedCell[1] === colIndex)
+								}
+								isColumnHighlighted={
+									selectedCell !== null &&
+									selectedCell[1] === colIndex &&
+									!(selectedCell[0] === rowIndex && selectedCell[1] === colIndex)
+								}
 								onSelect={() => onCellSelect(rowIndex, colIndex)}
 							/>
 						</div>

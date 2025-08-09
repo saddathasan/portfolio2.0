@@ -15,6 +15,7 @@ interface GameState {
 	history: SudokuGrid[];
 	historyIndex: number;
 	hintCells: Set<string>;
+	highlightedValue: number | null;
 }
 
 interface UseSudokuReturn {
@@ -31,6 +32,7 @@ interface UseSudokuReturn {
 	progress: number;
 	canUndo: boolean;
 	hintCells: Set<string>;
+	highlightedValue: number | null;
 	
 	// Actions
 	selectCell: (row: number, col: number) => void;
@@ -64,6 +66,7 @@ export function useSudoku(): UseSudokuReturn {
 			history: [puzzle.map(row => [...row])],
 			historyIndex: 0,
 			hintCells: new Set(),
+			highlightedValue: null,
 		};
 	});
 
@@ -118,10 +121,14 @@ export function useSudoku(): UseSudokuReturn {
 	}, []);
 
 	const selectCell = useCallback((row: number, col: number) => {
-		setGameState(prev => ({
-			...prev,
-			selectedCell: [row, col],
-		}));
+		setGameState(prev => {
+			const cellValue = prev.grid[row][col];
+			return {
+				...prev,
+				selectedCell: [row, col],
+				highlightedValue: cellValue, // Highlight the value if cell has content, null if empty
+			};
+		});
 	}, []);
 
 	const selectNumber = useCallback((num: number | null) => {
@@ -178,6 +185,7 @@ export function useSudoku(): UseSudokuReturn {
 			history: [puzzle.map(row => [...row])],
 			historyIndex: 0,
 			hintCells: new Set(),
+			highlightedValue: null,
 		}));
 	}, [gameState.difficulty]);
 
@@ -201,6 +209,7 @@ export function useSudoku(): UseSudokuReturn {
 			grid: clearedGrid,
 			mistakes: 0,
 			hintCells: new Set(),
+			highlightedValue: null,
 		}));
 		
 		addToHistory(clearedGrid);
@@ -329,6 +338,7 @@ export function useSudoku(): UseSudokuReturn {
 		progress,
 		canUndo,
 		hintCells: gameState.hintCells,
+		highlightedValue: gameState.highlightedValue,
 		
 		// Actions
 		selectCell,

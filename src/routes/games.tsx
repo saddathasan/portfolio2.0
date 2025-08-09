@@ -72,13 +72,14 @@ function GamesPage() {
 							{/* Game Board */}
 							<div className="lg:col-span-2">
 								<SudokuGame.Board
-							grid={sudoku.grid}
-							initialGrid={sudoku.initialGrid}
-							selectedCell={sudoku.selectedCell}
-							onCellSelect={sudoku.selectCell}
-							conflicts={sudoku.conflicts}
-							hintCells={sudoku.hintCells}
-						/>
+				grid={sudoku.grid}
+				initialGrid={sudoku.initialGrid}
+				selectedCell={sudoku.selectedCell}
+				onCellSelect={sudoku.selectCell}
+				conflicts={sudoku.conflicts}
+				hintCells={sudoku.hintCells}
+				highlightedValue={sudoku.highlightedValue}
+			/>
 							</div>
 
 							{/* Number Pad */}
