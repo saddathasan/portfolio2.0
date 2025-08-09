@@ -22,21 +22,43 @@ export const SudokuBoard: React.FC<SudokuBoardProps> = ({
 			initial={{ opacity: 0, scale: 0.9 }}
 			animate={{ opacity: 1, scale: 1 }}
 			transition={{ duration: 0.5 }}
+				style={{
+					gap: '2px'
+				}}
 		>
 			{grid.map((row, rowIndex) =>
-				row.map((cell, colIndex) => (
-					<SudokuCell
-						key={`${rowIndex}-${colIndex}`}
-						value={cell}
-						isInitial={initialGrid[rowIndex][colIndex] !== null}
-						isSelected={
-							selectedCell?.[0] === rowIndex && selectedCell?.[1] === colIndex
-						}
-						isConflict={conflicts.has(`${rowIndex}-${colIndex}`)}
-						isHint={hintCells.has(`${rowIndex}-${colIndex}`)}
-						onSelect={() => onCellSelect(rowIndex, colIndex)}
-					/>
-				)),
+				row.map((cell, colIndex) => {
+					// Add thick borders to separate 3x3 grids
+					const borderClasses = [];
+					
+					// Right border for columns 2 and 5 (after 3rd and 6th columns)
+					if (colIndex === 2 || colIndex === 5) {
+						borderClasses.push('border-r-2 border-r-border');
+					}
+					
+					// Bottom border for rows 2 and 5 (after 3rd and 6th rows)
+					if (rowIndex === 2 || rowIndex === 5) {
+						borderClasses.push('border-b-2 border-b-border');
+					}
+					
+					return (
+						<div
+							key={`${rowIndex}-${colIndex}`}
+							className={borderClasses.join(' ')}
+						>
+							<SudokuCell
+								value={cell}
+								isInitial={initialGrid[rowIndex][colIndex] !== null}
+								isSelected={
+									selectedCell?.[0] === rowIndex && selectedCell?.[1] === colIndex
+								}
+								isConflict={conflicts.has(`${rowIndex}-${colIndex}`)}
+								isHint={hintCells.has(`${rowIndex}-${colIndex}`)}
+								onSelect={() => onCellSelect(rowIndex, colIndex)}
+							/>
+						</div>
+					);
+				})
 			)}
 		</motion.div>
 	);
