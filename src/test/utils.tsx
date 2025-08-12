@@ -137,39 +137,7 @@ export const mockSkillCategory: SkillCategory = {
 	skills: ["React", "TypeScript", "CSS"],
 };
 
-// Mock implementations for services
-export const mockAnalyticsService = {
-	trackPageView: jest.fn(),
-	trackEvent: jest.fn(),
-	trackTiming: jest.fn(),
-};
-
-export const mockErrorReportingService = {
-	reportError: jest.fn(),
-	reportMessage: jest.fn(),
-};
-
-export const mockPerformanceService = {
-	startTiming: jest.fn(),
-	endTiming: jest.fn(),
-	measure: jest.fn(),
-	measureAsync: jest.fn(),
-	getWebVitals: jest.fn().mockResolvedValue({}),
-};
-
-export const mockDataService = {
-	fetchProjects: jest.fn().mockResolvedValue([mockProject]),
-	fetchExperience: jest.fn().mockResolvedValue([mockExperience]),
-	fetchCertificates: jest.fn().mockResolvedValue([mockCertificate]),
-	fetchSkills: jest.fn().mockResolvedValue([mockSkillCategory]),
-	clearCache: jest.fn(),
-	invalidateCache: jest.fn(),
-};
-
-export const mockEmailService = {
-	sendContactForm: jest.fn().mockResolvedValue(true),
-	sendEmail: jest.fn().mockResolvedValue(true),
-};
+// Mock services removed - using simplified implementation
 
 // Mock localStorage
 const store: Record<string, string> = {};

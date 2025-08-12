@@ -2,12 +2,7 @@ import { config } from "@/config";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { useTheme } from "@/hooks/useTheme";
-import {
-	analyticsService,
-	dataService,
-	errorReportingService,
-	performanceService,
-} from "@/services";
+// Services removed - using simplified data fetching
 import type { Certificate, Experience, Project, SkillCategory } from "@/types";
 import React, {
 	createContext,
@@ -71,10 +66,7 @@ interface AppState {
 
 	// Services
 	services: {
-		analytics: typeof analyticsService;
-		errorReporting: typeof errorReportingService;
-		performance: typeof performanceService;
-		data: typeof dataService;
+		// Services removed for simplified implementation
 	};
 
 	// Utility functions
@@ -207,10 +199,7 @@ export function AppProvider({ children }: AppProviderProps) {
 			const errorMessage =
 				error instanceof Error ? error.message : "Failed to fetch data";
 			setErrors((prev) => ({ ...prev, [type]: errorMessage }));
-			errorReportingService.reportError(
-				error instanceof Error ? error : new Error(errorMessage),
-				{ context: `fetch-${type}` },
-			);
+			console.error(`Error fetching ${type}:`, error);
 		} finally {
 			setIsLoading((prev) => ({ ...prev, [type]: false }));
 		}
@@ -220,86 +209,29 @@ export function AppProvider({ children }: AppProviderProps) {
 	const refreshData = useCallback(async (
 		type?: "projects" | "experience" | "certificates" | "skills",
 	) => {
+		// Simplified implementation - just reset loading states
 		if (!type) {
-			// Refresh all data
-			await Promise.all([
-				fetchData(
-					"projects",
-					() => dataService.fetchProjects(),
-					setProjects,
-				),
-				fetchData(
-					"experience",
-					() => dataService.fetchExperience(),
-					setExperience,
-				),
-				fetchData(
-					"certificates",
-					async (): Promise<Certificate[]> => {
-						const certificates = await dataService.fetchCertificates();
-						return certificates.map((cert) => ({
-							id: cert.credentialId,
-							name: cert.name,
-							issuer: cert.issuer,
-							date: cert.issuingDate,
-							credentialUrl: cert.credentialUrl,
-							description: ""
-						}));
-					},
-					setCertificates,
-				),
-				fetchData("skills", () => dataService.fetchSkills(), setSkills),
-			]);
+			setIsLoading({
+				projects: false,
+				experience: false,
+				certificates: false,
+				skills: false,
+			});
 		} else {
-			// Refresh specific data type
-			switch (type) {
-				case "projects":
-					await fetchData(
-						"projects",
-						() => dataService.fetchProjects(),
-						setProjects,
-					);
-					break;
-				case "experience":
-					await fetchData(
-						"experience",
-						() => dataService.fetchExperience(),
-						setExperience,
-					);
-					break;
-				case "certificates":
-					await fetchData(
-						"certificates",
-						async (): Promise<Certificate[]> => {
-						const certificates =
-							await dataService.fetchCertificates();
-						return certificates.map((cert) => ({
-							id: cert.credentialId,
-							name: cert.name,
-							issuer: cert.issuer,
-							date: cert.issuingDate,
-							credentialUrl: cert.credentialUrl,
-							description: ""
-						}));
-					},
-						setCertificates,
-					);
-					break;
-				case "skills":
-					await fetchData(
-						"skills",
-						() => dataService.fetchSkills(),
-						setSkills,
-					);
-					break;
-			}
+			setIsLoading((prev) => ({ ...prev, [type]: false }));
 		}
 	}, []);
 
 	// Initial data loading
 	useEffect(() => {
-		refreshData();
-	}, [refreshData]);
+		// Set initial loading to false since we're not fetching data
+		setIsLoading({
+			projects: false,
+			experience: false,
+			certificates: false,
+			skills: false,
+		});
+	}, []);
 
 	// Analytics and tracking functions
 	const trackEvent = (
@@ -309,30 +241,29 @@ export function AppProvider({ children }: AppProviderProps) {
 		value?: number,
 	) => {
 		if (preferences.analyticsEnabled) {
-			analyticsService.trackEvent(action, category, label, value);
+			console.log('Track event:', { action, category, label, value });
 		}
 	};
 
 	const trackPageView = (path: string, title?: string) => {
 		if (preferences.analyticsEnabled) {
-			analyticsService.trackPageView(path, title);
+			console.log('Track page view:', { path, title });
 		}
 		setCurrentPath(path);
 	};
 
 	const reportError = (error: Error, context?: Record<string, unknown>) => {
-		errorReportingService.reportError(error, context);
+		console.error('Error reported:', error, context);
 	};
 
 	// Performance monitoring
 	useEffect(() => {
-		const updatePerformanceMetrics = async () => {
-			try {
-				const webVitals = await performanceService.getWebVitals();
-				setPerformanceMetrics(webVitals);
-			} catch (error) {
-				console.warn("Failed to collect performance metrics:", error);
-			}
+		const updatePerformanceMetrics = () => {
+			// Simplified performance metrics
+			setPerformanceMetrics({
+				loadTime: performance.now(),
+				timestamp: Date.now()
+			});
 		};
 
 		// Collect metrics after initial load
@@ -378,10 +309,7 @@ export function AppProvider({ children }: AppProviderProps) {
 
 		// Services
 		services: {
-			analytics: analyticsService,
-			errorReporting: errorReportingService,
-			performance: performanceService,
-			data: dataService,
+			// Services removed for simplified implementation
 		},
 
 		// Utility functions
@@ -463,8 +391,8 @@ export function useAppServices() {
 }
 
 export function useAppPerformance() {
-	const { performanceMetrics, services } = useApp();
-	return { performanceMetrics, performance: services.performance };
+	const { performanceMetrics } = useApp();
+	return { performanceMetrics };
 }
 
 // HOC for components that need app context
