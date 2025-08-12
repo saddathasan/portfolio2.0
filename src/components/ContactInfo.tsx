@@ -82,7 +82,7 @@ function ContactInfoCard({
 			)}
 			{...props}>
 			<CardHeader>
-				<CardTitle className="text-xl text-primary">{title}</CardTitle>
+				<CardTitle className="text-xl text-gray-900 dark:text-gray-100">{title}</CardTitle>
 				<CardDescription>{description}</CardDescription>
 			</CardHeader>
 			<CardContent className="space-y-4">{children}</CardContent>
@@ -109,7 +109,7 @@ function ContactInfoItem({
 				className,
 			)}
 			{...props}>
-			<span className="text-xl mt-0.5 group-hover:text-primary transition-colors">
+			<span className="text-xl mt-0.5 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors">
 				{icon}
 			</span>
 			<div className="flex-1">
@@ -124,7 +124,7 @@ function ContactInfoItem({
 						href={link}
 						target={isExternal ? "_blank" : undefined}
 						rel={isExternal ? "noopener noreferrer" : undefined}
-						className="text-primary hover:underline text-sm font-medium">
+						className="text-gray-700 dark:text-gray-300 hover:underline text-sm font-medium">
 						{content}
 					</a>
 				) : (

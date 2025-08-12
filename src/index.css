@@ -2,62 +2,87 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Font Face Declarations */
+@font-face {
+	font-family: 'Inter';
+	src: url('./fonts/InterVF.ttf') format('truetype-variations');
+	font-weight: 100 900;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Space Grotesk';
+	src: url('./fonts/SpaceGroteskVF.ttf') format('truetype-variations');
+	font-weight: 300 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Clash Display';
+	src: url('./fonts/ClashDisplayVF.ttf') format('truetype-variations');
+	font-weight: 200 700;
+	font-style: normal;
+	font-display: swap;
+}
+
 @layer base {
 	:root {
-		/* Light theme - vibrant and sophisticated for full-stack engineer */
-		--background: 0 0% 99%; /* Slightly off-white for warmth */
-		--foreground: 220 25% 15%; /* Deep blue-gray for text */
-		--card: 0 0% 97%;
-		--card-foreground: 220 25% 15%;
-		--popover: 0 0% 100%;
-		--popover-foreground: 220 25% 15%;
-		--primary: 262 83% 58%; /* Vibrant purple #8B5CF6 */
-		--primary-foreground: 0 0% 100%;
-		--secondary: 204 94% 94%; /* Light blue background */
-		--secondary-foreground: 220 25% 15%;
-		--muted: 210 40% 96%; /* Very light blue-gray */
-		--muted-foreground: 220 15% 45%;
-		--accent: 142 76% 36%; /* Emerald green #10B981 */
-		--accent-foreground: 0 0% 100%;
-		--destructive: 0 84% 60%;
-		--destructive-foreground: 0 0% 98%;
-		--border: 220 13% 91%;
-		--input: 220 13% 95%;
-		--ring: 262 83% 58%;
-		--chart-1: 262 83% 58%; /* Purple */
-		--chart-2: 142 76% 36%; /* Emerald */
-		--chart-3: 217 91% 60%; /* Blue */
-		--chart-4: 45 93% 47%; /* Amber */
-		--chart-5: 339 82% 52%; /* Pink */
+		/* Light theme - new color palette */
+		--background: 100 100% 99%; /* Baby powder background */
+		--foreground: 228 25% 12%; /* Raisin black for text */
+		--card: 100 100% 97%; /* Slightly darker baby powder */
+		--card-foreground: 228 25% 12%; /* Raisin black */
+		--popover: 100 100% 99%;
+		--popover-foreground: 228 25% 12%; /* Raisin black */
+		--primary: 21 89% 52%; /* School bus yellow */
+		--primary-foreground: 228 25% 12%; /* Raisin black text on primary */
+		--secondary: 209 59% 34%; /* Lapis lazuli */
+		--secondary-foreground: 100 100% 99%; /* Baby powder text */
+		--muted: 209 59% 90%; /* Very light lapis lazuli */
+		--muted-foreground: 209 59% 34%; /* Lapis lazuli */
+		--accent: 209 59% 34%; /* Lapis lazuli */
+		--accent-foreground: 100 100% 99%; /* Baby powder text on accent */
+		--destructive: 358 65% 46%; /* Fire engine red */
+		--destructive-foreground: 100 100% 99%;
+		--border: 209 59% 80%; /* Light lapis lazuli border */
+		--input: 100 100% 95%; /* Light baby powder input */
+		--ring: 21 89% 52%; /* Primary school bus yellow for focus rings */
+		--chart-1: 21 89% 52%; /* School bus yellow */
+		--chart-2: 358 65% 46%; /* Fire engine red */
+		--chart-3: 209 59% 34%; /* Lapis lazuli */
+		--chart-4: 228 25% 12%; /* Raisin black */
+		--chart-5: 100 100% 99%; /* Baby powder */
 		--radius: 0.75rem;
 	}
 
 	.dark {
-		/* Dark theme - sophisticated and vibrant for full-stack engineer */
-		--background: 220 27% 8%; /* Rich dark blue-gray */
-		--foreground: 210 40% 92%; /* Light blue-gray for text */
-		--card: 220 25% 11%;
-		--card-foreground: 210 40% 92%;
-		--popover: 220 27% 8%;
-		--popover-foreground: 210 40% 92%;
-		--primary: 262 83% 65%; /* Brighter purple for dark mode */
-		--primary-foreground: 220 27% 8%;
-		--secondary: 220 25% 15%; /* Darker blue-gray */
-		--secondary-foreground: 210 40% 85%;
-		--muted: 220 20% 18%;
-		--muted-foreground: 210 20% 65%;
-		--accent: 142 76% 45%; /* Brighter emerald for dark mode */
-		--accent-foreground: 220 27% 8%;
-		--destructive: 0 75% 55%;
-		--destructive-foreground: 0 0% 98%;
-		--border: 220 20% 20%;
-		--input: 220 20% 16%;
-		--ring: 262 83% 65%;
-		--chart-1: 262 83% 65%; /* Brighter purple */
-		--chart-2: 142 76% 50%; /* Brighter emerald */
-		--chart-3: 217 91% 65%; /* Brighter blue */
-		--chart-4: 45 93% 55%; /* Brighter amber */
-		--chart-5: 339 82% 60%; /* Brighter pink */
+		/* Dark theme - new color palette */
+		--background: 228 25% 12%; /* Raisin black background */
+		--foreground: 100 100% 99%; /* Baby powder for text */
+		--card: 228 25% 16%; /* Darker raisin black */
+		--card-foreground: 100 100% 99%; /* Baby powder */
+		--popover: 228 25% 12%;
+		--popover-foreground: 100 100% 99%;
+		--primary: 21 89% 52%; /* School bus yellow */
+		--primary-foreground: 228 25% 12%; /* Raisin black text on primary */
+		--secondary: 209 59% 34%; /* Lapis lazuli */
+		--secondary-foreground: 100 100% 99%; /* Baby powder text */
+		--muted: 228 25% 18%; /* Dark raisin black */
+		--muted-foreground: 209 59% 60%; /* Lighter lapis lazuli */
+		--accent: 209 59% 34%; /* Lapis lazuli */
+		--accent-foreground: 100 100% 99%; /* Baby powder text on accent */
+		--destructive: 358 65% 46%; /* Fire engine red */
+		--destructive-foreground: 100 100% 99%;
+		--border: 209 59% 25%; /* Dark lapis lazuli border */
+		--input: 228 25% 14%; /* Dark raisin black input */
+		--ring: 21 89% 52%; /* Primary school bus yellow for focus rings */
+		--chart-1: 21 89% 52%; /* School bus yellow */
+		--chart-2: 358 65% 46%; /* Fire engine red */
+		--chart-3: 209 59% 34%; /* Lapis lazuli */
+		--chart-4: 100 100% 99%; /* Baby powder */
+		--chart-5: 228 25% 12%; /* Raisin black */
 	}
 }
 
@@ -66,11 +91,21 @@
 		border-color: hsl(var(--border));
 	}
 	body {
-		@apply bg-background text-foreground;
+		@apply bg-background text-foreground font-sans;
 		position: relative;
 	}
 
-	/* Dynamic background gradients for sophisticated look */
+	/* Typography defaults */
+	h1, h2, h3, h4, h5, h6 {
+		@apply font-heading;
+	}
+
+	/* Display text utility */
+	.font-display {
+		font-family: 'Clash Display', system-ui, sans-serif;
+	}
+
+	/* Simple solid background */
 	body::before {
 		content: "";
 		position: fixed;
@@ -78,49 +113,12 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background:
-			/* Primary purple gradient */
-			radial-gradient(
-				ellipse 800px 600px at 15% 25%,
-				hsla(var(--primary), 0.08) 0%,
-				transparent 60%
-			),
-			/* Accent emerald gradient */
-			radial-gradient(
-				ellipse 600px 800px at 85% 75%,
-				hsla(var(--accent), 0.06) 0%,
-				transparent 55%
-			),
-			/* Blue accent gradient */
-			radial-gradient(
-				circle 400px at 70% 20%,
-				hsla(217, 91%, 60%, 0.04) 0%,
-				transparent 50%
-			),
-			/* Subtle mesh pattern */
-			linear-gradient(
-				45deg,
-				hsla(var(--primary), 0.02) 0%,
-				transparent 25%,
-				hsla(var(--accent), 0.02) 50%,
-				transparent 75%
-			);
+		background: hsl(var(--background));
 		pointer-events: none;
 		z-index: -1;
-		animation: gradientShift 20s ease-in-out infinite;
 	}
 
-	/* Animated gradient shift */
-	@keyframes gradientShift {
-		0%, 100% {
-			opacity: 1;
-			transform: scale(1);
-		}
-		50% {
-			opacity: 0.8;
-			transform: scale(1.05);
-		}
-	}
+
 
 	/* Floating animation for decorative elements */
 	@keyframes float {
@@ -192,20 +190,7 @@
 		border: 1px solid rgba(255, 255, 255, 0.1);
 	}
 
-	/* Gradient text utilities */
-	.text-gradient-primary {
-		background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
-		-webkit-background-clip: text;
-		background-clip: text;
-		-webkit-text-fill-color: transparent;
-	}
 
-	.text-gradient-secondary {
-		background: linear-gradient(135deg, hsl(var(--accent)), hsl(217, 91%, 60%));
-		-webkit-background-clip: text;
-		background-clip: text;
-		-webkit-text-fill-color: transparent;
-	}
 
 	/* Modern shadows */
 	.shadow-glow {

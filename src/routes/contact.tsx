@@ -53,47 +53,7 @@ export const Route = createFileRoute("/contact")({
 					{/* Contact Form */}
 					<ContentGrid.Item>
 						<div className="space-y-6">
-							<ContactForm>
-								<ContactForm.Field
-									label="Name"
-									type="text"
-									id="name"
-									placeholder="Your name"
-									required
-								/>
-
-								<ContactForm.Field
-									label="Email"
-									type="email"
-									id="email"
-									placeholder="your.email@example.com"
-									required
-								/>
-
-								<ContactForm.Field
-									label="Subject"
-									type="text"
-									id="subject"
-									placeholder="What's this about?"
-									required
-								/>
-
-								<ContactForm.TextareaField
-									label="Message"
-									id="message"
-									rows={5}
-									placeholder="Tell me about your project or just say hello!"
-									required
-								/>
-
-								<ContactForm.SubmitButton>
-									Send Message
-								</ContactForm.SubmitButton>
-
-								<p className="text-sm text-muted-foreground text-center">
-									{contactPageInfo.responseTime}
-								</p>
-							</ContactForm>
+							<ContactForm responseTime={contactPageInfo.responseTime} />
 						</div>
 					</ContentGrid.Item>
 				</ContentGrid>

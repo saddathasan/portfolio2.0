@@ -80,12 +80,12 @@ function ProjectCardHeader({
 	return (
 		<div
 			className={cn(
-				"h-32 bg-gradient-to-br from-primary/20 via-accent/10 to-secondary/20 border-b flex items-center justify-center group-hover:from-primary/30 group-hover:to-accent/20 transition-all duration-300",
+				"h-32 bg-card border-b flex items-center justify-center transition-all duration-300",
 				className,
 			)}
 			{...props}>
 			<div className="text-center px-4">
-				<div className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-1 line-clamp-2">
+				<div className="text-xl font-bold text-primary mb-1 line-clamp-2">
 					{title}
 				</div>
 				<div className="text-xs text-muted-foreground line-clamp-1">

@@ -12,7 +12,6 @@
 		"watch-routes": "tsr watch"
 	},
 	"dependencies": {
-		"@emailjs/browser": "^4.4.1",
 		"@radix-ui/react-accordion": "^1.2.11",
 		"@radix-ui/react-select": "^2.2.5",
 		"@radix-ui/react-slot": "^1.2.3",
@@ -23,6 +22,7 @@
 		"clsx": "^2.1.1",
 		"framer-motion": "^12.18.1",
 		"lucide-react": "^0.515.0",
+		"nodemailer": "^7.0.5",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
 		"react-helmet-async": "^2.0.5",
@@ -37,8 +37,10 @@
 		"@shadcn/ui": "^0.0.4",
 		"@tanstack/router-cli": "^1.121.13",
 		"@types/node": "^24.0.1",
+		"@types/nodemailer": "^6.4.17",
 		"@types/react": "^18.3.12",
 		"@types/react-dom": "^18.3.1",
+		"@vercel/node": "^5.3.11",
 		"@vitejs/plugin-react": "^4.4.1",
 		"autoprefixer": "^10.4.21",
 		"eslint": "^9.25.0",

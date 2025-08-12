@@ -53,7 +53,7 @@ function Navigation({ className, children, ...props }: NavigationProps) {
 			className={cn(
 				"border-b border-border/30 bg-background/80 backdrop-blur-xl sticky top-0 z-50",
 				"shadow-lg shadow-primary/5 transition-all duration-300",
-				"before:absolute before:inset-0 before:bg-gradient-to-r before:from-primary/5 before:via-transparent before:to-accent/5",
+
 				className,
 			)}
 			{...props}>
@@ -77,10 +77,10 @@ function NavigationBrand({
 			{...props}>
 			<Link
 				to={to}
-				className="group relative text-2xl font-black bg-gradient-to-r from-primary via-accent to-vibrant-blue bg-clip-text text-transparent hover:scale-105 transition-all duration-300">
+				className="group relative text-2xl font-black text-primary hover:scale-105 transition-all duration-300 font-display">
 				<span className="relative z-10">{children}</span>
 				{/* Hover effect background */}
-				<div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
+
 			</Link>
 		</div>
 	);
@@ -106,7 +106,7 @@ function NavigationLink({
 	className,
 	children,
 	to,
-	activeClassName = "[&.active]:text-primary [&.active]:after:w-full [&.active]:after:bg-gradient-to-r [&.active]:after:from-primary [&.active]:after:to-accent",
+	activeClassName = "[&.active]:text-primary [&.active]:after:w-full [&.active]:after:bg-primary",
 	...props
 }: NavigationLinkProps) {
 	return (
@@ -114,7 +114,7 @@ function NavigationLink({
 			to={to}
 			className={cn(
 				"group relative px-4 py-3 text-sm font-semibold text-muted-foreground hover:text-foreground transition-all duration-300",
-				"after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:h-0.5 after:w-0 after:bg-gradient-to-r after:from-primary after:to-accent after:transition-all after:duration-300",
+				"after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:h-0.5 after:w-0 after:bg-primary after:transition-all after:duration-300",
 				"hover:after:w-full hover:scale-105",
 				activeClassName,
 				className,

@@ -116,8 +116,8 @@ function GamesPage() {
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					transition={{ delay: 1, duration: 0.6 }}
-					className="mt-8 p-6 bg-gradient-to-r from-muted/20 to-muted/30 rounded-lg border border-border/20">
-					<h3 className="text-lg font-semibold mb-3 text-gradient-primary">
+					className="mt-8 p-6 bg-muted/20 rounded-lg border border-border/20">
+					<h3 className="text-lg font-semibold mb-3 text-primary">
 						How to Play
 					</h3>
 					<div className="grid md:grid-cols-2 gap-4 text-sm text-muted-foreground">

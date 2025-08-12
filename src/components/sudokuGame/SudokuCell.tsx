@@ -4,14 +4,15 @@ import type { SudokuCellProps } from './types';
 
 // Color constants for easy manipulation
 const CELL_COLORS = {
-	userInput: 'bg-green-300 text-green-800 hover:bg-green-400', // Light green for user input
-	prefilled: 'bg-slate-400 text-slate-700 hover:bg-slate-400', // Lighter shade for prefilled
-	hint: 'bg-yellow-300 text-yellow-800 hover:bg-yellow-400', // Light yellow for hints
-	empty: 'bg-muted/40 text-muted-foreground hover:bg-muted/50', // Empty cells
-	selected: 'bg-primary text-primary-foreground shadow-md scale-105', // Selected state
-	conflict: 'bg-destructive/20 text-destructive border-destructive/50', // Conflict state
-	highlighted: 'bg-teal-200 text-teal-800 hover:bg-teal-300', // Teal highlighting for same values
-	rowColumnHighlighted: 'bg-gray-500 text-purple-800 hover:bg-gray-600', // Light blue for row/column highlighting
+	// Modern amber and gray color scheme
+	userInput: 'bg-primary/10 text-black hover:bg-primary/20 dark:bg-primary/20 dark:text-black',
+	prefilled: 'bg-muted/30 text-foreground/80 hover:bg-muted/40',
+	hint: 'bg-primary/20 text-black hover:bg-primary/30 dark:bg-primary/30 dark:text-black',
+	empty: 'bg-card/60 text-muted-foreground hover:bg-card/80 dark:bg-gray-800/50',
+	selected: 'ring-2 ring-primary/60 bg-primary/10 text-foreground shadow-lg',
+	conflict: 'bg-destructive/10 text-destructive ring-2 ring-destructive/50',
+	highlighted: 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700/30 dark:text-gray-300',
+	rowColumnHighlighted: 'bg-gray-50 text-foreground hover:bg-gray-100 dark:bg-gray-800/20',
 } as const;
 
 export const SudokuCell: React.FC<SudokuCellProps> = ({
@@ -43,17 +44,21 @@ export const SudokuCell: React.FC<SudokuCellProps> = ({
 		<motion.button
 			type="button"
 			className={`
-				w-12 h-12 rounded-md border border-border/50
-				flex items-center justify-center text-lg font-medium
-				transition-all duration-200 
+				aspect-square h-12 w-12 md:h-14 md:w-14 rounded-md
+				border border-border/40 ring-1 ring-border/20
+				flex items-center justify-center text-lg md:text-xl
+				font-medium ${isInitial ? 'font-semibold' : ''}
+				transition-all duration-200 ease-out
+				hover:shadow-md active:scale-[0.98]
 				focus:outline-none focus:ring-2 focus:ring-primary/50
-				${isInitial ? 'font-bold border-border' : ''}
+				backdrop-blur supports-[backdrop-filter]:backdrop-blur-sm
 				${getCellColor()}
 				${className}
 			`}
+			aria-selected={isSelected}
 			onClick={onSelect}
-			whileHover={{ scale: isSelected ? 1.05 : 1.03 }}
-			whileTap={{ scale: 0.95 }}
+			whileHover={{ scale: isSelected ? 1.03 : 1.02 }}
+			whileTap={{ scale: 0.97 }}
 		>
 			{value || ''}
 		</motion.button>

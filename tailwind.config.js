@@ -4,6 +4,11 @@ export default {
 	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 	theme: {
 		extend: {
+			fontFamily: {
+				sans: ['Inter', 'system-ui', 'sans-serif'],
+				heading: ['Space Grotesk', 'system-ui', 'sans-serif'],
+				display: ['Clash Display', 'system-ui', 'sans-serif'],
+			},
 			borderRadius: {
 				lg: "var(--radius)",
 				md: "calc(var(--radius) - 2px)",
@@ -50,20 +55,13 @@ export default {
 					4: "hsl(var(--chart-4))",
 					5: "hsl(var(--chart-5))",
 				},
-				// Additional vibrant color utilities
-				vibrant: {
-					purple: "#8B5CF6",
-					emerald: "#10B981",
-					blue: "#3B82F6",
-					amber: "#F59E0B",
-					pink: "#EC4899",
-					indigo: "#6366F1",
-					cyan: "#06B6D4",
-				},
-				gradient: {
-					primary: "linear-gradient(135deg, #8B5CF6 0%, #10B981 100%)",
-					secondary: "linear-gradient(135deg, #3B82F6 0%, #EC4899 100%)",
-					accent: "linear-gradient(135deg, #F59E0B 0%, #6366F1 100%)",
+				// New color palette utilities
+				palette: {
+					"baby-powder": "#fdfffcff", /* Baby Powder */
+					"lapis-lazuli": "#235789ff", /* Lapis Lazuli */
+					"fire-engine-red": "#c1292eff", /* Fire Engine Red */
+					"school-bus-yellow": "#f38713", /* School Bus Yellow */
+					"raisin-black": "#161925ff", /* Raisin Black */
 				}
 			},
 		},

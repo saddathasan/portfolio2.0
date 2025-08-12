@@ -38,7 +38,6 @@ function Section({
 			<motion.section
 				className={cn(
 					"relative mb-24 px-4 py-12 overflow-hidden",
-					"before:absolute before:inset-0 before:bg-gradient-to-br before:from-primary/3 before:via-transparent before:to-accent/3",
 					"before:rounded-2xl before:blur-3xl before:-z-10",
 					className
 				)}
@@ -52,8 +51,6 @@ function Section({
 				viewport={{ once: true, margin: "-100px" }}
 				{...props}>
 				{/* Decorative elements */}
-				<div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-accent/10 to-primary/10 rounded-full blur-2xl" />
-				<div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-primary/10 to-vibrant-blue/10 rounded-full blur-xl" />
 				
 				<div className="relative z-10">
 					{children}
@@ -65,15 +62,12 @@ function Section({
 	return (
 		<section
 			className={cn(
-				"relative mb-24 px-4 py-12 overflow-hidden",
-				"before:absolute before:inset-0 before:bg-gradient-to-br before:from-primary/3 before:via-transparent before:to-accent/3",
-				"before:rounded-2xl before:blur-3xl before:-z-10",
-				className
-			)}
+			"relative mb-24 px-4 py-12 overflow-hidden",
+			"before:rounded-2xl before:blur-3xl before:-z-10",
+			className
+		)}
 			{...props}>
 			{/* Decorative elements */}
-			<div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-accent/10 to-primary/10 rounded-full blur-2xl" />
-			<div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-primary/10 to-vibrant-blue/10 rounded-full blur-xl" />
 			
 			<div className="relative z-10">
 				{children}
@@ -99,11 +93,10 @@ function SectionHeader({
 	};
 
 	const baseClasses = cn(
-		"relative font-black mb-16 leading-tight tracking-tight",
+		"relative font-black mb-16 leading-tight tracking-tight font-heading",
 		sizeClasses[size],
 		centered && "text-center",
-		gradient &&
-			"bg-gradient-to-r from-primary via-accent to-vibrant-blue bg-clip-text text-transparent",
+		gradient && "text-primary",
 	);
 
 	return (
@@ -122,7 +115,7 @@ function SectionHeader({
 			{gradient && (
 				<motion.div
 					className={cn(
-						"absolute -bottom-4 h-1 bg-gradient-to-r from-primary via-accent to-vibrant-blue rounded-full",
+						"absolute -bottom-4 h-1 bg-primary rounded-full",
 						centered ? "left-1/2 -translate-x-1/2" : "left-0"
 					)}
 					initial={{ width: 0 }}

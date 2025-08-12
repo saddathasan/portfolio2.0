@@ -31,7 +31,7 @@ export const SudokuNumberPad: React.FC<SudokuNumberPadProps> = ({
 							variant={selectedNumber === num ? "default" : "outline"}
 							size="lg"
 							onClick={() => onNumberSelect(num)}
-							className="w-16 h-16 text-2xl font-bold hover:text-teal-500"
+							className="w-16 h-16 text-2xl font-bold hover:text-primary"
 						>
 							{num}
 						</Button>
@@ -48,7 +48,7 @@ export const SudokuNumberPad: React.FC<SudokuNumberPadProps> = ({
 					variant={selectedNumber === null ? "destructive" : "outline"}
 					size="lg"
 					onClick={() => onNumberSelect(null)}
-					className="w-16 h-16 text-lg font-bold hover:text-teal-400"
+					className="w-16 h-16 text-lg font-bold hover:text-primary"
 				>
 					✕
 				</Button>

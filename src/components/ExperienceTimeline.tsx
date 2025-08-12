@@ -69,7 +69,7 @@ function TimelineLine({ className, ...props }: TimelineLineProps) {
 	return (
 		<div
 			className={cn(
-				"absolute left-4 md:left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-accent to-primary opacity-60",
+				"absolute left-4 md:left-8 top-0 bottom-0 w-0.5 bg-primary opacity-60",
 				className,
 			)}
 			{...props}
@@ -82,7 +82,7 @@ function TimelineDot({ className, ...props }: TimelineDotProps) {
 	return (
 		<div
 			className={cn(
-				"absolute left-2 md:left-6 w-4 h-4 bg-gradient-to-br from-primary to-accent rounded-full border-4 border-background shadow-lg z-10",
+				"absolute left-2 md:left-6 w-4 h-4 bg-primary rounded-full border-4 border-background shadow-lg z-10",
 				className,
 			)}
 			{...props}
@@ -116,7 +116,7 @@ function ExperienceItem({
 					<CardHeader>
 						<div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2">
 							<div className="flex-1">
-								<CardTitle className="text-lg md:text-xl font-bold text-primary">
+								<CardTitle className="text-lg md:text-xl font-bold text-gray-900 dark:text-gray-100">
 									{experience.role}
 								</CardTitle>
 								<CardDescription className="text-base md:text-lg font-semibold text-foreground">
@@ -182,7 +182,7 @@ function AchievementList({
 					<li
 						key={i}
 						className="flex items-start gap-2">
-						<span className="text-primary mt-1.5 text-xs">●</span>
+						<span className="text-gray-600 dark:text-gray-400 mt-1.5 text-xs">●</span>
 						<span className="text-sm text-muted-foreground">
 							{achievement}
 						</span>
@@ -228,7 +228,7 @@ function SubExperienceList({
 								<li
 									key={j}
 									className="flex items-start gap-2">
-									<span className="text-primary mt-1.5 text-xs">
+									<span className="text-gray-600 dark:text-gray-400 mt-1.5 text-xs">
 										●
 									</span>
 									<span className="text-sm text-muted-foreground">

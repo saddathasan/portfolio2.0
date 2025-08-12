@@ -34,7 +34,7 @@ export const Route = createFileRoute("/experience")({
 							<div
 								key={category.title}
 								className="space-y-2">
-								<h4 className="font-medium text-primary">
+								<h4 className="font-medium text-gray-900 dark:text-gray-100">
 									{category.title}
 								</h4>
 								<p className="text-sm text-muted-foreground mb-3">

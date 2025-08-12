@@ -28,7 +28,7 @@ export const SudokuStats: React.FC<SudokuStatsProps> = ({
 		>
 			{/* Time */}
 			<div className="text-center">
-				<div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+				<div className="text-2xl font-bold text-primary dark:text-primary">
 					{formatTime(time)}
 				</div>
 				<div className="text-sm text-gray-600 dark:text-gray-400">Time</div>
@@ -36,7 +36,7 @@ export const SudokuStats: React.FC<SudokuStatsProps> = ({
 
 			{/* Mistakes */}
 			<div className="text-center">
-				<div className="text-2xl font-bold text-red-600 dark:text-red-400">
+				<div className="text-2xl font-bold text-gray-800 dark:text-gray-200">
 					{mistakes}
 				</div>
 				<div className="text-sm text-gray-600 dark:text-gray-400">Mistakes</div>
@@ -44,7 +44,7 @@ export const SudokuStats: React.FC<SudokuStatsProps> = ({
 
 			{/* Progress */}
 			<div className="text-center">
-				<div className="text-2xl font-bold text-green-600 dark:text-green-400">
+				<div className="text-2xl font-bold text-gray-800 dark:text-gray-200">
 					{Math.round(progress)}%
 				</div>
 				<div className="text-sm text-gray-600 dark:text-gray-400">Progress</div>
@@ -56,9 +56,9 @@ export const SudokuStats: React.FC<SudokuStatsProps> = ({
 					className={`
 						text-2xl font-bold
 						${isComplete
-							? 'text-yellow-600 dark:text-yellow-400'
-							: 'text-gray-600 dark:text-gray-400'
-						}
+						? 'text-gray-800 dark:text-gray-200'
+						: 'text-gray-600 dark:text-gray-400'
+					}
 					`}
 				>
 					{isComplete ? '🎉' : '🎯'}

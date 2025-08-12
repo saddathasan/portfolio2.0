@@ -70,7 +70,7 @@ function BiographyTitle({
 
 	return (
 		<h2
-			className={cn("font-semibold mb-4", sizeClasses[size], className)}
+			className={cn("font-semibold mb-4 font-heading", sizeClasses[size], className)}
 			{...props}>
 			{children}
 		</h2>
@@ -109,7 +109,7 @@ function BiographyContent({
 					<li
 						key={index}
 						className="flex items-start gap-2">
-						<span className="text-primary mt-1">•</span>
+						<span className="text-gray-600 dark:text-gray-400 mt-1">•</span>
 						<span>{item}</span>
 					</li>
 				))}

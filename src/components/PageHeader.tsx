@@ -39,9 +39,9 @@ function PageHeaderTitle({
 	gradient = true,
 	...props
 }: PageHeaderTitleProps) {
-	const baseClasses = "text-3xl md:text-4xl font-bold mb-4";
+	const baseClasses = "text-3xl md:text-4xl font-bold mb-4 font-heading";
 	const gradientClasses = gradient
-		? "bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent"
+		? "text-primary"
 		: "";
 
 	return (

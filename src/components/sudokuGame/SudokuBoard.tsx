@@ -16,16 +16,17 @@ export const SudokuBoard: React.FC<SudokuBoardProps> = ({
 	return (
 		<motion.div
 			className={`
-				grid grid-cols-9 gap-1 p-3 bg-background border-2 border-border 
-				rounded-lg shadow-md max-w-lg mx-auto
+				relative grid grid-cols-9 gap-[2px]
+				p-3 sm:p-4
+				bg-card
+				border border-border/60 rounded-2xl shadow-xl
+				backdrop-blur supports-[backdrop-filter]:backdrop-blur-md
+				max-w-[min(90vw,560px)] mx-auto select-none
 				${className}
 			`}
-			initial={{ opacity: 0, scale: 0.9 }}
+			initial={{ opacity: 0, scale: 0.98 }}
 			animate={{ opacity: 1, scale: 1 }}
-			transition={{ duration: 0.5 }}
-				style={{
-					gap: '2px'
-				}}
+			transition={{ duration: 0.4 }}
 		>
 			{grid.map((row, rowIndex) =>
 				row.map((cell, colIndex) => {
@@ -34,12 +35,12 @@ export const SudokuBoard: React.FC<SudokuBoardProps> = ({
 					
 					// Right border for columns 2 and 5 (after 3rd and 6th columns)
 					if (colIndex === 2 || colIndex === 5) {
-						borderClasses.push('border-r-2 border-r-border');
+						borderClasses.push('border-r-2 border-border/80');
 					}
 					
 					// Bottom border for rows 2 and 5 (after 3rd and 6th rows)
 					if (rowIndex === 2 || rowIndex === 5) {
-						borderClasses.push('border-b-2 border-b-border');
+						borderClasses.push('border-b-2 border-border/80');
 					}
 					
 					// Calculate if this cell is in the same 3x3 grid as the selected cell

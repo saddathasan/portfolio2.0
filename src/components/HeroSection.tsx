@@ -49,19 +49,13 @@ function HeroSection({ className, children, ...props }: HeroSectionProps) {
 		<motion.section
 			className={cn(
 				"relative text-center mb-24 px-4 py-16 overflow-hidden",
-				"before:absolute before:inset-0 before:bg-gradient-to-br before:from-primary/5 before:via-transparent before:to-accent/5",
-				"before:rounded-3xl before:blur-3xl before:-z-10",
 				className
 			)}
 			initial={{ opacity: 0, y: 30 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.8, ease: "easeOut" }}
 			{...props}>
-			{/* Floating elements for visual interest */}
-			<div className="absolute top-10 left-10 w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-xl animate-pulse" />
-			<div className="absolute bottom-10 right-10 w-32 h-32 bg-gradient-to-br from-accent/15 to-primary/15 rounded-full blur-2xl animate-pulse delay-1000" />
-			<div className="absolute top-1/2 left-1/4 w-16 h-16 bg-gradient-to-br from-vibrant-blue/10 to-vibrant-pink/10 rounded-full blur-xl animate-bounce" />
-			
+
 			<div className="relative z-10">
 				{children}
 			</div>
@@ -74,8 +68,8 @@ function HeroTitle({ children, className, ...props }: HeroTitleProps) {
 	return (
 		<motion.h1
 			className={cn(
-				"text-5xl md:text-7xl lg:text-8xl font-extrabold mb-6",
-				"bg-gradient-to-r from-foreground via-primary to-accent bg-clip-text text-transparent",
+                "text-5xl md:text-7xl lg:text-8xl font-extrabold mb-6 font-display",
+        "text-primary",
 				"leading-tight tracking-tight",
 				className
 			)}
@@ -100,13 +94,13 @@ function HeroSubtitle({
 	...props
 }: HeroSubtitleProps) {
 	const gradientClasses = gradient
-		? "bg-gradient-to-r from-primary via-accent to-vibrant-blue bg-clip-text text-transparent"
-		: "text-primary";
+		? "text-primary"
+		: "text-gray-700 dark:text-gray-300";
 
 	return (
 		<motion.h2
 			className={cn(
-				"text-2xl md:text-4xl lg:text-5xl font-bold mb-6",
+				"text-2xl md:text-4xl lg:text-5xl font-bold mb-6 font-heading",
 				"relative inline-block",
 				gradientClasses,
 				className,
@@ -122,7 +116,7 @@ function HeroSubtitle({
 			{children}
 			{/* Animated underline */}
 			<motion.div
-				className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-primary to-accent rounded-full"
+				className="absolute -bottom-2 left-0 h-1 bg-primary rounded-full"
 				initial={{ width: 0 }}
 				animate={{ width: "100%" }}
 				transition={{ duration: 0.8, delay: 0.8 }}

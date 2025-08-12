@@ -457,9 +457,9 @@ export function AccessibleProgress({
 						'h-full transition-all duration-300 ease-out',
 						{
 							'bg-primary': variant === 'default',
-							'bg-green-500': variant === 'success',
-							'bg-yellow-500': variant === 'warning',
-							'bg-red-500': variant === 'error'
+							'bg-palette-carolina-blue': variant === 'success',
+				'bg-palette-hunyadi-yellow': variant === 'warning',
+				'bg-palette-orange-pantone': variant === 'error'
 						}
 					)}
 					style={{ width: `${percentage}%` }}

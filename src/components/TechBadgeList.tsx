@@ -40,8 +40,8 @@ export function TechBadgeList({
 		sizeClasses[size],
 		"font-semibold border-2 transition-all duration-300",
 		hoverable &&
-			"hover:bg-gradient-to-r hover:from-primary hover:to-accent hover:text-white hover:border-transparent hover:shadow-lg hover:shadow-primary/25 cursor-pointer transform hover:-translate-y-1",
-		!hoverable && "bg-gradient-to-r from-muted to-secondary border-border/50"
+			"hover:bg-primary hover:text-white hover:border-transparent hover:shadow-lg hover:shadow-primary/25 cursor-pointer transform hover:-translate-y-1",
+		!hoverable && "bg-muted border-border/50"
 	);
 
 	if (animated) {
@@ -78,10 +78,6 @@ export function TechBadgeList({
 								"relative overflow-hidden",
 								hoverable && "group"
 							)}>
-							{/* Shimmer effect */}
-							{hoverable && (
-								<div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-							)}
 							<span className="relative z-10">{tech}</span>
 						</Badge>
 					</motion.div>

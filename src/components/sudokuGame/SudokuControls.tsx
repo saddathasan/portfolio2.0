@@ -98,7 +98,7 @@ export const SudokuControls: React.FC<SudokuControlsProps> = ({
 						variant="default"
 						size="default"
 						onClick={onHint}
-						className="bg-yellow-600 hover:bg-yellow-700 text-white"
+						className="bg-palette-hunyadi-yellow hover:bg-palette-orange-pantone text-palette-charcoal"
 					>
 						Hint
 					</Button>

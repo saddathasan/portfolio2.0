@@ -123,9 +123,8 @@ function AnimatedCardTitle({
 }: AnimatedCardTitleProps) {
 	const variantClasses = {
 		default: "",
-		primary: "text-primary",
-		gradient:
-			"bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent",
+		primary: "text-gray-700 dark:text-gray-300",
+		gradient: "text-primary",
 	};
 
 	return (
