@@ -4,10 +4,9 @@ import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { useTheme } from "@/hooks/useTheme";
 // Services removed - using simplified data fetching
 // Removed unused type imports - components use static data imports
-import React, {
+import {
 	createContext,
 	type ReactNode,
-	useCallback,
 	useContext,
 	useEffect,
 	useState,
