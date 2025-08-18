@@ -181,7 +181,7 @@ export function AccessibleButton({
 			aria-disabled={isDisabled}
 			aria-describedby={loading ? 'loading-description' : undefined}
 			className={cn(
-				'inline-flex items-center justify-center rounded-md font-medium',
+				'inline-flex items-center justify-center rounded-md font-medium font-spaceGrotesk',
 				'transition-colors focus-visible:outline-none focus-visible:ring-2',
 				'focus-visible:ring-ring focus-visible:ring-offset-2',
 				'disabled:pointer-events-none disabled:opacity-50',
