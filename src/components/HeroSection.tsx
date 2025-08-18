@@ -49,16 +49,13 @@ function HeroSection({ className, children, ...props }: HeroSectionProps) {
 		<motion.section
 			className={cn(
 				"relative text-center mb-24 px-4 py-16 overflow-hidden",
-				className
+				className,
 			)}
 			initial={{ opacity: 0, y: 30 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.8, ease: "easeOut" }}
 			{...props}>
-
-			<div className="relative z-10">
-				{children}
-			</div>
+			<div className="relative z-10">{children}</div>
 		</motion.section>
 	);
 }
@@ -68,17 +65,17 @@ function HeroTitle({ children, className, ...props }: HeroTitleProps) {
 	return (
 		<motion.h1
 			className={cn(
-                "text-5xl md:text-7xl lg:text-8xl font-extrabold mb-6 font-display",
-        "text-primary",
+				"text-5xl md:text-7xl lg:text-8xl font-extrabold mb-6 font-clashDisplay",
+				"text-primary",
 				"leading-tight tracking-tight",
-				className
+				className,
 			)}
 			initial={{ opacity: 0, y: 30, scale: 0.9 }}
 			animate={{ opacity: 1, y: 0, scale: 1 }}
-			transition={{ 
-				duration: 0.8, 
+			transition={{
+				duration: 0.8,
 				delay: 0.2,
-				ease: [0.25, 0.46, 0.45, 0.94]
+				ease: [0.25, 0.46, 0.45, 0.94],
 			}}
 			{...props}>
 			{children}
@@ -100,17 +97,17 @@ function HeroSubtitle({
 	return (
 		<motion.h2
 			className={cn(
-				"text-2xl md:text-4xl lg:text-5xl font-bold mb-6 font-heading",
+				"text-2xl md:text-4xl lg:text-5xl font-bold mb-6 font-spaceGrotesk",
 				"relative inline-block",
 				gradientClasses,
 				className,
 			)}
 			initial={{ opacity: 0, y: 20, rotateX: -15 }}
 			animate={{ opacity: 1, y: 0, rotateX: 0 }}
-			transition={{ 
-				duration: 0.7, 
+			transition={{
+				duration: 0.7,
 				delay: 0.4,
-				ease: "easeOut"
+				ease: "easeOut",
 			}}
 			{...props}>
 			{children}
@@ -159,7 +156,7 @@ function HeroDescription({
 	return (
 		<motion.p
 			className={cn(
-				"text-xl md:text-2xl text-muted-foreground mb-8 mx-auto",
+				"text-xl md:text-2xl text-muted-foreground mb-8 mx-auto font-cabinet",
 				maxWidthClasses[maxWidth],
 				className,
 			)}

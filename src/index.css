@@ -27,6 +27,22 @@
 	font-display: swap;
 }
 
+@font-face {
+	font-family: 'Panchang';
+	src: url('./fonts/Panchang-Variable.ttf') format('truetype-variations');
+	font-weight: 200 800;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Cabinet';
+	src: url('./fonts/CabinetGrotesk-Variable.ttf') format('truetype-variations');
+	font-weight: 100 900;
+	font-style: normal;
+	font-display: swap;
+}
+
 @layer base {
 	:root {
 		/* Light theme - new color palette */
@@ -97,11 +113,11 @@
 
 	/* Typography defaults */
 	h1, h2, h3, h4, h5, h6 {
-		@apply font-heading;
+		@apply font-spaceGrotesk;
 	}
 
 	/* Display text utility */
-	.font-display {
+	.font-clashDisplay {
 		font-family: 'Clash Display', system-ui, sans-serif;
 	}
 

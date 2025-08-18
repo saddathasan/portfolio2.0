@@ -6,8 +6,10 @@ export default {
 		extend: {
 			fontFamily: {
 				sans: ['Inter', 'system-ui', 'sans-serif'],
-				heading: ['Space Grotesk', 'system-ui', 'sans-serif'],
-				display: ['Clash Display', 'system-ui', 'sans-serif'],
+				spaceGrotesk: ['Space Grotesk', 'system-ui', 'sans-serif'],
+				clashDisplay: ['Clash Display', 'system-ui', 'sans-serif'],
+				panchang: ['Panchang', 'system-ui', 'sans-serif'],
+				cabinet: ['Cabinet', 'system-ui', 'sans-serif'],
 			},
 			borderRadius: {
 				lg: "var(--radius)",

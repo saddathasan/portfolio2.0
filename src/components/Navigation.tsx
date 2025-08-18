@@ -77,7 +77,7 @@ function NavigationBrand({
 			{...props}>
 			<Link
 				to={to}
-				className="group relative text-2xl font-black text-primary hover:scale-105 transition-all duration-300 font-display">
+				className="group relative text-2xl font-black text-primary hover:scale-105 transition-all duration-300 font-clashDisplay">
 				<span className="relative z-10">{children}</span>
 				{/* Hover effect background */}
 
