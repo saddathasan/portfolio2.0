@@ -202,42 +202,42 @@ export function usePageSEO(seoProps: SEOProps) {
 export const pageSEO = {
 	home: {
 		title: 'Home',
-		description: 'Welcome to my portfolio. I\'m a software engineer passionate about building scalable applications.',
+		description: 'Software engineer focused on building fast, scalable, user‑centric web applications.',
 		keywords: ['portfolio', 'software engineer', 'react', 'typescript', 'frontend', 'backend'],
 		type: 'website' as const
 	},
 
 	about: {
 		title: 'About Me',
-		description: 'Learn more about my background, skills, and passion for software development.',
+		description: 'Background, core skills, and values that shape how I build software.',
 		keywords: ['about', 'biography', 'skills', 'background', 'software engineer'],
 		type: 'profile' as const
 	},
 
 	experience: {
 		title: 'Work Experience',
-		description: 'Explore my professional journey and the impact I\'ve made in various roles.',
+		description: 'Professional journey delivering reliable systems, performance gains, and measurable impact.',
 		keywords: ['experience', 'work history', 'career', 'professional', 'achievements'],
 		type: 'website' as const
 	},
 
 	projects: {
 		title: 'Projects',
-		description: 'Discover the projects I\'ve built and the technologies I\'ve used.',
+		description: 'Selected projects with concise impact notes and modern tech stacks.',
 		keywords: ['projects', 'portfolio', 'development', 'applications', 'code'],
 		type: 'website' as const
 	},
 
 	certificates: {
 		title: 'Certifications',
-		description: 'View my professional certifications and continuous learning achievements.',
+		description: 'Professional certifications reflecting continuous learning and growth.',
 		keywords: ['certifications', 'credentials', 'learning', 'professional development'],
 		type: 'website' as const
 	},
 
 	contact: {
 		title: 'Contact Me',
-		description: 'Get in touch with me for opportunities, collaborations, or just to say hello.',
+		description: 'Reach out for opportunities, collaboration, or a quick technical chat.',
 		keywords: ['contact', 'hire', 'collaboration', 'opportunities', 'get in touch'],
 		type: 'website' as const
 	}
