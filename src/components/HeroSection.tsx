@@ -65,7 +65,7 @@ function HeroTitle({ children, className, ...props }: HeroTitleProps) {
 	return (
 		<motion.h1
 			className={cn(
-				"text-5xl md:text-7xl lg:text-8xl font-bold mb-6 font-clashDisplay",
+				"text-5xl md:text-7xl lg:text-8xl font-medium mb-6 font-clashDisplay",
 				"text-primary",
 				"leading-tight tracking-tight",
 				className,
@@ -97,7 +97,7 @@ function HeroSubtitle({
 	return (
 		<motion.h2
 			className={cn(
-				"text-2xl md:text-4xl lg:text-5xl font-bold mb-6 font-spaceGrotesk",
+				"text-2xl md:text-4xl lg:text-5xl font-light mb-6 font-spaceGrotesk",
 				"relative inline-block",
 				gradientClasses,
 				className,

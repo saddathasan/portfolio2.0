@@ -2,7 +2,7 @@ import type { HeroInfo, Stat } from '@/types';
 
 export const heroInfo: HeroInfo = {
 	name: "Saddat Hasan",
-	title: "Full-Stack Engineer",
+	title: "Software Engineer",
 	location: "📍 Dhaka, Bangladesh",
 	description:
 		"Crafting exceptional digital experiences with cutting-edge technologies. Specializing in scalable full-stack solutions, performance optimization, and modern architecture patterns. Passionate about building products that make a difference.",
