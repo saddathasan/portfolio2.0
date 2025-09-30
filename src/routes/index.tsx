@@ -26,16 +26,8 @@ function HomePage() {
 						{heroInfo.description}
 					</HeroSection.Description>
 					<HeroSection.Actions>
-						<HeroSection.ActionButton
-							href={heroInfo.resumeUrl}
-							external>
-							View Resume
-						</HeroSection.ActionButton>
-						<HeroSection.ActionButton
-							href={heroInfo.linkedinUrl}
-							variant="outline"
-							external>
-							LinkedIn
+						<HeroSection.ActionButton href="/projects">
+							View Projects
 						</HeroSection.ActionButton>
 						<HeroSection.ActionButton
 							href="/contact"
@@ -54,8 +46,6 @@ function HomePage() {
 								technologies={techStack}
 								variant="secondary"
 								size="md"
-								animated
-								hoverable
 								gap="md"
 								/>
 						</div>
