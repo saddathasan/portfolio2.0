@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
+import { useApp } from "@/context/AppContext";
 import { PageLayout, Section, SudokuGame } from "../components";
 import { useSudoku } from "../hooks";
 
@@ -9,44 +10,38 @@ export const Route = createFileRoute("/games")({
 
 function GamesPage() {
 	const sudoku = useSudoku();
+	const { prefersReducedMotion } = useApp();
+	const MDiv: React.ElementType = prefersReducedMotion ? 'div' : motion.div;
+	const MP: React.ElementType = prefersReducedMotion ? 'p' : motion.p;
 
 	return (
 		<PageLayout>
 			<Section className="space-y-8">
-				<motion.div
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.6 }}
+				<MDiv
+					{...(!prefersReducedMotion && { initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.6 } })}
 					className="text-center space-y-4">
-					<motion.div
-						initial={{ scale: 0.8 }}
-						animate={{ scale: 1 }}
-						transition={{ delay: 0.2, duration: 0.5 }}
+					<MDiv
+						{...(!prefersReducedMotion && { initial: { scale: 0.8 }, animate: { scale: 1 }, transition: { delay: 0.2, duration: 0.5 } })}
 						className="text-6xl mb-2">
 						🧩
-					</motion.div>
+					</MDiv>
 					<Section.Header
 						size="xl"
-						gradient
 						centered
 						className="mb-2">
 						Sudoku Game
 					</Section.Header>
-					<motion.p
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						transition={{ delay: 0.4, duration: 0.5 }}
+					<MP
+						{...(!prefersReducedMotion && { initial: { opacity: 0 }, animate: { opacity: 1 }, transition: { delay: 0.4, duration: 0.5 } })}
 						className="text-lg text-muted-foreground max-w-2xl mx-auto">
 						Challenge yourself with this classic number puzzle! Use
 						keyboard navigation (arrow keys, 1-9, delete) or click
 						to play.
-					</motion.p>
-				</motion.div>
+					</MP>
+				</MDiv>
 
-				<motion.div
-					initial={{ opacity: 0, y: 40 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ delay: 0.6, duration: 0.8 }}>
+				<MDiv
+					{...(!prefersReducedMotion && { initial: { opacity: 0, y: 40 }, animate: { opacity: 1, y: 0 }, transition: { delay: 0.6, duration: 0.8 } })}>
 					<SudokuGame>
 						{/* Game Stats */}
 						<SudokuGame.Stats
@@ -109,13 +104,11 @@ function GamesPage() {
 							</div>
 						</div>
 					</SudokuGame>
-				</motion.div>
+				</MDiv>
 
 				{/* Game Instructions */}
-				<motion.div
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					transition={{ delay: 1, duration: 0.6 }}
+				<MDiv
+					{...(!prefersReducedMotion && { initial: { opacity: 0 }, animate: { opacity: 1 }, transition: { delay: 1, duration: 0.6 } })}
 					className="mt-8 p-6 bg-muted/20 rounded-lg border border-border/20">
 					<h3 className="text-lg font-semibold mb-3 text-primary">
 						How to Play
@@ -160,7 +153,7 @@ function GamesPage() {
 							</p>
 						</div>
 					</div>
-				</motion.div>
+				</MDiv>
 			</Section>
 		</PageLayout>
 	);
