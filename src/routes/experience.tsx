@@ -9,7 +9,7 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/experience")({
 	component: () => (
 		<PageLayout.Container>
-			<PageLayout.Main maxWidth="7xl">
+			<PageLayout.Main contentWidth="reading">
 				<PageHeader>
 					<PageHeader.Title>Professional Experience</PageHeader.Title>
 					<PageHeader.Description>
