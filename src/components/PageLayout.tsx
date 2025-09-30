@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { useApp } from "@/context/AppContext";
 
 interface PageLayoutProps {
 	className?: string;
@@ -57,6 +58,13 @@ function PageLayout({
 	contentWidth = 'default',
 	...props
 }: PageLayoutProps) {
+	const { firstMount, setFirstMount, prefersReducedMotion } = useApp();
+	// Disable animation after first mount or if user prefers reduced motion
+	const shouldAnimate = animate && firstMount && !prefersReducedMotion;
+	if (firstMount) {
+		// Mark as consumed for subsequent renders (next tick via microtask)
+		queueMicrotask(() => setFirstMount(false));
+	}
 	const maxWidthClasses = {
 		sm: "max-w-sm",
 		md: "max-w-md",
@@ -84,7 +92,7 @@ function PageLayout({
 		className,
 	);
 
-	if (animate) {
+	if (shouldAnimate) {
 		return (
 			<div
 				className={containerClasses}
@@ -140,6 +148,8 @@ function PageLayoutMain({
 	contentWidth = 'default',
 	...props
 }: PageLayoutMainProps) {
+	const { firstMount, prefersReducedMotion } = useApp();
+	const shouldAnimate = animate && firstMount && !prefersReducedMotion;
 	const maxWidthClasses = {
 		sm: "max-w-sm",
 		md: "max-w-md",
@@ -167,7 +177,7 @@ function PageLayoutMain({
 		className,
 	);
 
-	if (animate) {
+	if (shouldAnimate) {
 		return (
 			<div
 				className={containerClasses}
