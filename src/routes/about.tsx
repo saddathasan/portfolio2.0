@@ -25,7 +25,7 @@ export const Route = createFileRoute("/about")({
 				<ContentGrid
 					columns={2}
 					gap="lg"
-					className="mb-12">
+					className="mb-8">
 					<ContentGrid.Item>
 						<BiographySection direction="left">
 							<BiographySection.Title>

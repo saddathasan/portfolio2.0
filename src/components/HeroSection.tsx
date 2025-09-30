@@ -65,7 +65,7 @@ function HeroTitle({ children, className, ...props }: HeroTitleProps) {
 	return (
 		<motion.h1
 			className={cn(
-				"text-5xl md:text-7xl lg:text-8xl font-extrabold mb-6 font-clashDisplay",
+				"text-5xl md:text-7xl lg:text-8xl font-bold mb-6 font-clashDisplay",
 				"text-primary",
 				"leading-tight tracking-tight",
 				className,

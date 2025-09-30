@@ -23,7 +23,7 @@ export const aboutInfo: AboutInfo = {
 	location: "Dhaka, Bangladesh",
 	bio: [
 		"I'm Saddat Hasan, a software engineer with over 5+ years of experience developing scalable full-stack applications and enterprise-grade platforms. I currently work at InfinitiBit GmbH, where I build AI-powered web solutions using React, FastAPI, PostgreSQL, and large language models integrated via OpenAI APIs.",
-		"Throughout my career, I've delivered impactful solutions for both startups and global enterprises like Dell and Microsoft—ranging from increasing user engagement by 75% to engineering systems with 99.9% uptime. My strengths lie in clean architecture, robust API design, and integrating AI-driven automation into modern web platforms.",
+		"Throughout my career, I've delivered impactful solutions for both startups and global enterprises like Dell and Microsoft. My strengths lie in clean architecture, robust API design, and integrating AI-driven automation into modern web platforms.",
 		"Outside of coding, I enjoy exploring emerging technologies, experimenting with LLM and agentic AI workflows, and contributing to open-source projects. I'm always learning, adapting, and pushing the boundaries of what technology can do.",
 	],
 	whatIDo: [
