@@ -50,7 +50,7 @@ export function ResponsiveNavigation({
 					<div className="flex-shrink-0">
 						<Link
 							to={brand.to || "/"}
-							className="text-xl md:text-2xl font-extrabold text-primary hover:text-accent transition-all duration-300 font-cabinet">
+							className="text-xl md:text-2xl font-extrabold text-primary hover:text-accent transition-all duration-300 font-sans">
 							{brand.children}
 						</Link>
 					</div>

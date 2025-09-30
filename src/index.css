@@ -2,123 +2,76 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Font Face Declarations */
-@font-face {
-	font-family: 'Inter';
-	src: url('./fonts/InterVF.ttf') format('truetype-variations');
-	font-weight: 100 900;
-	font-style: normal;
-	font-display: swap;
-}
+/* Lee Robinson minimal font imports - only Inter for system consistency */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
-@font-face {
-	font-family: 'Space Grotesk';
-	src: url('./fonts/SpaceGroteskVF.ttf') format('truetype-variations');
-	font-weight: 300 700;
-	font-style: normal;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: 'Clash Display';
-	src: url('./fonts/ClashDisplayVF.ttf') format('truetype-variations');
-	font-weight: 200 700;
-	font-style: normal;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: 'Panchang';
-	src: url('./fonts/Panchang-Variable.ttf') format('truetype-variations');
-	font-weight: 200 800;
-	font-style: normal;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: 'Cabinet';
-	src: url('./fonts/CabinetGrotesk-Variable.ttf') format('truetype-variations');
-	font-weight: 100 900;
-	font-style: normal;
-	font-display: swap;
-}
+/* Remove all other font imports to match minimal aesthetic */
 
 @layer base {
 	:root {
-		/* Light theme - new color palette */
-		--background: 100 100% 99%; /* Baby powder background */
-		--foreground: 228 25% 12%; /* Raisin black for text */
-		--card: 100 100% 97%; /* Slightly darker baby powder */
-		--card-foreground: 228 25% 12%; /* Raisin black */
-		--popover: 100 100% 99%;
-		--popover-foreground: 228 25% 12%; /* Raisin black */
-		--primary: 21 89% 52%; /* School bus yellow */
-		--primary-foreground: 228 25% 12%; /* Raisin black text on primary */
-		--secondary: 209 59% 34%; /* Lapis lazuli */
-		--secondary-foreground: 100 100% 99%; /* Baby powder text */
-		--muted: 209 59% 90%; /* Very light lapis lazuli */
-		--muted-foreground: 209 59% 34%; /* Lapis lazuli */
-		--accent: 209 59% 34%; /* Lapis lazuli */
-		--accent-foreground: 100 100% 99%; /* Baby powder text on accent */
-		--destructive: 358 65% 46%; /* Fire engine red */
-		--destructive-foreground: 100 100% 99%;
-		--border: 209 59% 80%; /* Light lapis lazuli border */
-		--input: 100 100% 95%; /* Light baby powder input */
-		--ring: 21 89% 52%; /* Primary school bus yellow for focus rings */
-		--chart-1: 21 89% 52%; /* School bus yellow */
-		--chart-2: 358 65% 46%; /* Fire engine red */
-		--chart-3: 209 59% 34%; /* Lapis lazuli */
-		--chart-4: 228 25% 12%; /* Raisin black */
-		--chart-5: 100 100% 99%; /* Baby powder */
-		--radius: 0.75rem;
+		/* Light theme - Lee Robinson minimal palette */
+		--background: 0 0% 100%; /* Pure white background */
+		--foreground: 0 0% 9%; /* Near black for text */
+		--card: 0 0% 100%; /* Pure white cards */
+		--card-foreground: 0 0% 9%; /* Near black text */
+		--popover: 0 0% 100%; /* Pure white popover */
+		--popover-foreground: 0 0% 9%; /* Near black text */
+		--primary: 0 0% 9%; /* Near black primary */
+		--primary-foreground: 0 0% 98%; /* Off-white text on primary */
+		--secondary: 0 0% 96%; /* Light gray secondary */
+		--secondary-foreground: 0 0% 9%; /* Near black text */
+		--muted: 0 0% 96%; /* Light gray muted */
+		--muted-foreground: 0 0% 45%; /* Medium gray text */
+		--accent: 0 0% 96%; /* Light gray accent */
+		--accent-foreground: 0 0% 9%; /* Near black text */
+		--destructive: 0 84% 60%; /* Minimal red for errors */
+		--destructive-foreground: 0 0% 98%; /* Off-white text */
+		--border: 0 0% 90%; /* Light gray border */
+		--input: 0 0% 100%; /* Pure white input */
+		--ring: 0 0% 9%; /* Near black focus ring */
+		--chart-1: 0 0% 9%; /* Near black */
+		--chart-2: 0 0% 45%; /* Medium gray */
+		--chart-3: 0 0% 70%; /* Light gray */
+		--chart-4: 0 0% 85%; /* Very light gray */
+		--chart-5: 0 0% 96%; /* Off-white */
+		--radius: 0.5rem; /* Reduced border radius for minimal aesthetic */
 	}
 
 	.dark {
-		/* Dark theme - new color palette */
-		--background: 228 25% 12%; /* Raisin black background */
-		--foreground: 100 100% 99%; /* Baby powder for text */
-		--card: 228 25% 16%; /* Darker raisin black */
-		--card-foreground: 100 100% 99%; /* Baby powder */
-		--popover: 228 25% 12%;
-		--popover-foreground: 100 100% 99%;
-		--primary: 21 89% 52%; /* School bus yellow */
-		--primary-foreground: 228 25% 12%; /* Raisin black text on primary */
-		--secondary: 209 59% 34%; /* Lapis lazuli */
-		--secondary-foreground: 100 100% 99%; /* Baby powder text */
-		--muted: 228 25% 18%; /* Dark raisin black */
-		--muted-foreground: 209 59% 60%; /* Lighter lapis lazuli */
-		--accent: 209 59% 34%; /* Lapis lazuli */
-		--accent-foreground: 100 100% 99%; /* Baby powder text on accent */
-		--destructive: 358 65% 46%; /* Fire engine red */
-		--destructive-foreground: 100 100% 99%;
-		--border: 209 59% 25%; /* Dark lapis lazuli border */
-		--input: 228 25% 14%; /* Dark raisin black input */
-		--ring: 21 89% 52%; /* Primary school bus yellow for focus rings */
-		--chart-1: 21 89% 52%; /* School bus yellow */
-		--chart-2: 358 65% 46%; /* Fire engine red */
-		--chart-3: 209 59% 34%; /* Lapis lazuli */
-		--chart-4: 100 100% 99%; /* Baby powder */
-		--chart-5: 228 25% 12%; /* Raisin black */
+		/* Dark theme - Lee Robinson minimal palette */
+		--background: 0 0% 3%; /* Near black background */
+		--foreground: 0 0% 98%; /* Off-white text */
+		--card: 0 0% 3%; /* Near black cards */
+		--card-foreground: 0 0% 98%; /* Off-white text */
+		--popover: 0 0% 3%; /* Near black popover */
+		--popover-foreground: 0 0% 98%; /* Off-white text */
+		--primary: 0 0% 98%; /* Off-white primary */
+		--primary-foreground: 0 0% 9%; /* Near black text on primary */
+		--secondary: 0 0% 14%; /* Dark gray secondary */
+		--secondary-foreground: 0 0% 98%; /* Off-white text */
+		--muted: 0 0% 14%; /* Dark gray muted */
+		--muted-foreground: 0 0% 63%; /* Medium gray text */
+		--accent: 0 0% 14%; /* Dark gray accent */
+		--accent-foreground: 0 0% 98%; /* Off-white text */
+		--destructive: 0 62% 30%; /* Dark red for errors */
+		--destructive-foreground: 0 0% 98%; /* Off-white text */
+		--border: 0 0% 14%; /* Dark gray border */
+		--input: 0 0% 14%; /* Dark gray input */
+		--ring: 0 0% 83%; /* Light gray focus ring */
+		--chart-1: 0 0% 98%; /* Off-white */
+		--chart-2: 0 0% 63%; /* Medium gray */
+		--chart-3: 0 0% 45%; /* Darker gray */
+		--chart-4: 0 0% 25%; /* Very dark gray */
+		--chart-5: 0 0% 14%; /* Near black */
 	}
 }
 
 @layer base {
 	* {
-		border-color: hsl(var(--border));
+		@apply border-border;
 	}
 	body {
 		@apply bg-background text-foreground font-sans;
-		position: relative;
-	}
-
-	/* Typography defaults */
-	h1, h2, h3, h4, h5, h6 {
-		@apply font-spaceGrotesk;
-	}
-
-	/* Display text utility */
-	.font-clashDisplay {
-		font-family: 'Clash Display', system-ui, sans-serif;
 	}
 
 	/* Simple solid background */
@@ -133,8 +86,6 @@
 		pointer-events: none;
 		z-index: -1;
 	}
-
-
 
 	/* Floating animation for decorative elements */
 	@keyframes float {

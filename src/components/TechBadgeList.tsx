@@ -78,7 +78,7 @@ export function TechBadgeList({
 								"relative overflow-hidden",
 								hoverable && "group"
 							)}>
-							<span className="relative z-10 font-cabinet font-normal">{tech}</span>
+							<span className="relative z-10 font-sans font-normal">{tech}</span>
 						</Badge>
 					</motion.div>
 				))}

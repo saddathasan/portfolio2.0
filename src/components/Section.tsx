@@ -93,7 +93,7 @@ function SectionHeader({
 	};
 
 	const baseClasses = cn(
-		"relative font-black mb-16 leading-tight tracking-tight font-spaceGrotesk",
+		"relative font-black mb-16 leading-tight tracking-tight font-sans",
 		sizeClasses[size],
 		centered && "text-center",
 		gradient && "text-primary",
