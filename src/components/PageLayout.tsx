@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
 
 interface PageLayoutProps {
 	className?: string;
@@ -18,6 +17,8 @@ interface PageLayoutProps {
 		| "7xl"
 		| "full";
 	centered?: boolean;
+	/** Optional semantic content width override (reading: ~68ch, wide: 6xl). */
+	contentWidth?: 'default' | 'reading' | 'wide';
 }
 
 interface PageLayoutContainerProps {
@@ -43,6 +44,7 @@ interface PageLayoutMainProps {
 		| "7xl"
 		| "full";
 	centered?: boolean;
+	contentWidth?: 'default' | 'reading' | 'wide';
 }
 
 // Root PageLayout Component
@@ -52,6 +54,7 @@ function PageLayout({
 	animate = true,
 	maxWidth = "4xl",
 	centered = true,
+	contentWidth = 'default',
 	...props
 }: PageLayoutProps) {
 	const maxWidthClasses = {
@@ -68,22 +71,26 @@ function PageLayout({
 		full: "max-w-full",
 	};
 
+	const semanticWidth =
+		contentWidth === 'reading'
+			? 'max-w-[68ch]'
+			: contentWidth === 'wide'
+				? 'max-w-6xl'
+				: maxWidthClasses[maxWidth];
+
 	const containerClasses = cn(
-		maxWidthClasses[maxWidth],
+		semanticWidth,
 		centered && "mx-auto",
 		className,
 	);
 
 	if (animate) {
 		return (
-			<motion.div
+			<div
 				className={containerClasses}
-				initial={{ opacity: 0, y: 20 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.6 }}
 				{...props}>
 				{children}
-			</motion.div>
+			</div>
 		);
 	}
 
@@ -130,6 +137,7 @@ function PageLayoutMain({
 	animate = true,
 	maxWidth = "4xl",
 	centered = true,
+	contentWidth = 'default',
 	...props
 }: PageLayoutMainProps) {
 	const maxWidthClasses = {
@@ -146,22 +154,26 @@ function PageLayoutMain({
 		full: "max-w-full",
 	};
 
+	const semanticWidth =
+		contentWidth === 'reading'
+			? 'max-w-[68ch]'
+			: contentWidth === 'wide'
+				? 'max-w-6xl'
+				: maxWidthClasses[maxWidth];
+
 	const containerClasses = cn(
-		maxWidthClasses[maxWidth],
+		semanticWidth,
 		centered && "mx-auto",
 		className,
 	);
 
 	if (animate) {
 		return (
-			<motion.div
+			<div
 				className={containerClasses}
-				initial={{ opacity: 0, y: 20 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.6 }}
 				{...props}>
 				{children}
-			</motion.div>
+			</div>
 		);
 	}
 
