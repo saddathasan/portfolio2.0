@@ -5,10 +5,10 @@ export const GlobalFooter = () => {
 		<FooterCallToAction>
 			<FooterCallToAction.Content>
 				<FooterCallToAction.Title>
-					Let’s build something impactful.
+					Let's work together
 				</FooterCallToAction.Title>
 				<FooterCallToAction.Description>
-					Open to collaboration & new opportunities.
+					Get in touch to discuss your next project.
 				</FooterCallToAction.Description>
 			</FooterCallToAction.Content>
 

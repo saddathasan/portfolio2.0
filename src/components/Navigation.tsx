@@ -46,25 +46,23 @@ interface NavigationActionProps {
 	external?: boolean;
 }
 
-// Root Navigation Component
+// Root Navigation Component - Lee Robinson ultra-minimal style
 function Navigation({ className, children, ...props }: NavigationProps) {
 	return (
 		<nav
 			className={cn(
-				"border-b border-border/30 bg-background/80 backdrop-blur-xl sticky top-0 z-50",
-				"shadow-lg shadow-primary/5 transition-all duration-300",
-
-				className,
+				"w-full border-b border-border bg-background",
+				className
 			)}
 			{...props}>
-			<div className="container mx-auto flex h-18 items-center px-6 relative z-10">
+			<div className="container flex h-16 max-w-4xl items-center justify-between px-6 mx-auto">
 				{children}
 			</div>
 		</nav>
 	);
 }
 
-// Brand/Logo Component
+// Navigation Brand - ultra-minimal styling
 function NavigationBrand({
 	className,
 	children,
@@ -72,52 +70,11 @@ function NavigationBrand({
 	...props
 }: NavigationBrandProps) {
 	return (
-		<div
-			className={cn("mr-10", className)}
-			{...props}>
-			<Link
-				to={to}
-				className="group relative text-2xl font-black text-primary hover:scale-105 transition-all duration-300 font-sans">
-				<span className="relative z-10">{children}</span>
-				{/* Hover effect background */}
-
-			</Link>
-		</div>
-	);
-}
-
-// Navigation Links Container
-function NavigationLinks({
-	className,
-	children,
-	...props
-}: NavigationLinksProps) {
-	return (
-		<div
-			className={cn("flex gap-6 flex-1", className)}
-			{...props}>
-			{children}
-		</div>
-	);
-}
-
-// Individual Navigation Link
-function NavigationLink({
-	className,
-	children,
-	to,
-	activeClassName = "[&.active]:text-primary [&.active]:after:w-full [&.active]:after:bg-primary",
-	...props
-}: NavigationLinkProps) {
-	return (
 		<Link
 			to={to}
 			className={cn(
-				"group relative px-4 py-3 text-sm font-semibold text-muted-foreground hover:text-foreground transition-all duration-300",
-				"after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:h-0.5 after:w-0 after:bg-primary after:transition-all after:duration-300",
-				"hover:after:w-full hover:scale-105",
-				activeClassName,
-				className,
+				"text-base font-medium text-foreground hover:text-muted-foreground transition-colors",
+				className
 			)}
 			{...props}>
 			{children}
@@ -125,7 +82,44 @@ function NavigationLink({
 	);
 }
 
-// Navigation Actions Container
+// Navigation Links - ultra-minimal styling
+function NavigationLinks({
+	className,
+	children,
+	...props
+}: NavigationLinksProps) {
+	return (
+		<div
+			className={cn("flex items-center space-x-8", className)}
+			{...props}>
+			{children}
+		</div>
+	);
+}
+
+// Navigation Link - minimal styling
+function NavigationLink({
+	className,
+	children,
+	to,
+	activeClassName = "[&.active]:text-foreground [&.active]:font-medium",
+	...props
+}: NavigationLinkProps) {
+	return (
+		<Link
+			to={to}
+			className={cn(
+				"text-sm text-muted-foreground hover:text-foreground transition-colors",
+				activeClassName,
+				className
+			)}
+			{...props}>
+			{children}
+		</Link>
+	);
+}
+
+// Navigation Actions - minimal styling
 function NavigationActions({
 	className,
 	children,
@@ -133,19 +127,19 @@ function NavigationActions({
 }: NavigationActionsProps) {
 	return (
 		<div
-			className={cn("flex items-center gap-2", className)}
+			className={cn("flex items-center space-x-2", className)}
 			{...props}>
 			{children}
 		</div>
 	);
 }
 
-// Navigation Action Button
+// Navigation Action - minimal button styling
 function NavigationAction({
 	className,
 	children,
 	href,
-	variant = "outline",
+	variant = "ghost",
 	size = "sm",
 	external = false,
 	...props
@@ -153,13 +147,10 @@ function NavigationAction({
 	if (href) {
 		return (
 			<Button
+				asChild
 				variant={variant}
 				size={size}
-				className={cn(
-					"border-primary/20 text-primary hover:bg-primary hover:text-primary/90 transition-all duration-300",
-					className,
-				)}
-				asChild
+				className={cn("", className)}
 				{...props}>
 				<a
 					href={href}
@@ -175,10 +166,7 @@ function NavigationAction({
 		<Button
 			variant={variant}
 			size={size}
-			className={cn(
-				"border-primary/20 text-primary hover:bg-primary hover:text-primary/90 transition-all duration-300",
-				className,
-			)}
+			className={cn("", className)}
 			{...props}>
 			{children}
 		</Button>

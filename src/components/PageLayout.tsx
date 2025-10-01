@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { useApp } from "@/context/AppContext";
 
 interface PageLayoutProps {
 	className?: string;
@@ -18,8 +17,6 @@ interface PageLayoutProps {
 		| "7xl"
 		| "full";
 	centered?: boolean;
-	/** Optional semantic content width override (reading: ~68ch, wide: 6xl). */
-	contentWidth?: 'default' | 'reading' | 'wide';
 }
 
 interface PageLayoutContainerProps {
@@ -45,7 +42,6 @@ interface PageLayoutMainProps {
 		| "7xl"
 		| "full";
 	centered?: boolean;
-	contentWidth?: 'default' | 'reading' | 'wide';
 }
 
 // Root PageLayout Component
@@ -55,16 +51,8 @@ function PageLayout({
 	animate = true,
 	maxWidth = "4xl",
 	centered = true,
-	contentWidth = 'default',
 	...props
 }: PageLayoutProps) {
-	const { firstMount, setFirstMount, prefersReducedMotion } = useApp();
-	// Disable animation after first mount or if user prefers reduced motion
-	const shouldAnimate = animate && firstMount && !prefersReducedMotion;
-	if (firstMount) {
-		// Mark as consumed for subsequent renders (next tick via microtask)
-		queueMicrotask(() => setFirstMount(false));
-	}
 	const maxWidthClasses = {
 		sm: "max-w-sm",
 		md: "max-w-md",
@@ -79,20 +67,13 @@ function PageLayout({
 		full: "max-w-full",
 	};
 
-	const semanticWidth =
-		contentWidth === 'reading'
-			? 'max-w-[68ch]'
-			: contentWidth === 'wide'
-				? 'max-w-6xl'
-				: maxWidthClasses[maxWidth];
-
 	const containerClasses = cn(
-		semanticWidth,
+		maxWidthClasses[maxWidth],
 		centered && "mx-auto",
 		className,
 	);
 
-	if (shouldAnimate) {
+	if (animate) {
 		return (
 			<div
 				className={containerClasses}
@@ -145,11 +126,8 @@ function PageLayoutMain({
 	animate = true,
 	maxWidth = "4xl",
 	centered = true,
-	contentWidth = 'default',
 	...props
 }: PageLayoutMainProps) {
-	const { firstMount, prefersReducedMotion } = useApp();
-	const shouldAnimate = animate && firstMount && !prefersReducedMotion;
 	const maxWidthClasses = {
 		sm: "max-w-sm",
 		md: "max-w-md",
@@ -164,20 +142,13 @@ function PageLayoutMain({
 		full: "max-w-full",
 	};
 
-	const semanticWidth =
-		contentWidth === 'reading'
-			? 'max-w-[68ch]'
-			: contentWidth === 'wide'
-				? 'max-w-6xl'
-				: maxWidthClasses[maxWidth];
-
 	const containerClasses = cn(
-		semanticWidth,
+		maxWidthClasses[maxWidth],
 		centered && "mx-auto",
 		className,
 	);
 
-	if (shouldAnimate) {
+	if (animate) {
 		return (
 			<div
 				className={containerClasses}

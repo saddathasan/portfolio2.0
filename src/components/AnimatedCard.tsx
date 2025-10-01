@@ -6,7 +6,6 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
 
 interface AnimatedCardProps {
 	className?: string;
@@ -20,6 +19,8 @@ interface AnimatedCardProps {
 interface AnimatedCardHeaderProps {
 	className?: string;
 	children: React.ReactNode;
+	title?: string;
+	description?: string;
 }
 
 interface AnimatedCardContentProps {
@@ -38,49 +39,23 @@ interface AnimatedCardDescriptionProps {
 	children: React.ReactNode;
 }
 
-// Root animated card component
+// Root AnimatedCard Component - simplified without animations
 function AnimatedCard({
 	className,
 	children,
-	index = 0,
-	delay,
 	hoverEffect = true,
-	direction = "up",
 	...props
 }: AnimatedCardProps) {
-	const directionMap = {
-		up: { opacity: 0, y: 20 },
-		down: { opacity: 0, y: -20 },
-		left: { opacity: 0, x: -20 },
-		right: { opacity: 0, x: 20 },
-	};
-
-	const calculateDelay = delay !== undefined ? delay : index * 0.1;
-
-	const hoverProps = hoverEffect
-		? {
-				whileHover: { scale: 1.02 },
-				transition: { duration: 0.3 },
-			}
-		: {};
-
 	return (
-		<motion.div
-			initial={directionMap[direction]}
-			whileInView={{ opacity: 1, x: 0, y: 0 }}
-			transition={{ duration: 0.5, delay: calculateDelay }}
-			viewport={{ once: true }}
-			{...hoverProps}
+		<Card
+			className={cn(
+				"transition-colors duration-200",
+				hoverEffect && "hover:bg-accent/5",
+				className,
+			)}
 			{...props}>
-			<Card
-				className={cn(
-					"hover:shadow-lg transition-all duration-300",
-					hoverEffect && "hover:border-primary/20",
-					className,
-				)}>
-				{children}
-			</Card>
-		</motion.div>
+			{children}
+		</Card>
 	);
 }
 

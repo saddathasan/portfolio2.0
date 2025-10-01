@@ -5,7 +5,7 @@ export const heroInfo: HeroInfo = {
 	title: "Software Engineer",
 	location: "📍 Dhaka, Bangladesh",
 	description:
-		"Crafting exceptional digital experiences with cutting-edge technologies. Specializing in scalable full-stack solutions, performance optimization, and modern architecture patterns. Passionate about building products that make a difference.",
+		"Building scalable web applications with modern technologies. Focused on clean code, performance, and user experience.",
 	resumeUrl: "/resume.pdf",
 	linkedinUrl: "https://linkedin.com/in/saddathasan",
 };
@@ -18,27 +18,11 @@ export const techStack: string[] = [
 	"NestJS",
 	"PostgreSQL",
 	"MongoDB",
-	"Redis",
-	"GraphQL",
-	"REST APIs",
 	"Docker",
 	"AWS",
-	"Kubernetes",
-	"Microservices",
+	"REST APIs",
+	"GraphQL",
 	"Tailwind CSS",
-	"Framer Motion",
-	"Prisma",
-	"tRPC",
-	"Zustand",
-	"React Query",
-	"WebSockets",
-	"CI/CD",
-	"Testing (Jest/Cypress)",
-	"Performance Optimization",
-	"System Design",
-	"AI/ML Integration",
-	"DevOps",
-	"Agile/Scrum",
 ];
 
 export const stats: Stat[] = [

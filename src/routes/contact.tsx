@@ -1,5 +1,6 @@
 import { ContactForm } from "@/components/ContactForm";
 import { ContactInfo } from "@/components/ContactInfo";
+import { ContentGrid } from "@/components/ContentGrid";
 import { PageHeader } from "@/components/PageHeader";
 import { PageLayout } from "@/components/PageLayout";
 import { contactInfo, contactPageInfo } from "@/data";
@@ -8,7 +9,7 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/contact")({
 	component: () => (
 		<PageLayout.Container>
-			<PageLayout.Main contentWidth="reading">
+			<PageLayout.Main>
 				{/* Page Header */}
 				<PageHeader>
 					<PageHeader.Title>{contactPageInfo.title}</PageHeader.Title>
@@ -18,10 +19,16 @@ export const Route = createFileRoute("/contact")({
 				</PageHeader>
 
 				{/* Main Content Grid */}
-				<div className="space-y-10">
-					<section>
-						<h2 className="text-xl font-semibold mb-6">Get in touch</h2>
+				<ContentGrid
+					columns={2}
+					gap="lg">
+					{/* Contact Information */}
+					<ContentGrid.Item>
 						<ContactInfo>
+							<h2 className="text-2xl font-semibold mb-6">
+								Let's Connect
+							</h2>
+
 							<ContactInfo.Card>
 								{contactInfo.map((info) => (
 									<ContactInfo.Item
@@ -35,17 +42,21 @@ export const Route = createFileRoute("/contact")({
 										additionalInfo={
 											info.title === "Location"
 												? "Available for remote work"
-											: undefined
+												: undefined
 										}
 									/>
 								))}
 							</ContactInfo.Card>
 						</ContactInfo>
-					</section>
-					<section>
-						<ContactForm responseTime={contactPageInfo.responseTime} />
-					</section>
-				</div>
+					</ContentGrid.Item>
+
+					{/* Contact Form */}
+					<ContentGrid.Item>
+						<div className="space-y-6">
+							<ContactForm responseTime={contactPageInfo.responseTime} />
+						</div>
+					</ContentGrid.Item>
+				</ContentGrid>
 			</PageLayout.Main>
 		</PageLayout.Container>
 	),

@@ -3,7 +3,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
 import { useState } from "react";
 
 interface ContactFormProps {
@@ -99,16 +98,12 @@ function ContactForm({
 	};
 
 	return (
-		<motion.div
-			initial={{ opacity: 0, x: 20 }}
-			whileInView={{ opacity: 1, x: 0 }}
-			transition={{ duration: 0.6 }}
-			viewport={{ once: true }}
+		<div
 			className={className}
 			{...props}>
-			<h2 className="text-2xl font-semibold mb-6">{title}</h2>
-			<Card className="h-full border-border/50 hover:border-accent/20 transition-all duration-300">
-				<CardContent className="pt-6 h-full">
+			<h2 className="text-xl font-medium mb-6">{title}</h2>
+			<Card className="h-full border-0 shadow-none">
+				<CardContent className="pt-0 h-full px-0">
 					<form
 						className="space-y-4 h-full flex flex-col"
 						onSubmit={handleSubmit}>
@@ -155,12 +150,12 @@ function ContactForm({
 							/>
 						</div>
 						{status === 'error' && (
-							<div className="text-gray-800 dark:text-gray-200 text-sm text-center">
+							<div className="text-destructive text-sm text-center">
 								{errorMessage}
 							</div>
 						)}
 						{status === 'success' && (
-							<div className="text-gray-800 dark:text-gray-200 text-sm text-center">
+							<div className="text-green-600 text-sm text-center">
 								Message sent successfully! I'll get back to you soon.
 							</div>
 						)}
@@ -173,11 +168,11 @@ function ContactForm({
 					</form>
 				</CardContent>
 			</Card>
-		</motion.div>
+		</div>
 	);
 }
 
-// Form field component
+// Form field component - Lee Robinson ultra-minimal styling
 function FormField({
 	label,
 	id,
@@ -206,14 +201,14 @@ function FormField({
 				placeholder={placeholder}
 				value={value}
 				onChange={onChange}
-				className="border-border/50 focus:border-primary focus:ring-primary"
+				className="border-0 border-b border-muted-foreground/20 rounded-none focus:border-foreground focus:ring-0 bg-transparent px-0"
 				required={required}
 			/>
 		</div>
 	);
 }
 
-// Textarea field component
+// Textarea field component - Lee Robinson ultra-minimal styling
 function TextareaField({
 	label,
 	id,
@@ -242,14 +237,14 @@ function TextareaField({
 				placeholder={placeholder}
 				value={value}
 				onChange={onChange}
-				className="border-border/50 focus:border-primary focus:ring-primary"
+				className="border-0 border-b border-muted-foreground/20 rounded-none focus:border-foreground focus:ring-0 bg-transparent px-0 resize-none"
 				required={required}
 			/>
 		</div>
 	);
 }
 
-// Submit button component
+// Submit button component - Lee Robinson ultra-minimal styling
 function SubmitButton({ children = "Send Message", isLoading = false, status = 'idle', className, ...props }: SubmitButtonProps) {
 	const getButtonText = () => {
 		if (isLoading) return "Sending...";
@@ -263,9 +258,9 @@ function SubmitButton({ children = "Send Message", isLoading = false, status = '
 			type="submit"
 			disabled={isLoading}
 			className={cn(
-				"w-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300",
-				status === 'success' && "bg-palette-carolina-blue hover:bg-palette-lapis-lazuli",
-				status === 'error' && "bg-palette-orange-pantone hover:bg-destructive",
+				"w-full bg-foreground text-background hover:bg-foreground/90 border-0 font-medium",
+				status === 'success' && "bg-green-600 hover:bg-green-700",
+				status === 'error' && "bg-destructive hover:bg-destructive/90",
 				className,
 			)}
 			size="lg"

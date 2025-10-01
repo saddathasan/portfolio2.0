@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
 
 interface SectionProps {
 	className?: string;
@@ -25,110 +24,54 @@ interface SectionContentProps {
 	maxWidth?: "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "full";
 }
 
-// Root Section Component
+// Root Section Component - minimal styling
 function Section({
 	className,
 	children,
-	animate = true,
-	delay = 0,
 	...props
-}: SectionProps) {
-	if (animate) {
-		return (
-			<motion.section
-				className={cn(
-					"relative mb-24 px-4 py-12 overflow-hidden",
-					"before:rounded-2xl before:blur-3xl before:-z-10",
-					className
-				)}
-				initial={{ opacity: 0, y: 40, scale: 0.95 }}
-				whileInView={{ opacity: 1, y: 0, scale: 1 }}
-				transition={{ 
-					duration: 0.8, 
-					delay,
-					ease: [0.25, 0.46, 0.45, 0.94]
-				}}
-				viewport={{ once: true, margin: "-100px" }}
-				{...props}>
-				{/* Decorative elements */}
-				
-				<div className="relative z-10">
-					{children}
-				</div>
-			</motion.section>
-		);
-	}
-
+}: Omit<SectionProps, 'animate' | 'delay'>) {
 	return (
 		<section
 			className={cn(
-			"relative mb-24 px-4 py-12 overflow-hidden",
-			"before:rounded-2xl before:blur-3xl before:-z-10",
-			className
-		)}
+				"py-16 px-4 max-w-4xl mx-auto",
+				className
+			)}
 			{...props}>
-			{/* Decorative elements */}
-			
-			<div className="relative z-10">
-				{children}
-			</div>
+			{children}
 		</section>
 	);
 }
 
-// Section Header
+// Section Header - minimal styling
 function SectionHeader({
 	className,
 	children,
-	centered = true,
+	centered = false,
 	size = "lg",
-	gradient = true,
 	...props
-}: SectionHeaderProps) {
+}: Omit<SectionHeaderProps, 'gradient'>) {
 	const sizeClasses = {
-		sm: "text-xl md:text-2xl",
-		md: "text-2xl md:text-3xl",
-		lg: "text-3xl md:text-4xl lg:text-5xl",
-		xl: "text-4xl md:text-5xl lg:text-6xl",
+		sm: "text-2xl md:text-3xl",
+		md: "text-3xl md:text-4xl",
+		lg: "text-4xl md:text-5xl",
+		xl: "text-5xl md:text-6xl",
 	};
 
-	const baseClasses = cn(
-		"relative font-black mb-16 leading-tight tracking-tight font-sans",
-		sizeClasses[size],
-		centered && "text-center",
-		gradient && "text-primary",
-	);
-
 	return (
-		<motion.h2
-			className={cn(baseClasses, className)}
-			initial={{ opacity: 0, y: 20, rotateX: -10 }}
-			whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-			transition={{ 
-				duration: 0.7,
-				ease: "easeOut"
-			}}
-			viewport={{ once: true }}
+		<h2
+			className={cn(
+				"font-bold mb-8 leading-tight font-sans text-foreground",
+				sizeClasses[size],
+				centered && "text-center",
+				className
+			)}
 			{...props}>
 			{children}
-			{/* Animated underline */}
-			{gradient && (
-				<motion.div
-					className={cn(
-						"absolute -bottom-4 h-1 bg-primary rounded-full",
-						centered ? "left-1/2 -translate-x-1/2" : "left-0"
-					)}
-					initial={{ width: 0 }}
-					whileInView={{ width: centered ? "60%" : "100%" }}
-					transition={{ duration: 0.8, delay: 0.3 }}
-					viewport={{ once: true }}
-				/>
-			)}
-		</motion.h2>
+		</h2>
 	);
 }
 
-// Section Content
+// Section Content - minimal styling
 function SectionContent({
 	className,
 	children,
@@ -157,25 +100,17 @@ function SectionContent({
 	};
 
 	const gridClasses = grid
-		? {
-				1: "grid-cols-1",
-				2: "grid md:grid-cols-2",
-				3: "grid md:grid-cols-2 lg:grid-cols-3",
-				4: "grid md:grid-cols-2 lg:grid-cols-4",
-			}
-		: {};
-
-	const baseClasses = cn(
-		maxWidthClasses[maxWidth],
-		"mx-auto",
-		grid && "grid",
-		grid && gridClasses[columns],
-		gapClasses[gap],
-	);
+		? `grid grid-cols-1 md:grid-cols-${columns} ${gapClasses[gap]}`
+		: "";
 
 	return (
 		<div
-			className={cn(baseClasses, className)}
+			className={cn(
+				"mx-auto",
+				maxWidthClasses[maxWidth],
+				gridClasses,
+				className
+			)}
 			{...props}>
 			{children}
 		</div>

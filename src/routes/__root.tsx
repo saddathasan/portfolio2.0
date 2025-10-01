@@ -13,12 +13,13 @@ export const Route = createRootRoute({
 					children: "Saddat Hasan",
 				}}
 				links={[
-					{ to: "/", children: "Home" },
-					{ to: "/experience", children: "Experience" },
-					{ to: "/projects", children: "Projects" },
-					{ to: "/about", children: "About" },
-					{ to: "/contact", children: "Contact" },
-				]}
+				{ to: "/", children: "Home" },
+				{ to: "/experience", children: "Experience" },
+				{ to: "/projects", children: "Projects" },
+				{ to: "/games", children: "Games" },
+				{ to: "/about", children: "About" },
+				{ to: "/contact", children: "Contact" },
+			]}
 				actions={[
 					{
 						href: "/resume.pdf",

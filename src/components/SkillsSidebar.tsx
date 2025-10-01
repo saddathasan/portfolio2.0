@@ -7,7 +7,6 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
 
 interface SkillCategory {
 	title: string;
@@ -23,7 +22,6 @@ interface SkillsSidebarProps {
 
 interface SkillCategoryCardProps {
 	category: SkillCategory;
-	index: number;
 	className?: string;
 }
 
@@ -38,12 +36,11 @@ function SkillsSidebar({
 			className={cn("w-80 hidden lg:block", className)}
 			{...props}>
 			<div className="sticky top-24 space-y-4">
-				<h3 className="text-xl font-semibold mb-4">{title}</h3>
-				{skillCategories.map((category, index) => (
+				<h3 className="text-lg font-medium mb-4">{title}</h3>
+				{skillCategories.map((category) => (
 					<SkillCategoryCard
 						key={category.title}
 						category={category}
-						index={index}
 					/>
 				))}
 			</div>
@@ -53,24 +50,16 @@ function SkillsSidebar({
 
 function SkillCategoryCard({
 	category,
-	index,
 	className,
 	...props
 }: SkillCategoryCardProps) {
 	return (
-		<motion.div
-			initial={{ opacity: 0, x: 20 }}
-			whileInView={{ opacity: 1, x: 0 }}
-			transition={{
-				duration: 0.5,
-				delay: index * 0.1,
-			}}
-			viewport={{ once: true }}
+		<div
 			className={className}
 			{...props}>
-			<Card className="mb-4">
+			<Card className="mb-4 hover:bg-muted/30 transition-colors duration-200">
 				<CardHeader className="pb-3">
-					<CardTitle className="text-base">
+					<CardTitle className="text-base font-medium">
 						{category.title}
 					</CardTitle>
 					<CardDescription className="text-sm">
@@ -90,7 +79,7 @@ function SkillCategoryCard({
 					</div>
 				</CardContent>
 			</Card>
-		</motion.div>
+		</div>
 	);
 }
 

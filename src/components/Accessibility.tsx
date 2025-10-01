@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useApp } from '@/context/AppContext';
-import { useFocusManagement } from '@/hooks/useFocusManagement';
-import { cn } from '@/utils';
+import { useApp } from "@/context/AppContext";
+import { useFocusManagement } from "@/hooks/useFocusManagement";
+import { cn } from "@/utils";
+import { AnimatePresence, motion } from "framer-motion";
+import React, { useEffect, useRef, useState } from "react";
 
 // Skip to content link
 interface SkipLinkProps {
@@ -17,7 +17,7 @@ export function SkipLink({ targetId, children, className }: SkipLinkProps) {
 		const target = document.getElementById(targetId);
 		if (target) {
 			target.focus();
-			target.scrollIntoView({ behavior: 'smooth' });
+			target.scrollIntoView({ behavior: "smooth" });
 		}
 	};
 
@@ -26,13 +26,12 @@ export function SkipLink({ targetId, children, className }: SkipLinkProps) {
 			href={`#${targetId}`}
 			onClick={handleClick}
 			className={cn(
-				'sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4',
-				'z-50 bg-primary text-primary-foreground px-4 py-2 rounded-md',
-				'font-medium transition-all duration-200',
-				'focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
-				className
-			)}
-		>
+				"sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4",
+				"z-50 bg-primary text-primary-foreground px-4 py-2 rounded-md",
+				"font-medium transition-all duration-200",
+				"focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+				className,
+			)}>
 			{children}
 		</a>
 	);
@@ -44,35 +43,33 @@ interface ScreenReaderOnlyProps {
 	className?: string;
 }
 
-export function ScreenReaderOnly({ children, className }: ScreenReaderOnlyProps) {
-	return (
-		<span className={cn('sr-only', className)}>
-			{children}
-		</span>
-	);
+export function ScreenReaderOnly({
+	children,
+	className,
+}: ScreenReaderOnlyProps) {
+	return <span className={cn("sr-only", className)}>{children}</span>;
 }
 
 // Live region for announcements
 interface LiveRegionProps {
 	message: string;
-	politeness?: 'polite' | 'assertive' | 'off';
+	politeness?: "polite" | "assertive" | "off";
 	atomic?: boolean;
-	relevant?: 'additions' | 'removals' | 'text' | 'all';
+	relevant?: "additions" | "removals" | "text" | "all";
 }
 
-export function LiveRegion({ 
-	message, 
-	politeness = 'polite', 
+export function LiveRegion({
+	message,
+	politeness = "polite",
 	atomic = true,
-	relevant = 'all'
+	relevant = "all",
 }: LiveRegionProps) {
 	return (
 		<div
 			aria-live={politeness}
 			aria-atomic={atomic}
 			aria-relevant={relevant}
-			className="sr-only"
-		>
+			className="sr-only">
 			{message}
 		</div>
 	);
@@ -80,25 +77,36 @@ export function LiveRegion({
 
 // Announcement system
 interface AnnouncementContextType {
-	announce: (message: string, politeness?: 'polite' | 'assertive') => void;
+	announce: (message: string, politeness?: "polite" | "assertive") => void;
 }
 
-const AnnouncementContext = React.createContext<AnnouncementContextType | undefined>(undefined);
+const AnnouncementContext = React.createContext<
+	AnnouncementContextType | undefined
+>(undefined);
 
-export function AnnouncementProvider({ children }: { children: React.ReactNode }) {
-	const [announcements, setAnnouncements] = useState<Array<{
-		id: string;
-		message: string;
-		politeness: 'polite' | 'assertive';
-	}>>([]);
+export function AnnouncementProvider({
+	children,
+}: {
+	children: React.ReactNode;
+}) {
+	const [announcements, setAnnouncements] = useState<
+		Array<{
+			id: string;
+			message: string;
+			politeness: "polite" | "assertive";
+		}>
+	>([]);
 
-	const announce = (message: string, politeness: 'polite' | 'assertive' = 'polite') => {
+	const announce = (
+		message: string,
+		politeness: "polite" | "assertive" = "polite",
+	) => {
 		const id = Math.random().toString(36).substr(2, 9);
-		setAnnouncements(prev => [...prev, { id, message, politeness }]);
+		setAnnouncements((prev) => [...prev, { id, message, politeness }]);
 
 		// Remove announcement after a delay
 		setTimeout(() => {
-			setAnnouncements(prev => prev.filter(a => a.id !== id));
+			setAnnouncements((prev) => prev.filter((a) => a.id !== id));
 		}, 1000);
 	};
 
@@ -119,7 +127,9 @@ export function AnnouncementProvider({ children }: { children: React.ReactNode }
 export function useAnnouncement() {
 	const context = React.useContext(AnnouncementContext);
 	if (!context) {
-		throw new Error('useAnnouncement must be used within AnnouncementProvider');
+		throw new Error(
+			"useAnnouncement must be used within AnnouncementProvider",
+		);
 	}
 	return context;
 }
@@ -133,40 +143,43 @@ interface FocusTrapProps {
 	className?: string;
 }
 
-export function FocusTrap({ 
-	children, 
-	enabled = true, 
-	restoreFocus = true, 
+export function FocusTrap({
+	children,
+	enabled = true,
+	restoreFocus = true,
 	autoFocus = true,
-	className 
+	className,
 }: FocusTrapProps) {
 	const { containerRef } = useFocusManagement({
 		restoreFocus,
 		autoFocus,
-		trapFocus: enabled
+		trapFocus: enabled,
 	});
 
 	return (
-		<div ref={containerRef as React.RefObject<HTMLDivElement>} className={className}>
+		<div
+			ref={containerRef as React.RefObject<HTMLDivElement>}
+			className={className}>
 			{children}
 		</div>
 	);
 }
 
 // Accessible button component
-interface AccessibleButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-	variant?: 'primary' | 'secondary' | 'ghost' | 'destructive';
-	size?: 'sm' | 'md' | 'lg';
+interface AccessibleButtonProps
+	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+	variant?: "primary" | "secondary" | "ghost" | "destructive";
+	size?: "sm" | "md" | "lg";
 	loading?: boolean;
 	loadingText?: string;
 	children: React.ReactNode;
 }
 
 export function AccessibleButton({
-	variant = 'primary',
-	size = 'md',
+	variant = "primary",
+	size = "md",
 	loading = false,
-	loadingText = 'Loading...',
+	loadingText = "Loading...",
 	children,
 	className,
 	disabled,
@@ -179,24 +192,27 @@ export function AccessibleButton({
 			{...props}
 			disabled={isDisabled}
 			aria-disabled={isDisabled}
-			aria-describedby={loading ? 'loading-description' : undefined}
+			aria-describedby={loading ? "loading-description" : undefined}
 			className={cn(
-				'inline-flex items-center justify-center rounded-md font-medium font-sans',
-				'transition-colors focus-visible:outline-none focus-visible:ring-2',
-				'focus-visible:ring-ring focus-visible:ring-offset-2',
-				'disabled:pointer-events-none disabled:opacity-50',
+				"inline-flex items-center justify-center rounded-md font-medium font-sans",
+				"transition-colors focus-visible:outline-none focus-visible:ring-2",
+				"focus-visible:ring-ring focus-visible:ring-offset-2",
+				"disabled:pointer-events-none disabled:opacity-50",
 				{
-					'bg-primary text-primary-foreground hover:bg-primary/90': variant === 'primary',
-					'bg-secondary text-secondary-foreground hover:bg-secondary/80': variant === 'secondary',
-					'hover:bg-accent hover:text-accent-foreground': variant === 'ghost',
-					'bg-destructive text-destructive-foreground hover:bg-destructive/90': variant === 'destructive',
-					'h-9 px-3 text-sm': size === 'sm',
-					'h-10 px-4 py-2': size === 'md',
-					'h-11 px-8 text-lg': size === 'lg'
+					"bg-primary text-primary-foreground hover:bg-primary/90":
+						variant === "primary",
+					"bg-secondary text-secondary-foreground hover:bg-secondary/80":
+						variant === "secondary",
+					"hover:bg-accent hover:text-accent-foreground":
+						variant === "ghost",
+					"bg-destructive text-destructive-foreground hover:bg-destructive/90":
+						variant === "destructive",
+					"h-9 px-3 text-sm": size === "sm",
+					"h-10 px-4 py-2": size === "md",
+					"h-11 px-8 text-lg": size === "lg",
 				},
-				className
-			)}
-		>
+				className,
+			)}>
 			{loading ? (
 				<>
 					<span className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
@@ -230,38 +246,45 @@ export function AccessibleField({
 	helpText,
 	required = false,
 	children,
-	className
+	className,
 }: AccessibleFieldProps) {
 	const helpId = helpText ? `${id}-help` : undefined;
 	const errorId = error ? `${id}-error` : undefined;
-	const describedBy = [helpId, errorId].filter(Boolean).join(' ') || undefined;
+	const describedBy =
+		[helpId, errorId].filter(Boolean).join(" ") || undefined;
 
 	return (
-		<div className={cn('space-y-2', className)}>
+		<div className={cn("space-y-2", className)}>
 			<label
 				htmlFor={id}
-				className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-			>
+				className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
 				{label}
 				{required && (
-					<span className="text-destructive ml-1" aria-label="required">
+					<span
+						className="text-destructive ml-1"
+						aria-label="required">
 						*
 					</span>
 				)}
 			</label>
 			{React.cloneElement(children, {
 				id,
-				'aria-describedby': describedBy,
-				'aria-invalid': !!error,
-				'aria-required': required
+				"aria-describedby": describedBy,
+				"aria-invalid": !!error,
+				"aria-required": required,
 			} as React.HTMLAttributes<HTMLElement>)}
 			{helpText && (
-				<p id={helpId} className="text-sm text-muted-foreground">
+				<p
+					id={helpId}
+					className="text-sm text-muted-foreground">
 					{helpText}
 				</p>
 			)}
 			{error && (
-				<p id={errorId} className="text-sm text-destructive" role="alert">
+				<p
+					id={errorId}
+					className="text-sm text-destructive"
+					role="alert">
 					{error}
 				</p>
 			)}
@@ -276,7 +299,7 @@ interface AccessibleModalProps {
 	title: string;
 	description?: string;
 	children: React.ReactNode;
-	size?: 'sm' | 'md' | 'lg' | 'xl';
+	size?: "sm" | "md" | "lg" | "xl";
 	closeOnOverlayClick?: boolean;
 	closeOnEscape?: boolean;
 }
@@ -287,9 +310,9 @@ export function AccessibleModal({
 	title,
 	description,
 	children,
-	size = 'md',
+	size = "md",
 	closeOnOverlayClick = true,
-	closeOnEscape = true
+	closeOnEscape = true,
 }: AccessibleModalProps) {
 	const modalRef = useRef<HTMLDivElement>(null);
 	const { announce } = useAnnouncement();
@@ -299,13 +322,13 @@ export function AccessibleModal({
 		if (!isOpen || !closeOnEscape) return;
 
 		const handleEscape = (e: KeyboardEvent) => {
-			if (e.key === 'Escape') {
+			if (e.key === "Escape") {
 				onClose();
 			}
 		};
 
-		document.addEventListener('keydown', handleEscape);
-		return () => document.removeEventListener('keydown', handleEscape);
+		document.addEventListener("keydown", handleEscape);
+		return () => document.removeEventListener("keydown", handleEscape);
 	}, [isOpen, closeOnEscape, onClose]);
 
 	// Announce modal state changes
@@ -313,7 +336,7 @@ export function AccessibleModal({
 		if (isOpen) {
 			announce(`${title} dialog opened`);
 		} else {
-			announce('Dialog closed');
+			announce("Dialog closed");
 		}
 	}, [isOpen, title, announce]);
 
@@ -333,8 +356,7 @@ export function AccessibleModal({
 				animate={{ opacity: 1 }}
 				exit={{ opacity: 0 }}
 				className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm"
-				onClick={handleOverlayClick}
-			>
+				onClick={handleOverlayClick}>
 				<div className="fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]">
 					<FocusTrap>
 						<motion.div
@@ -345,36 +367,37 @@ export function AccessibleModal({
 							role="dialog"
 							aria-modal="true"
 							aria-labelledby="modal-title"
-							aria-describedby={description ? 'modal-description' : undefined}
+							aria-describedby={
+								description ? "modal-description" : undefined
+							}
 							className={cn(
-								'bg-background border rounded-lg shadow-lg',
-								'focus:outline-none focus:ring-2 focus:ring-ring',
+								"bg-background border rounded-lg shadow-lg",
+								"focus:outline-none focus:ring-2 focus:ring-ring",
 								{
-									'max-w-sm': size === 'sm',
-									'max-w-md': size === 'md',
-									'max-w-lg': size === 'lg',
-									'max-w-xl': size === 'xl'
-								}
-							)}
-						>
+									"max-w-sm": size === "sm",
+									"max-w-md": size === "md",
+									"max-w-lg": size === "lg",
+									"max-w-xl": size === "xl",
+								},
+							)}>
 							<div className="p-6">
 								<div className="flex items-center justify-between mb-4">
-									<h2 id="modal-title" className="text-lg font-semibold">
+									<h2
+										id="modal-title"
+										className="text-lg font-semibold">
 										{title}
 									</h2>
 									<button
 										onClick={onClose}
 										aria-label="Close dialog"
-										className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-									>
+										className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
 										<span className="sr-only">Close</span>
 										<svg
 											width="15"
 											height="15"
 											viewBox="0 0 15 15"
 											fill="none"
-											xmlns="http://www.w3.org/2000/svg"
-										>
+											xmlns="http://www.w3.org/2000/svg">
 											<path
 												d="m11.7816 4.03157c.0824-.07446.0824-.19618 0-.27064L11.4926 3.46226c-.0824-.07446-.2186-.07446-.301 0L7.50002 7.14832 3.80844 3.46226c-.08246-.07446-.21814-.07446-.30061 0L3.21916 3.76093c-.08246.07446-.08246.19618 0 .27064L6.91074 7.50002 3.21916 11.2391c-.08246.0745-.08246.1962 0 .2707l.28867.2896c.08247.0745.21815.0745.30061 0L7.50002 8.14171l3.69158 3.68896c.0824.0745.2186.0745.301 0l.2887-.2896c.0824-.0745.0824-.1962 0-.2707L8.08929 7.50002 11.7816 4.03157Z"
 												fill="currentColor"
@@ -385,7 +408,9 @@ export function AccessibleModal({
 									</button>
 								</div>
 								{description && (
-									<p id="modal-description" className="text-sm text-muted-foreground mb-4">
+									<p
+										id="modal-description"
+										className="text-sm text-muted-foreground mb-4">
 										{description}
 									</p>
 								)}
@@ -405,8 +430,8 @@ interface AccessibleProgressProps {
 	max?: number;
 	label?: string;
 	showValue?: boolean;
-	size?: 'sm' | 'md' | 'lg';
-	variant?: 'default' | 'success' | 'warning' | 'error';
+	size?: "sm" | "md" | "lg";
+	variant?: "default" | "success" | "warning" | "error";
 	className?: string;
 }
 
@@ -415,18 +440,20 @@ export function AccessibleProgress({
 	max = 100,
 	label,
 	showValue = false,
-	size = 'md',
-	variant = 'default',
-	className
+	size = "md",
+	variant = "default",
+	className,
 }: AccessibleProgressProps) {
 	const percentage = Math.round((value / max) * 100);
 	const progressId = React.useId();
 
 	return (
-		<div className={cn('space-y-2', className)}>
+		<div className={cn("space-y-2", className)}>
 			{label && (
 				<div className="flex justify-between items-center">
-					<label htmlFor={progressId} className="text-sm font-medium">
+					<label
+						htmlFor={progressId}
+						className="text-sm font-medium">
 						{label}
 					</label>
 					{showValue && (
@@ -444,23 +471,22 @@ export function AccessibleProgress({
 				aria-valuemax={max}
 				aria-label={label || `Progress: ${percentage}%`}
 				className={cn(
-					'w-full bg-secondary rounded-full overflow-hidden',
+					"w-full bg-secondary rounded-full overflow-hidden",
 					{
-						'h-1': size === 'sm',
-						'h-2': size === 'md',
-						'h-3': size === 'lg'
-					}
-				)}
-			>
+						"h-1": size === "sm",
+						"h-2": size === "md",
+						"h-3": size === "lg",
+					},
+				)}>
 				<div
 					className={cn(
-						'h-full transition-all duration-300 ease-out',
+						"h-full transition-all duration-300 ease-out",
 						{
-							'bg-primary': variant === 'default',
-							'bg-palette-carolina-blue': variant === 'success',
-				'bg-palette-hunyadi-yellow': variant === 'warning',
-				'bg-palette-orange-pantone': variant === 'error'
-						}
+							"bg-primary": variant === "default",
+							"bg-palette-carolina-blue": variant === "success",
+							"bg-palette-hunyadi-yellow": variant === "warning",
+							"bg-palette-orange-pantone": variant === "error",
+						},
 					)}
 					style={{ width: `${percentage}%` }}
 				/>
@@ -477,7 +503,7 @@ export function HighContrastToggle() {
 	const handleToggle = () => {
 		const newValue = !highContrast;
 		setHighContrast(newValue);
-		announce(`High contrast mode ${newValue ? 'enabled' : 'disabled'}`);
+		announce(`High contrast mode ${newValue ? "enabled" : "disabled"}`);
 	};
 
 	return (
@@ -486,10 +512,9 @@ export function HighContrastToggle() {
 			size="sm"
 			onClick={handleToggle}
 			aria-pressed={highContrast}
-			aria-label={`${highContrast ? 'Disable' : 'Enable'} high contrast mode`}
-		>
+			aria-label={`${highContrast ? "Disable" : "Enable"} high contrast mode`}>
 			<span className="sr-only">
-				{highContrast ? 'Disable' : 'Enable'} high contrast mode
+				{highContrast ? "Disable" : "Enable"} high contrast mode
 			</span>
 			<svg
 				width="16"
@@ -497,10 +522,19 @@ export function HighContrastToggle() {
 				viewBox="0 0 16 16"
 				fill="none"
 				xmlns="http://www.w3.org/2000/svg"
-				aria-hidden="true"
-			>
-				<circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="2" fill="none" />
-				<path d="M8 1 A7 7 0 0 1 8 15 Z" fill="currentColor" />
+				aria-hidden="true">
+				<circle
+					cx="8"
+					cy="8"
+					r="7"
+					stroke="currentColor"
+					strokeWidth="2"
+					fill="none"
+				/>
+				<path
+					d="M8 1 A7 7 0 0 1 8 15 Z"
+					fill="currentColor"
+				/>
 			</svg>
 		</AccessibleButton>
 	);
@@ -514,7 +548,7 @@ export function ReducedMotionToggle() {
 	const handleToggle = () => {
 		const newValue = !preferences.animationsEnabled;
 		setPreferences({ animationsEnabled: newValue });
-		announce(`Animations ${newValue ? 'enabled' : 'disabled'}`);
+		announce(`Animations ${newValue ? "enabled" : "disabled"}`);
 	};
 
 	return (
@@ -523,10 +557,10 @@ export function ReducedMotionToggle() {
 			size="sm"
 			onClick={handleToggle}
 			aria-pressed={preferences.animationsEnabled}
-			aria-label={`${preferences.animationsEnabled ? 'Disable' : 'Enable'} animations`}
-		>
+			aria-label={`${preferences.animationsEnabled ? "Disable" : "Enable"} animations`}>
 			<span className="sr-only">
-				{preferences.animationsEnabled ? 'Disable' : 'Enable'} animations
+				{preferences.animationsEnabled ? "Disable" : "Enable"}{" "}
+				animations
 			</span>
 			<svg
 				width="16"
@@ -534,13 +568,14 @@ export function ReducedMotionToggle() {
 				viewBox="0 0 16 16"
 				fill="none"
 				xmlns="http://www.w3.org/2000/svg"
-				aria-hidden="true"
-			>
+				aria-hidden="true">
 				<path
 					d="M8 2L10 6H14L11 9L12 13L8 11L4 13L5 9L2 6H6L8 2Z"
 					stroke="currentColor"
 					strokeWidth="2"
-					fill={preferences.animationsEnabled ? 'currentColor' : 'none'}
+					fill={
+						preferences.animationsEnabled ? "currentColor" : "none"
+					}
 				/>
 			</svg>
 		</AccessibleButton>

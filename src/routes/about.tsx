@@ -11,7 +11,7 @@ import { ExternalLink } from "lucide-react";
 export const Route = createFileRoute("/about")({
 	component: () => (
 		<PageLayout.Container>
-			<PageLayout.Main contentWidth="reading">
+			<PageLayout.Main>
 				{/* Page Header */}
 				<PageHeader>
 					<PageHeader.Title>About {aboutInfo.name}</PageHeader.Title>

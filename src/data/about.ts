@@ -22,23 +22,23 @@ export const aboutInfo: AboutInfo = {
 	experience: "5+ Years Experience",
 	location: "Dhaka, Bangladesh",
 	bio: [
-		"I'm Saddat Hasan, a software engineer with over 5+ years of experience developing scalable full-stack applications and enterprise-grade platforms. I currently work at InfinitiBit GmbH, where I build AI-powered web solutions using React, FastAPI, PostgreSQL, and large language models integrated via OpenAI APIs.",
-		"Throughout my career, I've delivered impactful solutions for both startups and global enterprises like Dell and Microsoft. My strengths lie in clean architecture, robust API design, and integrating AI-driven automation into modern web platforms.",
-		"Outside of coding, I enjoy exploring emerging technologies, experimenting with LLM and agentic AI workflows, and contributing to open-source projects. I'm always learning, adapting, and pushing the boundaries of what technology can do.",
+		"Software engineer with 5+ years of experience building scalable full-stack applications. Currently at InfinitiBit GmbH, developing AI-powered web solutions with React, FastAPI, and PostgreSQL.",
+		"I've delivered solutions for startups and enterprises like Dell and Microsoft, focusing on clean architecture and robust API design.",
+		"Passionate about emerging technologies, LLM integration, and contributing to open-source projects.",
 	],
 	whatIDo: [
-		"Full-stack development with React, Next.js, and NestJS",
+		"Full-stack development with React and Next.js",
 		"Backend systems with Node.js and PostgreSQL",
-		"Performance optimization and scalability improvements",
-		"REST API design and authentication systems",
-		"Enterprise client solutions and agile project management",
+		"Performance optimization and scalability",
+		"REST API design and authentication",
+		"Enterprise solutions and project management",
 	],
 	education: {
 		degree: "B.Sc. in Computer Science",
 		institution: "BRAC University, Dhaka, Bangladesh",
 		period: "2016-2020",
 		description:
-			"Graduated with a comprehensive foundation in computer science fundamentals, software engineering principles, and practical programming experience.",
+			"B.Sc. in Computer Science with foundation in software engineering and programming.",
 		link: "https://bracu.ac.bd",
 	},
 };

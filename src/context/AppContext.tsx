@@ -24,6 +24,8 @@ interface AppState {
 	highContrast: boolean;
 	setHighContrast: (enabled: boolean) => void;
 
+	// Removed unused data, loading, and error states - components use static data imports
+
 	// User preferences
 	preferences: {
 		animationsEnabled: boolean;
@@ -36,9 +38,12 @@ interface AppState {
 	// Navigation state
 	currentPath: string;
 	setCurrentPath: (path: string) => void;
+	// Removed unused visitedPages and performanceMetrics - not used by any components
 
-	// Services (placeholder for future expansion)
-	services: Record<string, unknown>;
+	// Services
+	services: {
+		// Services removed for simplified implementation
+	};
 
 	// Utility functions
 	trackEvent: (
@@ -49,10 +54,7 @@ interface AppState {
 	) => void;
 	trackPageView: (path: string, title?: string) => void;
 	reportError: (error: Error, context?: Record<string, unknown>) => void;
-
-	// One-time mount flag for initial animations
-	firstMount: boolean;
-	setFirstMount: (val: boolean) => void;
+	// Removed unused refreshData function
 }
 
 // Default preferences
@@ -75,6 +77,8 @@ interface AppProviderProps {
 export function AppProvider({ children }: AppProviderProps) {
 	// Theme management
 	const { mode: theme, resolvedTheme, setMode: setTheme } = useTheme();
+
+	// Accessibility preferences
 	const prefersReducedMotion = usePrefersReducedMotion();
 	const [highContrast, setHighContrast] = useLocalStorage(
 		"high-contrast",
@@ -89,8 +93,6 @@ export function AppProvider({ children }: AppProviderProps) {
 
 	// Navigation state
 	const [currentPath, setCurrentPath] = useState(window.location.pathname);
-	// One-time mount animation guard
-	const [firstMount, setFirstMount] = useState(true);
 	// Removed unused state variables - visitedPages, data states, loading states, error states, and performanceMetrics
 
 	// Update preferences
@@ -159,6 +161,8 @@ export function AppProvider({ children }: AppProviderProps) {
 		highContrast,
 		setHighContrast,
 
+		// Removed unused data, loading, and error states
+
 		// Preferences
 		preferences,
 		setPreferences,
@@ -166,16 +170,18 @@ export function AppProvider({ children }: AppProviderProps) {
 		// Navigation
 		currentPath,
 		setCurrentPath,
+		// Removed unused visitedPages and performanceMetrics
 
-		// Services placeholder
-		services: {},
+		// Services
+		services: {
+			// Services removed for simplified implementation
+		},
 
 		// Utility functions
 		trackEvent,
 		trackPageView,
 		reportError,
-		firstMount,
-		setFirstMount,
+		// Removed unused refreshData function
 	};
 
 	return (

@@ -1,11 +1,8 @@
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
 
 interface BiographySectionProps {
 	className?: string;
 	children: React.ReactNode;
-	animate?: boolean;
-	direction?: "left" | "right";
 }
 
 interface BiographyTitleProps {
@@ -22,30 +19,12 @@ interface BiographyContentProps {
 	renderAs?: "paragraphs" | "list" | "custom";
 }
 
-// Root BiographySection Component
+// Root BiographySection Component - simplified without animations
 function BiographySection({
 	className,
 	children,
-	animate = true,
-	direction = "left",
 	...props
 }: BiographySectionProps) {
-	const animationDirection = direction === "left" ? { x: -20 } : { x: 20 };
-
-	if (animate) {
-		return (
-			<motion.div
-				className={className}
-				initial={{ opacity: 0, ...animationDirection }}
-				whileInView={{ opacity: 1, x: 0 }}
-				transition={{ duration: 0.6 }}
-				viewport={{ once: true }}
-				{...props}>
-				{children}
-			</motion.div>
-		);
-	}
-
 	return (
 		<div
 			className={className}

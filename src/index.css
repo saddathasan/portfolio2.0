@@ -9,60 +9,60 @@
 
 @layer base {
 	:root {
-		/* Light theme - refined neutral + blue accent */
-		--background: 0 0% 100%;
-		--foreground: 222 20% 15%;
-		--card: 0 0% 100%;
-		--card-foreground: 222 20% 15%;
-		--popover: 0 0% 100%;
-		--popover-foreground: 222 20% 15%;
-		--primary: 222 20% 15%;
-		--primary-foreground: 0 0% 100%;
-		--secondary: 220 13% 95%;
-		--secondary-foreground: 222 20% 15%;
-		--muted: 220 13% 95%;
-		--muted-foreground: 222 12% 46%;
-		--accent: 217 100% 50%;
-		--accent-foreground: 0 0% 100%;
-		--destructive: 0 84% 60%;
-		--destructive-foreground: 0 0% 100%;
-		--border: 220 13% 90%;
-		--input: 0 0% 100%;
-		--ring: 217 100% 50%;
-		--chart-1: 217 100% 50%;
-		--chart-2: 221 83% 53%;
-		--chart-3: 224 76% 55%;
-		--chart-4: 226 70% 58%;
-		--chart-5: 228 64% 60%;
-		--radius: 0.75rem;
+		/* Light theme - Lee Robinson minimal palette */
+		--background: 0 0% 100%; /* Pure white background */
+		--foreground: 0 0% 9%; /* Near black for text */
+		--card: 0 0% 100%; /* Pure white cards */
+		--card-foreground: 0 0% 9%; /* Near black text */
+		--popover: 0 0% 100%; /* Pure white popover */
+		--popover-foreground: 0 0% 9%; /* Near black text */
+		--primary: 0 0% 9%; /* Near black primary */
+		--primary-foreground: 0 0% 98%; /* Off-white text on primary */
+		--secondary: 0 0% 96%; /* Light gray secondary */
+		--secondary-foreground: 0 0% 9%; /* Near black text */
+		--muted: 0 0% 96%; /* Light gray muted */
+		--muted-foreground: 0 0% 45%; /* Medium gray text */
+		--accent: 0 0% 96%; /* Light gray accent */
+		--accent-foreground: 0 0% 9%; /* Near black text */
+		--destructive: 0 84% 60%; /* Minimal red for errors */
+		--destructive-foreground: 0 0% 98%; /* Off-white text */
+		--border: 0 0% 90%; /* Light gray border */
+		--input: 0 0% 100%; /* Pure white input */
+		--ring: 0 0% 9%; /* Near black focus ring */
+		--chart-1: 0 0% 9%; /* Near black */
+		--chart-2: 0 0% 45%; /* Medium gray */
+		--chart-3: 0 0% 70%; /* Light gray */
+		--chart-4: 0 0% 85%; /* Very light gray */
+		--chart-5: 0 0% 96%; /* Off-white */
+		--radius: 0.5rem; /* Reduced border radius for minimal aesthetic */
 	}
 
 	.dark {
-		/* Dark theme - neutral base + luminous blue accent */
-		--background: 222 15% 10%;
-		--foreground: 210 15% 92%;
-		--card: 222 15% 10%;
-		--card-foreground: 210 15% 92%;
-		--popover: 222 15% 10%;
-		--popover-foreground: 210 15% 92%;
-		--primary: 210 15% 92%;
-		--primary-foreground: 222 20% 15%;
-		--secondary: 222 12% 18%;
-		--secondary-foreground: 210 15% 92%;
-		--muted: 222 12% 18%;
-		--muted-foreground: 220 10% 65%;
-		--accent: 217 90% 60%;
-		--accent-foreground: 0 0% 100%;
-		--destructive: 0 62% 40%;
-		--destructive-foreground: 0 0% 100%;
-		--border: 222 12% 22%;
-		--input: 222 12% 22%;
-		--ring: 217 90% 60%;
-		--chart-1: 217 90% 60%;
-		--chart-2: 221 83% 63%;
-		--chart-3: 224 76% 67%;
-		--chart-4: 226 70% 70%;
-		--chart-5: 228 64% 74%;
+		/* Dark theme - Lee Robinson minimal palette */
+		--background: 0 0% 3%; /* Near black background */
+		--foreground: 0 0% 98%; /* Off-white text */
+		--card: 0 0% 3%; /* Near black cards */
+		--card-foreground: 0 0% 98%; /* Off-white text */
+		--popover: 0 0% 3%; /* Near black popover */
+		--popover-foreground: 0 0% 98%; /* Off-white text */
+		--primary: 0 0% 98%; /* Off-white primary */
+		--primary-foreground: 0 0% 9%; /* Near black text on primary */
+		--secondary: 0 0% 14%; /* Dark gray secondary */
+		--secondary-foreground: 0 0% 98%; /* Off-white text */
+		--muted: 0 0% 14%; /* Dark gray muted */
+		--muted-foreground: 0 0% 63%; /* Medium gray text */
+		--accent: 0 0% 14%; /* Dark gray accent */
+		--accent-foreground: 0 0% 98%; /* Off-white text */
+		--destructive: 0 62% 30%; /* Dark red for errors */
+		--destructive-foreground: 0 0% 98%; /* Off-white text */
+		--border: 0 0% 14%; /* Dark gray border */
+		--input: 0 0% 14%; /* Dark gray input */
+		--ring: 0 0% 83%; /* Light gray focus ring */
+		--chart-1: 0 0% 98%; /* Off-white */
+		--chart-2: 0 0% 63%; /* Medium gray */
+		--chart-3: 0 0% 45%; /* Darker gray */
+		--chart-4: 0 0% 25%; /* Very dark gray */
+		--chart-5: 0 0% 14%; /* Near black */
 	}
 }
 
@@ -72,7 +72,6 @@
 	}
 	body {
 		@apply bg-background text-foreground font-sans;
-		color: hsl(var(--foreground) / 0.92);
 	}
 
 	/* Simple solid background */
@@ -91,19 +90,6 @@
 
 @layer utilities {
 	/* Minimal utilities for Lee Robinson aesthetic */
-
-	/* Gradient accent text */
-	.gradient-accent {
-		background: linear-gradient(90deg,#2563eb,#6366f1);
-		-webkit-background-clip: text;
-		color: transparent;
-	}
-
-	/* Narrow prose width utility */
-	.prose-narrow {
-		max-width: 68ch;
-		margin-inline: auto;
-	}
 	
 	/* Simple hover transitions */
 	.hover-lift {
@@ -184,14 +170,6 @@
 button:focus,
 button:focus-visible {
 	outline: 4px auto -webkit-focus-ring-color;
-}
-
-/* Typography scale adjustments */
-@layer base {
-	h1 { font-weight:600; letter-spacing:-0.02em; font-size:clamp(2.25rem,6vw,3.25rem); }
-	h2 { font-weight:600; letter-spacing:-0.01em; font-size:clamp(1.75rem,4.5vw,2.25rem); }
-	h3 { font-weight:600; letter-spacing:-0.01em; font-size:clamp(1.4rem,3.2vw,1.75rem); }
-	p { line-height:1.6; }
 }
 
 @media (prefers-color-scheme: light) {

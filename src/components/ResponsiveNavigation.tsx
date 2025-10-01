@@ -41,7 +41,7 @@ export function ResponsiveNavigation({
 	return (
 		<nav
 			className={cn(
-				"border-b border-border/50 bg-background/95 backdrop-blur sticky top-0 z-50 shadow-sm",
+				"border-b bg-background/95 backdrop-blur sticky top-0 z-50",
 				className,
 			)}>
 			<div className="container mx-auto flex h-16 items-center justify-between px-4">
@@ -49,10 +49,10 @@ export function ResponsiveNavigation({
 				{brand && (
 					<div className="flex-shrink-0">
 						<Link
-							to={brand.to || "/"}
-							className="text-xl md:text-2xl font-extrabold text-primary hover:text-accent transition-all duration-300 font-sans">
-							{brand.children}
-						</Link>
+						to={brand.to || "/"}
+						className="text-xl md:text-2xl font-bold text-foreground hover:text-foreground/80 transition-colors">
+						{brand.children}
+					</Link>
 					</div>
 				)}
 
@@ -62,7 +62,7 @@ export function ResponsiveNavigation({
 						<Link
 							key={index}
 							to={link.to}
-							className="text-sm font-medium transition-all duration-300 hover:text-primary pb-4 [&.active]:text-primary [&.active]:border-b-2 [&.active]:border-primary">
+							className="text-sm font-medium transition-colors hover:text-foreground/80 [&.active]:text-foreground">
 							{link.children}
 						</Link>
 					))}
@@ -75,7 +75,6 @@ export function ResponsiveNavigation({
 							key={index}
 							variant="outline"
 							size="sm"
-							className="border-primary/20 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
 							asChild={!!action.href}>
 							{action.href ? (
 								<a
@@ -123,7 +122,7 @@ export function ResponsiveNavigation({
 								<Link
 									key={index}
 									to={link.to}
-									className="text-sm font-medium transition-all duration-300 hover:text-primary py-2 px-3 rounded-md hover:bg-primary/10 [&.active]:text-primary [&.active]:bg-primary/10"
+									className="text-sm font-medium transition-colors hover:text-foreground/80 py-2 px-3 rounded [&.active]:text-foreground"
 									onClick={() => setIsOpen(false)}>
 									{link.children}
 								</Link>
@@ -138,7 +137,7 @@ export function ResponsiveNavigation({
 										key={index}
 										variant="outline"
 										size="sm"
-										className="border-primary/20 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 w-full"
+										className="w-full"
 										asChild={!!action.href}
 										onClick={() => setIsOpen(false)}>
 										{action.href ? (
