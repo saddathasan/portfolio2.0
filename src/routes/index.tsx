@@ -1,9 +1,7 @@
 import { HeroSection } from "@/components/HeroSection";
 import { PageLayout } from "@/components/PageLayout";
-import { Section } from "@/components/Section";
-import { TechBadgeList } from "@/components/TechBadgeList";
 import { SEO } from "@/components/SEO";
-import { heroInfo, techStack } from "@/data";
+import { heroInfo } from "@/data";
 import { createFileRoute } from "@tanstack/react-router";
 
 function HomePage() {
@@ -19,10 +17,16 @@ function HomePage() {
 			<PageLayout.Container>
 				{/* Hero Section */}
 				<HeroSection>
-					<HeroSection.Title>{heroInfo.name}</HeroSection.Title>
-					<HeroSection.Subtitle>{heroInfo.title}</HeroSection.Subtitle>
-					<HeroSection.Location>{heroInfo.location}</HeroSection.Location>
-					<HeroSection.Description>
+					<HeroSection.Title className="font-clash-display">
+						{heroInfo.name}
+					</HeroSection.Title>
+					<HeroSection.Subtitle className="font-cabinet-grotesk">
+						{heroInfo.title}
+					</HeroSection.Subtitle>
+					<HeroSection.Location className="font-inter">
+						{heroInfo.location}
+					</HeroSection.Location>
+					<HeroSection.Description className="font-inter">
 						{heroInfo.description}
 					</HeroSection.Description>
 					<HeroSection.Actions>
@@ -46,7 +50,7 @@ function HomePage() {
 				</HeroSection>
 
 				{/* Tech Stack Section */}
-				<Section>
+				{/* <Section>
 					<Section.Header>Tech Stack</Section.Header>
 					<Section.Content maxWidth="4xl">
 						<div className="flex justify-center">
@@ -58,7 +62,7 @@ function HomePage() {
 								/>
 						</div>
 					</Section.Content>
-				</Section>
+				</Section> */}
 			</PageLayout.Container>
 		</>
 	);

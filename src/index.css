@@ -2,10 +2,51 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Lee Robinson minimal font imports - only Inter for system consistency */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+/* Variable Font Declarations */
+@font-face {
+	font-family: 'Inter Variable';
+	src: url('./fonts/InterVF.ttf') format('truetype-variations');
+	font-weight: 100 900;
+	font-style: normal;
+	font-display: swap;
+	font-variation-settings: 'wght' 400;
+}
 
-/* Remove all other font imports to match minimal aesthetic */
+@font-face {
+	font-family: 'Cabinet Grotesk Variable';
+	src: url('./fonts/CabinetGrotesk-Variable.ttf') format('truetype-variations');
+	font-weight: 100 900;
+	font-style: normal;
+	font-display: swap;
+	font-variation-settings: 'wght' 400;
+}
+
+@font-face {
+	font-family: 'Clash Display Variable';
+	src: url('./fonts/ClashDisplayVF.ttf') format('truetype-variations');
+	font-weight: 200 700;
+	font-style: normal;
+	font-display: swap;
+	font-variation-settings: 'wght' 400;
+}
+
+@font-face {
+	font-family: 'Panchang Variable';
+	src: url('./fonts/Panchang-Variable.ttf') format('truetype-variations');
+	font-weight: 300 800;
+	font-style: normal;
+	font-display: swap;
+	font-variation-settings: 'wght' 400;
+}
+
+@font-face {
+	font-family: 'Space Grotesk Variable';
+	src: url('./fonts/SpaceGroteskVF.ttf') format('truetype-variations');
+	font-weight: 300 700;
+	font-style: normal;
+	font-display: swap;
+	font-variation-settings: 'wght' 400;
+}
 
 @layer base {
 	:root {
@@ -34,7 +75,7 @@
 		--chart-3: 0 0% 70%; /* Light gray */
 		--chart-4: 0 0% 85%; /* Very light gray */
 		--chart-5: 0 0% 96%; /* Off-white */
-		--radius: 0.5rem; /* Reduced border radius for minimal aesthetic */
+		--radius: 0.5rem; /* Reduced border radius for minimal aesthetic */ --sidebar-background: 0 0% 98%; --sidebar-foreground: 240 5.3% 26.1%; --sidebar-primary: 240 5.9% 10%; --sidebar-primary-foreground: 0 0% 98%; --sidebar-accent: 240 4.8% 95.9%; --sidebar-accent-foreground: 240 5.9% 10%; --sidebar-border: 220 13% 91%; --sidebar-ring: 217.2 91.2% 59.8%;
 	}
 
 	.dark {
@@ -62,7 +103,7 @@
 		--chart-2: 0 0% 63%; /* Medium gray */
 		--chart-3: 0 0% 45%; /* Darker gray */
 		--chart-4: 0 0% 25%; /* Very dark gray */
-		--chart-5: 0 0% 14%; /* Near black */
+		--chart-5: 0 0% 14%; /* Near black */ --sidebar-background: 240 5.9% 10%; --sidebar-foreground: 240 4.8% 95.9%; --sidebar-primary: 224.3 76.3% 48%; --sidebar-primary-foreground: 0 0% 100%; --sidebar-accent: 240 3.7% 15.9%; --sidebar-accent-foreground: 240 4.8% 95.9%; --sidebar-border: 240 3.7% 15.9%; --sidebar-ring: 217.2 91.2% 59.8%;
 	}
 }
 
@@ -89,6 +130,158 @@
 }
 
 @layer utilities {
+	/* Variable Font Utilities */
+	
+	/* Inter Variable Font Utilities */
+	.font-inter-thin { 
+		font-family: 'Inter Variable', 'Inter', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 100; 
+	}
+	.font-inter-extralight { 
+		font-family: 'Inter Variable', 'Inter', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 200; 
+	}
+	.font-inter-light { 
+		font-family: 'Inter Variable', 'Inter', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 300; 
+	}
+	.font-inter-normal { 
+		font-family: 'Inter Variable', 'Inter', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 400; 
+	}
+	.font-inter-medium { 
+		font-family: 'Inter Variable', 'Inter', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 500; 
+	}
+	.font-inter-semibold { 
+		font-family: 'Inter Variable', 'Inter', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 600; 
+	}
+	.font-inter-bold { 
+		font-family: 'Inter Variable', 'Inter', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 700; 
+	}
+	.font-inter-extrabold { 
+		font-family: 'Inter Variable', 'Inter', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 800; 
+	}
+	.font-inter-black { 
+		font-family: 'Inter Variable', 'Inter', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 900; 
+	}
+
+	/* Cabinet Grotesk Variable Font Utilities */
+	.font-cabinet-grotesk-thin { 
+		font-family: 'Cabinet Grotesk Variable', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 100; 
+	}
+	.font-cabinet-grotesk-extralight { 
+		font-family: 'Cabinet Grotesk Variable', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 200; 
+	}
+	.font-cabinet-grotesk-light { 
+		font-family: 'Cabinet Grotesk Variable', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 300; 
+	}
+	.font-cabinet-grotesk-normal { 
+		font-family: 'Cabinet Grotesk Variable', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 400; 
+	}
+	.font-cabinet-grotesk-medium { 
+		font-family: 'Cabinet Grotesk Variable', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 500; 
+	}
+	.font-cabinet-grotesk-semibold { 
+		font-family: 'Cabinet Grotesk Variable', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 600; 
+	}
+	.font-cabinet-grotesk-bold { 
+		font-family: 'Cabinet Grotesk Variable', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 700; 
+	}
+	.font-cabinet-grotesk-extrabold { 
+		font-family: 'Cabinet Grotesk Variable', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 800; 
+	}
+	.font-cabinet-grotesk-black { 
+		font-family: 'Cabinet Grotesk Variable', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 900; 
+	}
+
+	/* Clash Display Variable Font Utilities */
+	.font-clash-display-extralight { 
+		font-family: 'Clash Display Variable', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 200; 
+	}
+	.font-clash-display-light { 
+		font-family: 'Clash Display Variable', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 300; 
+	}
+	.font-clash-display-normal { 
+		font-family: 'Clash Display Variable', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 400; 
+	}
+	.font-clash-display-medium { 
+		font-family: 'Clash Display Variable', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 500; 
+	}
+	.font-clash-display-semibold { 
+		font-family: 'Clash Display Variable', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 600; 
+	}
+	.font-clash-display-bold { 
+		font-family: 'Clash Display Variable', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 700; 
+	}
+
+	/* Panchang Variable Font Utilities */
+	.font-panchang-light { 
+		font-family: 'Panchang Variable', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 300; 
+	}
+	.font-panchang-normal { 
+		font-family: 'Panchang Variable', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 400; 
+	}
+	.font-panchang-medium { 
+		font-family: 'Panchang Variable', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 500; 
+	}
+	.font-panchang-semibold { 
+		font-family: 'Panchang Variable', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 600; 
+	}
+	.font-panchang-bold { 
+		font-family: 'Panchang Variable', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 700; 
+	}
+	.font-panchang-extrabold { 
+		font-family: 'Panchang Variable', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 800; 
+	}
+
+	/* Space Grotesk Variable Font Utilities */
+	.font-space-grotesk-light { 
+		font-family: 'Space Grotesk Variable', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 300; 
+	}
+	.font-space-grotesk-normal { 
+		font-family: 'Space Grotesk Variable', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 400; 
+	}
+	.font-space-grotesk-medium { 
+		font-family: 'Space Grotesk Variable', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 500; 
+	}
+	.font-space-grotesk-semibold { 
+		font-family: 'Space Grotesk Variable', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 600; 
+	}
+	.font-space-grotesk-bold { 
+		font-family: 'Space Grotesk Variable', system-ui, sans-serif; 
+		font-variation-settings: 'wght' 700; 
+	}
+
 	/* Minimal utilities for Lee Robinson aesthetic */
 	
 	/* Simple hover transitions */
@@ -182,5 +375,16 @@ button:focus-visible {
 	}
 	button {
 		background-color: #f9f9f9;
+	}
+}
+
+
+
+@layer base {
+  * {
+    @apply border-border;
+	}
+  body {
+    @apply bg-background text-foreground;
 	}
 }
