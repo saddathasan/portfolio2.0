@@ -21,9 +21,22 @@ export default defineConfig({
 			},
 		},
 		chunkSizeWarningLimit: 1000,
+		// Optimize for Cloudflare Pages
+		target: 'esnext',
+		minify: 'esbuild',
+		sourcemap: false,
+		cssCodeSplit: true,
+		assetsInlineLimit: 4096,
 	},
 	server: {
-		port: 5173,
+		port: 5175,
 		host: true,
+		proxy: {
+			'/api/send-email-dev': {
+				target: 'http://localhost:3001',
+				changeOrigin: true,
+				rewrite: (path) => path.replace(/^\/api\/send-email-dev/, '/api/send-email'),
+			},
+		},
 	},
 });

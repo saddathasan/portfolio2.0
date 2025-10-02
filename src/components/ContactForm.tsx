@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { toast } from "sonner";
 
 interface ContactFormProps {
 	className?: string;
@@ -71,8 +72,20 @@ function ContactForm({
 		setErrorMessage('');
 
 		try {
-			// Make API call to send email (works in both development and production)
-			const response = await fetch('/api/send-email', {
+			// Determine API endpoint based on environment
+			const isDevelopment = import.meta.env.DEV;
+			let apiEndpoint: string;
+			
+			if (isDevelopment) {
+				// Development: use local dev server
+				apiEndpoint = '/api/send-email-dev';
+			} else {
+				// Production: use Cloudflare Pages Functions
+				apiEndpoint = '/api/send-email';
+			}
+
+			// Make API call to send email
+			const response = await fetch(apiEndpoint, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -80,17 +93,23 @@ function ContactForm({
 				body: JSON.stringify(formData),
 			});
 
-			if (response.ok) {
+			const responseData = await response.json();
+
+			if (response.ok && responseData.success) {
 				setStatus('success');
 				setFormData({ name: '', email: '', subject: '', message: '' });
+				toast.success('Email sent successfully');
 			} else {
-				const errorData = await response.json();
 				setStatus('error');
-				setErrorMessage(errorData.message || 'Failed to send email');
+				const errorMsg = responseData.message || 'Failed to send email';
+				setErrorMessage(errorMsg);
+				toast.error(errorMsg);
 			}
 		} catch (error) {
 			setStatus('error');
-			setErrorMessage('Network error. Please try again.');
+			const errorMsg = 'Network error. Please try again.';
+			setErrorMessage(errorMsg);
+			toast.error(errorMsg);
 			console.error('Email sending error:', error);
 		} finally {
 			setIsLoading(false);
@@ -105,14 +124,13 @@ function ContactForm({
 			<Card className="h-full border-0 shadow-none">
 				<CardContent className="pt-0 h-full px-0">
 					<form
-						className="space-y-4 h-full flex flex-col"
-						onSubmit={handleSubmit}>
-						<div className="flex-1 space-y-4">
+						onSubmit={handleSubmit}
+						className="space-y-8">
+						<div className="space-y-6">
 							<FormField
 								label="Name"
 								id="name"
 								name="name"
-								type="text"
 								placeholder="Your name"
 								value={formData.name}
 								onChange={handleInputChange}
@@ -123,7 +141,7 @@ function ContactForm({
 								id="email"
 								name="email"
 								type="email"
-								placeholder="your.email@example.com"
+								placeholder="your@email.com"
 								value={formData.email}
 								onChange={handleInputChange}
 								required
@@ -132,7 +150,6 @@ function ContactForm({
 								label="Subject"
 								id="subject"
 								name="subject"
-								type="text"
 								placeholder="What's this about?"
 								value={formData.subject}
 								onChange={handleInputChange}
@@ -142,7 +159,7 @@ function ContactForm({
 								label="Message"
 								id="message"
 								name="message"
-								placeholder="Tell me about your project, ideas, or just say hello!"
+								placeholder="Your message..."
 								value={formData.message}
 								onChange={handleInputChange}
 								rows={6}
@@ -172,7 +189,7 @@ function ContactForm({
 	);
 }
 
-// Form field component - Lee Robinson ultra-minimal styling
+// Form field component - Modern shadcn/ui styling
 function FormField({
 	label,
 	id,
@@ -187,12 +204,13 @@ function FormField({
 }: FormFieldProps) {
 	return (
 		<div
-			className={className}
+			className={cn("space-y-1", className)}
 			{...props}>
 			<label
 				htmlFor={id}
-				className="block text-sm font-medium mb-2 text-foreground">
+				className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
 				{label}
+				{required && <span className="text-destructive ml-1">*</span>}
 			</label>
 			<Input
 				type={type}
@@ -201,14 +219,13 @@ function FormField({
 				placeholder={placeholder}
 				value={value}
 				onChange={onChange}
-				className="border-0 border-b border-muted-foreground/20 rounded-none focus:border-foreground focus:ring-0 bg-transparent px-0"
 				required={required}
 			/>
 		</div>
 	);
 }
 
-// Textarea field component - Lee Robinson ultra-minimal styling
+// Textarea field component - Modern shadcn/ui styling
 function TextareaField({
 	label,
 	id,
@@ -223,12 +240,13 @@ function TextareaField({
 }: TextareaFieldProps) {
 	return (
 		<div
-			className={className}
+			className={cn("space-y-1", className)}
 			{...props}>
 			<label
 				htmlFor={id}
-				className="block text-sm font-medium mb-2 text-foreground">
+				className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
 				{label}
+				{required && <span className="text-destructive ml-1">*</span>}
 			</label>
 			<Textarea
 				id={id}
@@ -237,14 +255,14 @@ function TextareaField({
 				placeholder={placeholder}
 				value={value}
 				onChange={onChange}
-				className="border-0 border-b border-muted-foreground/20 rounded-none focus:border-foreground focus:ring-0 bg-transparent px-0 resize-none"
+				className="resize-none"
 				required={required}
 			/>
 		</div>
 	);
 }
 
-// Submit button component - Lee Robinson ultra-minimal styling
+// Submit button componenssN Lee Robinson ultra-minimal styling
 function SubmitButton({ children = "Send Message", isLoading = false, status = 'idle', className, ...props }: SubmitButtonProps) {
 	const getButtonText = () => {
 		if (isLoading) return "Sending...";

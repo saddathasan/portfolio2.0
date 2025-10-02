@@ -1,0 +1,21 @@
+# SPA routing - redirect all non-file requests to index.html
+# This ensures React Router works correctly on Cloudflare Pages
+
+# API routes - handle with Cloudflare Functions
+/api/send-email /api/send-email 200
+/api/send-email/ /api/send-email 200
+
+# Static assets - serve directly
+/assets/* /assets/:splat 200
+/images/* /images/:splat 200
+/fonts/* /fonts/:splat 200
+/favicon.ico /favicon.ico 200
+/manifest.json /manifest.json 200
+/robots.txt /robots.txt 200
+/sitemap.xml /sitemap.xml 200
+
+# Service worker
+/sw.js /sw.js 200
+
+# SPA fallback - all other routes go to index.html for React Router
+/* /index.html 200
