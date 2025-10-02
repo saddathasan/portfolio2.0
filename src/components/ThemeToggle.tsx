@@ -1,39 +1,14 @@
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { useTheme } from "@/hooks/useTheme";
 
 export function ThemeToggle() {
-	const [isDark, setIsDark] = useState(false);
-
-	useEffect(() => {
-		const theme = localStorage.getItem("theme");
-		if (
-			theme === "dark" ||
-			(!theme &&
-				window.matchMedia("(prefers-color-scheme: dark)").matches)
-		) {
-			setIsDark(true);
-			document.documentElement.classList.add("dark");
-		}
-	}, []);
-
-	const toggleTheme = () => {
-		const newTheme = !isDark;
-		setIsDark(newTheme);
-
-		if (newTheme) {
-			document.documentElement.classList.add("dark");
-			localStorage.setItem("theme", "dark");
-		} else {
-			document.documentElement.classList.remove("dark");
-			localStorage.setItem("theme", "light");
-		}
-	};
+	const { isDark, toggle } = useTheme();
 
 	return (
 		<Button
 			variant="ghost"
 			size="icon"
-			onClick={toggleTheme}
+			onClick={toggle}
 			className="h-8 w-8 border-0 hover:bg-muted/50">
 			{isDark ? (
 				<svg

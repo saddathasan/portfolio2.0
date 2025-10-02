@@ -93,7 +93,7 @@ export function AppSidebar({ brand, links = [], className }: AppSidebarProps) {
 			<Sidebar
 				variant="sidebar"
 				className={cn(
-					"w-16 dev-border border-r border-border/40 bg-transparent shadow-none",
+					"w-16 border-r border-border/40 bg-background shadow-none",
 					"data-[side=left]:border-r data-[side=right]:border-l",
 					className,
 				)}

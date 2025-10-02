@@ -2,6 +2,7 @@ import { SkipLink } from "@/components/Accessibility";
 import { AppSidebar } from "@/components/AppSidebar";
 import { MobileNavigation } from "@/components/MobileNavigation";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { BRAND_CONFIG, NAVIGATION_LINKS, MOBILE_NAVIGATION_LINKS } from "@/constants";
 import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
@@ -9,43 +10,14 @@ export const Route = createRootRoute({
 	component: () => (
 		<>
 			<SkipLink targetId="main-content">Skip to main content</SkipLink>
-			<SidebarProvider className="">
+			<SidebarProvider className="md:pl-[3rem]">
 				{/* Desktop Sidebar - visible on desktop (≥768px), positioned on left */}
 				<AppSidebar
 					className="hidden md:flex"
-					brand={{
-						children: "sh",
-					}}
-					links={[
-						{ to: "/", children: "Home" },
-						{ to: "/experience", children: "Experience" },
-						{ to: "/projects", children: "Projects" },
-						{ to: "/games", children: "Games" },
-						{ to: "/about", children: "About" },
-						{ to: "/contact", children: "Contact" },
-						{
-							href: "/resume.pdf",
-							children: "Resume",
-							external: true,
-						},
-						{
-							href: "https://linkedin.com/in/saddathasan",
-							children: "LinkedIn",
-							external: true,
-						},
-						{
-							href: "https://github.com/saddathasan",
-							children: "GitHub",
-							external: true,
-						},
-						{
-							href: "https://x.com/saddathasan",
-							children: "X",
-							external: true,
-						},
-					]}
+					brand={BRAND_CONFIG}
+					links={NAVIGATION_LINKS}
 				/>
-				<SidebarInset className="dev-border">
+				<SidebarInset className="">
 					{/* Mobile App Bar with Hamburger Menu */}
 					<div className="sticky top-0 z-40 flex h-14 items-center justify-between border-b border-border/40 bg-background/95 backdrop-blur px-4 md:hidden">
 						<div className="flex items-center">
@@ -54,42 +26,13 @@ export const Route = createRootRoute({
 							</Link>
 						</div>
 						<MobileNavigation
-							// brand={{
-							// 	children: "sh",
-							// }}
-							links={[
-								{ to: "/", children: "Home" },
-								{ to: "/experience", children: "Experience" },
-								{ to: "/projects", children: "Projects" },
-								{ to: "/games", children: "Games" },
-								{ to: "/about", children: "About" },
-								{ to: "/contact", children: "Contact" },
-								{
-									href: "/resume.pdf",
-									children: "Resume",
-									external: true,
-								},
-								{
-									href: "https://linkedin.com/in/saddathasan",
-									children: "LinkedIn",
-									external: true,
-								},
-								{
-									href: "https://github.com/saddathasan",
-									children: "GitHub",
-									external: true,
-								},
-								{
-									href: "https://x.com/saddathasan",
-									children: "X (Twitter)",
-									external: true,
-								},
-							]}
+							// brand={BRAND_CONFIG}
+							links={MOBILE_NAVIGATION_LINKS}
 						/>
 					</div>
 					<main
 						id="main-content"
-						className=" p-4 h-full w-full"
+						className="h-full w-full"
 						tabIndex={-1}>
 						<Outlet />
 					</main>

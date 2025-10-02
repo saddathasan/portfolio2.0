@@ -78,7 +78,15 @@
 		--chart-3: 0 0% 70%; /* Light gray */
 		--chart-4: 0 0% 85%; /* Very light gray */
 		--chart-5: 0 0% 96%; /* Off-white */
-		--radius: 0.5rem; /* Reduced border radius for minimal aesthetic */ --sidebar-background: 0 0% 98%; --sidebar-foreground: 240 5.3% 26.1%; --sidebar-primary: 240 5.9% 10%; --sidebar-primary-foreground: 0 0% 98%; --sidebar-accent: 240 4.8% 95.9%; --sidebar-accent-foreground: 240 5.9% 10%; --sidebar-border: 220 13% 91%; --sidebar-ring: 217.2 91.2% 59.8%;
+		--radius: 0.5rem; /* Reduced border radius for minimal aesthetic */ 
+		--sidebar-background: 0 0% 100%; /* Match main background */
+		--sidebar-foreground: 0 0% 9%; /* Match main foreground */
+		--sidebar-primary: 0 0% 9%; /* Match main primary */
+		--sidebar-primary-foreground: 0 0% 98%; /* Match main primary-foreground */
+		--sidebar-accent: 0 0% 96%; /* Match main accent */
+		--sidebar-accent-foreground: 0 0% 9%; /* Match main accent-foreground */
+		--sidebar-border: 0 0% 90%; /* Match main border */
+		--sidebar-ring: 0 0% 9%; /* Match main ring */
 	}
 
 	.dark {
@@ -106,7 +114,15 @@
 		--chart-2: 0 0% 63%; /* Medium gray */
 		--chart-3: 0 0% 45%; /* Darker gray */
 		--chart-4: 0 0% 25%; /* Very dark gray */
-		--chart-5: 0 0% 14%; /* Near black */ --sidebar-background: 240 5.9% 10%; --sidebar-foreground: 240 4.8% 95.9%; --sidebar-primary: 224.3 76.3% 48%; --sidebar-primary-foreground: 0 0% 100%; --sidebar-accent: 240 3.7% 15.9%; --sidebar-accent-foreground: 240 4.8% 95.9%; --sidebar-border: 240 3.7% 15.9%; --sidebar-ring: 217.2 91.2% 59.8%;
+		--chart-5: 0 0% 14%; /* Near black */
+		--sidebar-background: 0 0% 3%; /* Match main background */
+		--sidebar-foreground: 0 0% 98%; /* Match main foreground */
+		--sidebar-primary: 0 0% 98%; /* Match main primary */
+		--sidebar-primary-foreground: 0 0% 9%; /* Match main primary-foreground */
+		--sidebar-accent: 0 0% 14%; /* Match main accent */
+		--sidebar-accent-foreground: 0 0% 98%; /* Match main accent-foreground */
+		--sidebar-border: 0 0% 14%; /* Match main border */
+		--sidebar-ring: 0 0% 83%; /* Match main ring */
 	}
 }
 
