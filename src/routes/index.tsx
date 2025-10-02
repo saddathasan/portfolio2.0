@@ -1,71 +1,44 @@
-import { HeroSection } from "@/components/HeroSection";
-import { PageLayout } from "@/components/PageLayout";
-import { Section } from "@/components/Section";
-import { TechBadgeList } from "@/components/TechBadgeList";
-import { SEO } from "@/components/SEO";
-import { heroInfo, techStack } from "@/data";
 import { createFileRoute } from "@tanstack/react-router";
-
-function HomePage() {
-	// Since this page uses static data imports, no loading state needed
-
-	return (
-		<>
-			<SEO
-				title="Home"
-				description={heroInfo.description}
-				type="website"
-			/>
-			<PageLayout.Container>
-				{/* Hero Section */}
-				<HeroSection>
-					<HeroSection.Title>{heroInfo.name}</HeroSection.Title>
-					<HeroSection.Subtitle>{heroInfo.title}</HeroSection.Subtitle>
-					<HeroSection.Location>{heroInfo.location}</HeroSection.Location>
-					<HeroSection.Description>
-						{heroInfo.description}
-					</HeroSection.Description>
-					<HeroSection.Actions>
-						<HeroSection.ActionButton
-							href={heroInfo.resumeUrl}
-							external>
-							View Resume
-						</HeroSection.ActionButton>
-						<HeroSection.ActionButton
-							href={heroInfo.linkedinUrl}
-							variant="outline"
-							external>
-							LinkedIn
-						</HeroSection.ActionButton>
-						<HeroSection.ActionButton
-							href="/contact"
-							variant="outline">
-							Contact
-						</HeroSection.ActionButton>
-					</HeroSection.Actions>
-				</HeroSection>
-
-				{/* Tech Stack Section */}
-				<Section>
-					<Section.Header>Tech Stack</Section.Header>
-					<Section.Content maxWidth="4xl">
-						<div className="flex justify-center">
-							<TechBadgeList
-								technologies={techStack}
-								variant="secondary"
-								size="md"
-								animated
-								hoverable
-								gap="md"
-								/>
-						</div>
-					</Section.Content>
-				</Section>
-			</PageLayout.Container>
-		</>
-	);
-}
+import { Copyright } from "../components/Copyright";
+import { HeroSection } from "../components/HeroSection";
+import { ResumeDownloadButton } from "../components/ResumeDownloadButton";
 
 export const Route = createFileRoute("/")({
-	component: HomePage,
+	component: Index,
 });
+
+function Index() {
+	return (
+		<div className="flex flex-col h-full w-full">
+			<div className="flex-1 container mx-auto flex justify-center items-center">
+				<div className="max-w-4xl mx-auto">
+					{/* Hero Section with Native Tailwind Font Weights */}
+					<section className="text-left space-y-2">
+						<HeroSection.Title className="font-clash-display text-4xl md:text-6xl tracking-tight">
+							Saddat Hasan
+						</HeroSection.Title>
+
+						<HeroSection.Subtitle className="font-cabinet-grotesk text-xl md:text-2xl font-medium text-muted-foreground">
+							Software Engineer
+						</HeroSection.Subtitle>
+
+						<HeroSection.Description className="font-cabinet-grotesk text-lg font-normal leading-relaxed text-muted-foreground max-w-2xl">
+							Crafting digital experiences with modern web
+							technologies. Passionate about clean code, intuitive
+							design, and building products that make a
+							difference.
+						</HeroSection.Description>
+					</section>
+
+					{/* Resume Download Button */}
+					<div className="md:mt-10 mt-20 flex justify-center md:justify-start">
+						<ResumeDownloadButton variant="compact" />
+					</div>
+				</div>
+			</div>
+
+			{/* Copyright Section at Bottom */}
+			<Copyright className="py-4" />
+		</div>
+	);
+}

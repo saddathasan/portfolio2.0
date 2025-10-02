@@ -1,6 +1,6 @@
 # Portfolio 2.0
 
-A modern React portfolio website built with cutting-edge technologies for optimal performance and developer experience.
+A modern React portfolio website built with cutting-edge technologies and inspired by Lee Robinson's minimal design philosophy for optimal performance and developer experience.
 
 ## 🚀 Tech Stack
 
@@ -14,12 +14,24 @@ A modern React portfolio website built with cutting-edge technologies for optima
 ## ✨ Features
 
 - ⚡ Lightning fast development with Vite
-- 🎨 Modern, responsive design with Tailwind CSS
+- 🎨 Minimal design inspired by Lee Robinson's aesthetic
 - 🔒 Type-safe routing with TanStack Router
 - 🎯 Accessible UI components with shadcn/ui
 - 📱 Mobile-first responsive design
 - 🌙 Dark/light mode support (via CSS variables)
 - 🔧 Easy customization and theming
+- 🎮 Interactive Sudoku game
+- 📊 Performance optimized with manual chunking
+
+## 🎨 Design Philosophy
+
+This portfolio follows Lee Robinson's minimal design principles:
+
+- **Typography**: Single font family (Inter) with limited weights (400, 500, 600)
+- **Color Palette**: Minimal grayscale with high contrast ratios
+- **Spacing**: Consistent spacing scale using Tailwind's system
+- **Animations**: Subtle, purposeful animations without overwhelming motion
+- **Layout**: Clean, content-focused layouts with generous whitespace
 
 ## 🏃‍♂️ Getting Started
 
@@ -65,13 +77,19 @@ npm run dev
 ```
 src/
 ├── components/          # React components
-│   └── ui/             # shadcn/ui components
+│   ├── ui/             # shadcn/ui components
+│   ├── sudokuGame/     # Sudoku game components
+│   └── ...             # Other feature components
 ├── lib/                # Utility functions
+├── hooks/              # Custom React hooks
+├── context/            # React context providers
 ├── routes/             # TanStack Router routes
 │   ├── __root.tsx      # Root route layout
 │   ├── index.tsx       # Home page
 │   ├── about.tsx       # About page
 │   ├── projects.tsx    # Projects page
+│   ├── experience.tsx  # Experience page
+│   ├── games.tsx       # Games page
 │   └── contact.tsx     # Contact page
 ├── index.css           # Global styles and Tailwind directives
 └── main.tsx            # Application entry point
@@ -89,6 +107,7 @@ src/
 
 - Edit CSS variables in `src/index.css` to customize the color scheme
 - Use Tailwind classes for component styling
+- Follow the minimal design principles for consistency
 - Add custom components to `src/components/`
 
 ### Adding shadcn/ui Components
@@ -96,6 +115,13 @@ src/
 ```bash
 npx shadcn@latest add [component-name]
 ```
+
+## 🚀 Performance Optimizations
+
+- **Bundle Splitting**: Manual chunking for vendor, router, and UI dependencies
+- **Font Loading**: Optimized Google Fonts loading with specific weights
+- **CSS Optimization**: Minimal CSS with Tailwind purging
+- **Build Configuration**: Optimized Vite configuration for production
 
 ## 🚀 Deployment
 

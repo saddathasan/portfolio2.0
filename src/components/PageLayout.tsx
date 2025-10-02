@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
 
 interface PageLayoutProps {
 	className?: string;
@@ -76,14 +75,11 @@ function PageLayout({
 
 	if (animate) {
 		return (
-			<motion.div
+			<div
 				className={containerClasses}
-				initial={{ opacity: 0, y: 20 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.6 }}
 				{...props}>
 				{children}
-			</motion.div>
+			</div>
 		);
 	}
 
@@ -154,14 +150,11 @@ function PageLayoutMain({
 
 	if (animate) {
 		return (
-			<motion.div
+			<div
 				className={containerClasses}
-				initial={{ opacity: 0, y: 20 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.6 }}
 				{...props}>
 				{children}
-			</motion.div>
+			</div>
 		);
 	}
 

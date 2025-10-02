@@ -6,7 +6,6 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
 
 interface ContactInfoProps {
 	className?: string;
@@ -33,30 +32,12 @@ interface ContactInfoItemProps {
 	additionalInfo?: string;
 }
 
-// Root ContactInfo Component
+// Root ContactInfo Component - minimal styling
 function ContactInfo({
 	className,
 	children,
-	animate = true,
-	direction = "left",
 	...props
-}: ContactInfoProps) {
-	const animationDirection = direction === "left" ? { x: -20 } : { x: 20 };
-
-	if (animate) {
-		return (
-			<motion.div
-				className={cn("space-y-6", className)}
-				initial={{ opacity: 0, ...animationDirection }}
-				whileInView={{ opacity: 1, x: 0 }}
-				transition={{ duration: 0.6 }}
-				viewport={{ once: true }}
-				{...props}>
-				{children}
-			</motion.div>
-		);
-	}
-
+}: Omit<ContactInfoProps, 'animate' | 'direction'>) {
 	return (
 		<div
 			className={cn("space-y-6", className)}
@@ -90,7 +71,7 @@ function ContactInfoCard({
 	);
 }
 
-// Individual ContactInfo Item
+// Individual ContactInfo Item - minimal styling
 function ContactInfoItem({
 	className,
 	icon,
@@ -105,11 +86,11 @@ function ContactInfoItem({
 	const itemContent = (
 		<div
 			className={cn(
-				"flex items-start gap-3 p-3 rounded-lg hover:bg-accent/10 transition-all duration-300 group cursor-pointer",
+				"flex items-start gap-3 p-3 rounded-lg hover:bg-accent/10 transition-colors duration-200",
 				className,
 			)}
 			{...props}>
-			<span className="text-xl mt-0.5 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors">
+			<span className="text-xl mt-0.5 text-muted-foreground">
 				{icon}
 			</span>
 			<div className="flex-1">
@@ -124,7 +105,7 @@ function ContactInfoItem({
 						href={link}
 						target={isExternal ? "_blank" : undefined}
 						rel={isExternal ? "noopener noreferrer" : undefined}
-						className="text-gray-700 dark:text-gray-300 hover:underline text-sm font-medium">
+						className="text-foreground hover:underline text-sm font-medium">
 						{content}
 					</a>
 				) : (

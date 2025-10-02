@@ -27,7 +27,6 @@ function GamesPage() {
 					</motion.div>
 					<Section.Header
 						size="xl"
-						gradient
 						centered
 						className="mb-2">
 						Sudoku Game

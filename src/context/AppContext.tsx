@@ -15,9 +15,10 @@ import {
 // Application state interface
 interface AppState {
 	// Theme state
-	theme: "light" | "dark" | "system";
-	resolvedTheme: "light" | "dark";
-	setTheme: (theme: "light" | "dark" | "system") => void;
+	isDark: boolean;
+	isLight: boolean;
+	setTheme: (dark: boolean) => void;
+	toggle: () => void;
 
 	// Accessibility preferences
 	prefersReducedMotion: boolean;
@@ -76,7 +77,7 @@ interface AppProviderProps {
 // Context provider component
 export function AppProvider({ children }: AppProviderProps) {
 	// Theme management
-	const { mode: theme, resolvedTheme, setMode: setTheme } = useTheme();
+	const { isDark, isLight, setTheme, toggle } = useTheme();
 
 	// Accessibility preferences
 	const prefersReducedMotion = usePrefersReducedMotion();
@@ -152,9 +153,10 @@ export function AppProvider({ children }: AppProviderProps) {
 	// Context value
 	const contextValue: AppState = {
 		// Theme
-		theme,
-		resolvedTheme,
+		isDark,
+		isLight,
 		setTheme,
+		toggle,
 
 		// Accessibility
 		prefersReducedMotion,

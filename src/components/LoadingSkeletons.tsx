@@ -10,7 +10,7 @@ function Skeleton({ className, ...props }: SkeletonProps) {
 	return (
 		<div
 			className={cn(
-				'animate-pulse rounded-md bg-muted',
+				'animate-pulse rounded bg-gray-200 dark:bg-gray-800',
 				className
 			)}
 			{...props}
@@ -206,7 +206,7 @@ function LoadingSpinner({ className, size = 'md' }: SkeletonProps & { size?: 'sm
 	return (
 		<div className={cn('flex items-center justify-center', className)}>
 			<div className={cn(
-				'animate-spin rounded-full border-2 border-muted border-t-primary',
+				'animate-spin rounded-full border-2 border-gray-200 border-t-gray-900 dark:border-gray-700 dark:border-t-gray-100',
 				sizeClasses[size]
 			)} />
 		</div>

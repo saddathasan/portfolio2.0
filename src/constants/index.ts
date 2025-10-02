@@ -218,3 +218,65 @@ export const DEV = {
 	SHOW_BREAKPOINTS: false,
 	ENABLE_DEVTOOLS: process.env.NODE_ENV === "development",
 } as const;
+
+// Navigation constants
+export const NAVIGATION_LINKS = [
+  { to: "/", children: "Home" },
+  { to: "/experience", children: "Experience" },
+  { to: "/projects", children: "Projects" },
+  { to: "/games", children: "Games" },
+  { to: "/about", children: "About" },
+  { to: "/contact", children: "Contact" },
+  {
+    href: "/resume.pdf",
+    children: "Resume",
+    external: true,
+  },
+  {
+    href: "https://linkedin.com/in/saddathasan",
+    children: "LinkedIn",
+    external: true,
+  },
+  {
+    href: "https://github.com/saddathasan",
+    children: "GitHub",
+    external: true,
+  },
+  {
+    href: "https://x.com/saddathasan",
+    children: "X",
+    external: true,
+  },
+];
+
+export const MOBILE_NAVIGATION_LINKS = [
+  { to: "/", children: "Home" },
+  { to: "/experience", children: "Experience" },
+  { to: "/projects", children: "Projects" },
+  { to: "/about", children: "About" },
+  { to: "/contact", children: "Contact" },
+  {
+    href: "/resume.pdf",
+    children: "Resume",
+    external: true,
+  },
+  {
+    href: "https://linkedin.com/in/saddathasan",
+    children: "LinkedIn",
+    external: true,
+  },
+  {
+    href: "https://github.com/saddathasan",
+    children: "GitHub",
+    external: true,
+  },
+  {
+    href: "https://x.com/saddathasan",
+    children: "X (Twitter)",
+    external: true,
+  },
+];
+
+export const BRAND_CONFIG = {
+  children: "sh",
+};

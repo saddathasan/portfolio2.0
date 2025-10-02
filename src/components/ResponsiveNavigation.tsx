@@ -29,7 +29,7 @@ interface ResponsiveNavigationCompoundProps {
 	actions?: NavigationActionItem[];
 }
 
-// Main Responsive Navigation Component
+// Main Responsive Navigation Component - Only visible on mobile (< 640px)
 export function ResponsiveNavigation({
 	className,
 	brand,
@@ -41,7 +41,7 @@ export function ResponsiveNavigation({
 	return (
 		<nav
 			className={cn(
-				"border-b border-border/50 bg-background/95 backdrop-blur sticky top-0 z-50 shadow-sm",
+				"border-b bg-background/95 backdrop-blur sticky top-0 z-50 sm:hidden",
 				className,
 			)}>
 			<div className="container mx-auto flex h-16 items-center justify-between px-4">
@@ -49,60 +49,17 @@ export function ResponsiveNavigation({
 				{brand && (
 					<div className="flex-shrink-0">
 						<Link
-							to={brand.to || "/"}
-							className="text-xl md:text-2xl font-extrabold text-primary hover:text-accent transition-all duration-300 font-cabinet">
-							{brand.children}
-						</Link>
+						to={brand.to || "/"}
+						className="text-xl font-bold text-foreground hover:text-foreground/80 transition-colors">
+						{brand.children}
+					</Link>
 					</div>
 				)}
-
-				{/* Desktop Navigation */}
-				<div className="hidden md:flex items-center gap-6 flex-1 justify-center">
-					{links.map((link, index) => (
-						<Link
-							key={index}
-							to={link.to}
-							className="text-sm font-medium transition-all duration-300 hover:text-primary pb-4 [&.active]:text-primary [&.active]:border-b-2 [&.active]:border-primary">
-							{link.children}
-						</Link>
-					))}
-				</div>
-
-				{/* Desktop Actions */}
-				<div className="hidden md:flex items-center gap-2">
-					{actions.map((action, index) => (
-						<Button
-							key={index}
-							variant="outline"
-							size="sm"
-							className="border-primary/20 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-							asChild={!!action.href}>
-							{action.href ? (
-								<a
-									href={action.href}
-									target={
-										action.external ? "_blank" : undefined
-									}
-									rel={
-										action.external
-											? "noopener noreferrer"
-											: undefined
-									}>
-									{action.children}
-								</a>
-							) : (
-								action.children
-							)}
-						</Button>
-					))}
-					<ThemeToggle />
-				</div>
 
 				{/* Mobile Menu Button */}
 				<Button
 					variant="ghost"
 					size="icon"
-					className="md:hidden"
 					onClick={() => setIsOpen(!isOpen)}
 					aria-label="Toggle menu">
 					{isOpen ? (
@@ -115,7 +72,7 @@ export function ResponsiveNavigation({
 
 			{/* Mobile Menu Dropdown */}
 			{isOpen && (
-				<div className="md:hidden border-t border-border bg-background">
+				<div className="border-t border-border bg-background">
 					<div className="container mx-auto px-4 py-4 space-y-4">
 						{/* Mobile Links */}
 						<div className="flex flex-col space-y-3">
@@ -123,7 +80,7 @@ export function ResponsiveNavigation({
 								<Link
 									key={index}
 									to={link.to}
-									className="text-sm font-medium transition-all duration-300 hover:text-primary py-2 px-3 rounded-md hover:bg-primary/10 [&.active]:text-primary [&.active]:bg-primary/10"
+									className="text-sm font-medium transition-colors hover:text-foreground/80 py-2 px-3 rounded [&.active]:text-foreground"
 									onClick={() => setIsOpen(false)}>
 									{link.children}
 								</Link>
@@ -138,7 +95,7 @@ export function ResponsiveNavigation({
 										key={index}
 										variant="outline"
 										size="sm"
-										className="border-primary/20 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 w-full"
+										className="w-full"
 										asChild={!!action.href}
 										onClick={() => setIsOpen(false)}>
 										{action.href ? (

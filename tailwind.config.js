@@ -5,11 +5,51 @@ export default {
 	theme: {
 		extend: {
 			fontFamily: {
-				sans: ['Inter', 'system-ui', 'sans-serif'],
-				spaceGrotesk: ['Space Grotesk', 'system-ui', 'sans-serif'],
-				clashDisplay: ['Clash Display', 'system-ui', 'sans-serif'],
-				panchang: ['Panchang', 'system-ui', 'sans-serif'],
-				cabinet: ['Cabinet', 'system-ui', 'sans-serif'],
+				sans: [
+					"Inter Variable",
+					"Inter",
+					"system-ui",
+					"-apple-system",
+					"BlinkMacSystemFont",
+					"Segoe UI",
+					"Roboto",
+					"sans-serif",
+				],
+				mono: [
+					"SF Mono",
+					"Monaco",
+					"Inconsolata",
+					"Roboto Mono",
+					"monospace",
+				],
+				inter: ["Inter Variable", "Inter", "system-ui", "sans-serif"],
+				"cabinet-grotesk": [
+					"Cabinet Grotesk Variable",
+					"system-ui",
+					"sans-serif",
+				],
+				"clash-display": [
+					"Clash Display Variable",
+					"system-ui",
+					"sans-serif",
+				],
+				panchang: ["Panchang Variable", "system-ui", "sans-serif"],
+				"space-grotesk": [
+					"Space Grotesk Variable",
+					"system-ui",
+					"sans-serif",
+				],
+			},
+			fontWeight: {
+				thin: "100",
+				extralight: "200",
+				light: "300",
+				normal: "400",
+				medium: "500",
+				semibold: "600",
+				bold: "700",
+				extrabold: "800",
+				black: "900",
 			},
 			borderRadius: {
 				lg: "var(--radius)",
@@ -57,16 +97,35 @@ export default {
 					4: "hsl(var(--chart-4))",
 					5: "hsl(var(--chart-5))",
 				},
-				// New color palette utilities
-				palette: {
-					"baby-powder": "#fdfffcff", /* Baby Powder */
-					"lapis-lazuli": "#235789ff", /* Lapis Lazuli */
-					"fire-engine-red": "#c1292eff", /* Fire Engine Red */
-					"school-bus-yellow": "#f38713", /* School Bus Yellow */
-					"raisin-black": "#161925ff", /* Raisin Black */
-				}
+				sidebar: {
+					DEFAULT: "hsl(var(--sidebar-background))",
+					foreground: "hsl(var(--sidebar-foreground))",
+					primary: "hsl(var(--sidebar-primary))",
+					"primary-foreground":
+						"hsl(var(--sidebar-primary-foreground))",
+					accent: "hsl(var(--sidebar-accent))",
+					"accent-foreground":
+						"hsl(var(--sidebar-accent-foreground))",
+					border: "hsl(var(--sidebar-border))",
+					ring: "hsl(var(--sidebar-ring))",
+				},
 			},
 		},
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [
+		require("tailwindcss-animate"),
+		function ({ addUtilities }) {
+			addUtilities({
+				".dev-border": {
+					border: "2px dashed #ef4444",
+				},
+				".dev-border-2": {
+					border: "1px dashed #006400",
+				},
+				".dev-border-3": {
+					border: "1px dashed #FF00BF",
+				},
+			});
+		},
+	],
 };

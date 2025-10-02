@@ -27,7 +27,7 @@ export const Route = createFileRoute("/about")({
 					gap="lg"
 					className="mb-8">
 					<ContentGrid.Item>
-						<BiographySection direction="left">
+						<BiographySection>
 							<BiographySection.Title>
 								My Story
 							</BiographySection.Title>
@@ -39,7 +39,7 @@ export const Route = createFileRoute("/about")({
 					</ContentGrid.Item>
 
 					<ContentGrid.Item>
-						<BiographySection direction="right">
+						<BiographySection>
 							<BiographySection.Title>
 								What I Do
 							</BiographySection.Title>
@@ -59,9 +59,7 @@ export const Route = createFileRoute("/about")({
 						Education
 					</Section.Header>
 					<Section.Content maxWidth="2xl">
-						<InfoCard
-							animate
-							hover>
+						<InfoCard>
 							<InfoCard.Header>
 								<InfoCard.Title
 									badge={aboutInfo.education.period}>
@@ -95,14 +93,10 @@ export const Route = createFileRoute("/about")({
 						Certifications
 					</Section.Header>
 					<Section.Content>
-						<ContentGrid
-							columns={2}
-							staggerChildren>
+						<ContentGrid columns={2}>
 							{certificates.map((cert, index) => (
-								<ContentGrid.Item
-									key={index}
-									delay={index * 0.1}>
-									<InfoCard hover>
+								<ContentGrid.Item key={index}>
+									<InfoCard>
 										<InfoCard.Header>
 											<InfoCard.Title className="text-lg leading-tight">
 												{cert.name}

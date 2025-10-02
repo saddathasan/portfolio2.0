@@ -1,12 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Link } from "@tanstack/react-router";
-import { motion } from "framer-motion";
 
 interface FooterCallToActionProps {
 	className?: string;
 	children: React.ReactNode;
-	animate?: boolean;
 }
 
 interface FooterTitleProps {
@@ -43,33 +41,12 @@ interface FooterActionProps {
 	external?: boolean;
 }
 
-// Root FooterCallToAction Component
+// Root FooterCallToAction Component - simplified without animations
 function FooterCallToAction({
 	className,
 	children,
-	animate = true,
 	...props
 }: FooterCallToActionProps) {
-	if (animate) {
-		return (
-			<motion.footer
-				className={cn(
-					"border-t bg-background/95 backdrop-blur sticky bottom-0 z-40",
-					className,
-				)}
-				initial={{ opacity: 0, y: 10 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.4 }}
-				{...props}>
-				<div className="container mx-auto px-4 py-3 md:py-0">
-					<div className="flex flex-col md:flex-row md:items-center md:justify-between md:h-16 gap-3 md:gap-0">
-						{children}
-					</div>
-				</div>
-			</motion.footer>
-		);
-	}
-
 	return (
 		<footer
 			className={cn(

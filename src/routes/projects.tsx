@@ -17,12 +17,9 @@ export const Route = createFileRoute("/projects")({
 				</PageHeader>
 
 				<div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-8 mb-16">
-					{projects.map((project, index) => (
+					{projects.map((project) => (
 						<div key={project.id}>
-							<ProjectCard
-								project={project}
-								index={index}
-							/>
+							<ProjectCard project={project} />
 						</div>
 					))}
 				</div>

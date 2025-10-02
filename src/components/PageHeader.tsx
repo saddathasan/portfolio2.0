@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
 
 interface PageHeaderProps {
 	className?: string;
@@ -18,17 +17,14 @@ interface PageHeaderDescriptionProps {
 	maxWidth?: "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl";
 }
 
-// Root compound component
+// Root compound component - minimal styling
 function PageHeader({ className, children, ...props }: PageHeaderProps) {
 	return (
-		<motion.div
+		<div
 			className={cn("text-center mb-12", className)}
-			initial={{ opacity: 0, y: 20 }}
-			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.6 }}
 			{...props}>
 			{children}
-		</motion.div>
+		</div>
 	);
 }
 
@@ -39,7 +35,7 @@ function PageHeaderTitle({
 	gradient = true,
 	...props
 }: PageHeaderTitleProps) {
-	const baseClasses = "text-3xl md:text-4xl font-bold mb-4 font-spaceGrotesk";
+	const baseClasses = "text-3xl md:text-4xl font-bold mb-4 font-sans";
 	const gradientClasses = gradient
 		? "text-primary"
 		: "";

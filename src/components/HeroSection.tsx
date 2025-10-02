@@ -1,7 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Link } from "@tanstack/react-router";
-import { motion } from "framer-motion";
 
 interface HeroSectionProps {
 	className?: string;
@@ -43,104 +41,68 @@ interface HeroActionButtonProps {
 	className?: string;
 }
 
-// Root Hero Section component
+// Root Hero Section component - Lee Robinson ultra-minimal styling
 function HeroSection({ className, children, ...props }: HeroSectionProps) {
 	return (
-		<motion.section
+		<section
 			className={cn(
-				"relative text-center mb-24 px-4 py-16 overflow-hidden",
+				"py-16 px-6 text-left max-w-4xl mx-auto",
 				className,
 			)}
-			initial={{ opacity: 0, y: 30 }}
-			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.8, ease: "easeOut" }}
 			{...props}>
-			<div className="relative z-10">{children}</div>
-		</motion.section>
+			{children}
+		</section>
 	);
 }
 
-// Hero title component
+// Hero title component - Lee Robinson ultra-minimal styling
 function HeroTitle({ children, className, ...props }: HeroTitleProps) {
 	return (
-		<motion.h1
+		<h1
 			className={cn(
-				"text-5xl md:text-7xl lg:text-8xl font-medium mb-6 font-clashDisplay",
-				"text-primary",
-				"leading-tight tracking-tight",
+				"text-3xl md:text-4xl font-medium mb-4 text-foreground",
 				className,
 			)}
-			initial={{ opacity: 0, y: 30, scale: 0.9 }}
-			animate={{ opacity: 1, y: 0, scale: 1 }}
-			transition={{
-				duration: 0.8,
-				delay: 0.2,
-				ease: [0.25, 0.46, 0.45, 0.94],
-			}}
 			{...props}>
 			{children}
-		</motion.h1>
+		</h1>
 	);
 }
 
-// Hero subtitle component
+// Hero subtitle component - Lee Robinson ultra-minimal styling
 function HeroSubtitle({
 	children,
-	gradient = true,
 	className,
 	...props
-}: HeroSubtitleProps) {
-	const gradientClasses = gradient
-		? "text-primary"
-		: "text-gray-700 dark:text-gray-300";
-
+}: Omit<HeroSubtitleProps, 'gradient'>) {
 	return (
-		<motion.h2
+		<p
 			className={cn(
-				"text-2xl md:text-4xl lg:text-5xl font-light mb-6 font-spaceGrotesk",
-				"relative inline-block",
-				gradientClasses,
+				"text-base text-muted-foreground mb-6",
 				className,
 			)}
-			initial={{ opacity: 0, y: 20, rotateX: -15 }}
-			animate={{ opacity: 1, y: 0, rotateX: 0 }}
-			transition={{
-				duration: 0.7,
-				delay: 0.4,
-				ease: "easeOut",
-			}}
 			{...props}>
 			{children}
-			{/* Animated underline */}
-			<motion.div
-				className="absolute -bottom-2 left-0 h-1 bg-primary rounded-full"
-				initial={{ width: 0 }}
-				animate={{ width: "100%" }}
-				transition={{ duration: 0.8, delay: 0.8 }}
-			/>
-		</motion.h2>
+		</p>
 	);
 }
 
-// Hero location component
+// Hero location component - minimal styling
 function HeroLocation({ children, className, ...props }: HeroLocationProps) {
 	return (
-		<motion.p
-			className={cn("text-lg text-muted-foreground mb-2", className)}
-			initial={{ opacity: 0, y: 20 }}
-			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.6, delay: 0.3 }}
+		<p
+			className={cn("text-sm text-muted-foreground mb-2", className)}
 			{...props}>
 			{children}
-		</motion.p>
+		</p>
 	);
 }
 
-// Hero description component
+// Hero description component - minimal styling
 function HeroDescription({
 	children,
 	className,
-	maxWidth = "3xl",
+	maxWidth = "2xl",
 	...props
 }: HeroDescriptionProps) {
 	const maxWidthClasses = {
@@ -154,36 +116,30 @@ function HeroDescription({
 	};
 
 	return (
-		<motion.p
+		<p
 			className={cn(
-				"text-xl md:text-2xl text-muted-foreground mb-8 mx-auto font-cabinet",
+				"text-muted-foreground mb-8 leading-relaxed",
 				maxWidthClasses[maxWidth],
 				className,
 			)}
-			initial={{ opacity: 0, y: 20 }}
-			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.6, delay: 0.4 }}
 			{...props}>
 			{children}
-		</motion.p>
+		</p>
 	);
 }
 
-// Hero actions container
+// Hero actions component - minimal styling
 function HeroActions({ children, className, ...props }: HeroActionsProps) {
 	return (
-		<motion.div
-			className={cn("flex flex-wrap gap-4 justify-center", className)}
-			initial={{ opacity: 0, y: 20 }}
-			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.6, delay: 0.5 }}
+		<div
+			className={cn("flex flex-col sm:flex-row gap-4", className)}
 			{...props}>
 			{children}
-		</motion.div>
+		</div>
 	);
 }
 
-// Hero action button component
+// Hero action button - minimal styling
 function HeroActionButton({
 	href,
 	children,
@@ -192,44 +148,19 @@ function HeroActionButton({
 	className,
 	...props
 }: HeroActionButtonProps) {
-	const buttonClasses = {
-		default:
-			"bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300",
-		outline:
-			"border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all duration-300",
-	};
-
-	if (external) {
-		return (
-			<Button
-				size="lg"
-				variant={variant}
-				className={cn(buttonClasses[variant], className)}
-				asChild
-				{...props}>
-				<a
-					href={href}
-					target="_blank"
-					rel="noopener noreferrer">
-					{children}
-				</a>
-			</Button>
-		);
-	}
-
 	return (
 		<Button
-			size="lg"
-			variant={variant}
-			className={cn(buttonClasses[variant], className)}
 			asChild
+			variant={variant}
+			size="default"
+			className={cn("", className)}
 			{...props}>
-			<Link
-				to={
-					href as "/contact" | "/experience" | "/projects" | "/about"
-				}>
+			<a
+				href={href}
+				target={external ? "_blank" : undefined}
+				rel={external ? "noopener noreferrer" : undefined}>
 				{children}
-			</Link>
+			</a>
 		</Button>
 	);
 }

@@ -17,14 +17,14 @@ export const contactInfo: ContactInfo[] = [
 	{
 		icon: "📧",
 		title: "Email",
-		description: "Drop me a line anytime",
+		description: "Send me a message",
 		content: "saddathasan94@gmail.com",
 		link: "mailto:saddathasan94@gmail.com",
 	},
 	{
 		icon: "💼",
 		title: "LinkedIn",
-		description: "Let's connect professionally",
+		description: "Connect professionally",
 		content: "linkedin.com/in/saddathasan",
 		link: "https://linkedin.com/in/saddathasan",
 		isExternal: true,
@@ -32,7 +32,7 @@ export const contactInfo: ContactInfo[] = [
 	{
 		icon: "🐱",
 		title: "GitHub",
-		description: "Check out my repositories",
+		description: "View my code",
 		content: "github.com/saddathasan",
 		link: "https://github.com/saddathasan",
 		isExternal: true,
@@ -54,6 +54,6 @@ export const currentPosition: CurrentPosition = {
 export const contactPageInfo = {
 	title: "Get In Touch",
 	description:
-		"I'm always interested in new opportunities and collaborations. Let's discuss how we can work together!",
-	responseTime: "I'll get back to you within 24 hours",
+		"Interested in new opportunities and collaborations. Let's discuss how we can work together.",
+	responseTime: "I'll respond within 24 hours",
 };

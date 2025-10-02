@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import type { Experience } from "@/types";
-import { motion } from "framer-motion";
 
 interface ExperienceTimelineProps {
 	experiences: Experience[];
@@ -40,7 +39,7 @@ interface SubExperienceListProps {
 	className?: string;
 }
 
-// Root Timeline component
+// Root Timeline component - Lee Robinson ultra-minimal styling
 function ExperienceTimeline({
 	experiences,
 	className,
@@ -51,12 +50,10 @@ function ExperienceTimeline({
 			className={cn("flex-1 max-w-4xl", className)}
 			{...props}>
 			<div className="relative">
-				<TimelineLine />
-				{experiences.map((exp, index) => (
+				{experiences.map((exp) => (
 					<ExperienceItem
 						key={exp.id}
 						experience={exp}
-						index={index}
 					/>
 				))}
 			</div>
@@ -90,52 +87,42 @@ function TimelineDot({ className, ...props }: TimelineDotProps) {
 	);
 }
 
-// Individual experience item
+// Individual experience item - Lee Robinson ultra-minimal styling
 function ExperienceItem({
 	experience,
-	index,
 	className,
 	...props
-}: ExperienceItemProps) {
+}: Omit<ExperienceItemProps, 'index'>) {
 	return (
-		<motion.div
-			initial={{ opacity: 0, x: -20 }}
-			whileInView={{ opacity: 1, x: 0 }}
-			transition={{
-				duration: 0.5,
-				delay: index * 0.1,
-			}}
-			viewport={{ once: true }}
-			className={cn("relative mb-12 last:mb-0", className)}
+		<div
+			className={cn("relative mb-8 last:mb-0", className)}
 			{...props}>
-			<TimelineDot />
-
 			{/* Content Card */}
-			<div className="ml-8 md:ml-16">
-				<Card className="hover:shadow-lg transition-shadow duration-300">
-					<CardHeader>
+			<div>
+				<Card className="border-0 shadow-none hover:bg-muted/30 transition-colors duration-200">
+					<CardHeader className="pb-3">
 						<div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2">
 							<div className="flex-1">
-								<CardTitle className="text-lg md:text-xl font-bold text-gray-900 dark:text-gray-100">
+								<CardTitle className="text-base font-medium text-foreground">
 									{experience.role}
 								</CardTitle>
-								<CardDescription className="text-base md:text-lg font-semibold text-foreground">
+								<CardDescription className="text-sm font-normal text-muted-foreground">
 									{experience.company}
 								</CardDescription>
 							</div>
 							<div className="md:text-right">
 								<Badge
 									variant="secondary"
-									className="mb-2">
+									className="mb-1 text-xs">
 									{experience.period}
 								</Badge>
-								<div className="text-sm text-muted-foreground">
+								<div className="text-xs text-muted-foreground">
 									{experience.type}
 								</div>
 							</div>
 						</div>
 					</CardHeader>
-					<CardContent>
+					<CardContent className="pt-0">
 						<AchievementList
 							achievements={experience.achievements}
 						/>
@@ -148,23 +135,22 @@ function ExperienceItem({
 
 						{/* Technologies */}
 						<div>
-							<h4 className="font-semibold mb-3 text-foreground">
+							<h4 className="font-medium mb-3 text-foreground text-sm">
 								Technologies Used
 							</h4>
 							<TechBadgeList
 								technologies={experience.technologies}
 								variant="secondary"
-								hoverable
 							/>
 						</div>
 					</CardContent>
 				</Card>
 			</div>
-		</motion.div>
+		</div>
 	);
 }
 
-// Achievement list component
+// Achievement list component - Lee Robinson ultra-minimal styling
 function AchievementList({
 	achievements,
 	className,
@@ -174,7 +160,7 @@ function AchievementList({
 		<div
 			className={cn("mb-4", className)}
 			{...props}>
-			<h4 className="font-semibold mb-3 text-foreground">
+			<h4 className="font-medium mb-3 text-foreground text-sm">
 				Key Achievements
 			</h4>
 			<ul className="space-y-2">
@@ -182,7 +168,7 @@ function AchievementList({
 					<li
 						key={i}
 						className="flex items-start gap-2">
-						<span className="text-gray-600 dark:text-gray-400 mt-1.5 text-xs">●</span>
+						<span className="text-muted-foreground mt-1.5 text-xs">●</span>
 						<span className="text-sm text-muted-foreground">
 							{achievement}
 						</span>
@@ -193,7 +179,7 @@ function AchievementList({
 	);
 }
 
-// Sub-experience list component
+// Sub-experience list component - Lee Robinson ultra-minimal styling
 function SubExperienceList({
 	subExperiences,
 	className,
@@ -205,7 +191,7 @@ function SubExperienceList({
 		<div
 			className={cn("mb-4", className)}
 			{...props}>
-			<h4 className="font-semibold mb-3 text-foreground">
+			<h4 className="font-medium mb-3 text-foreground text-sm">
 				Project Details
 			</h4>
 			<div className="space-y-4">
@@ -214,7 +200,7 @@ function SubExperienceList({
 						key={i}
 						className="border-l-2 border-muted pl-4">
 						<div className="flex justify-between items-start mb-2">
-							<h5 className="font-medium text-foreground">
+							<h5 className="font-medium text-foreground text-sm">
 								{subExp.company}
 							</h5>
 							<Badge
@@ -228,7 +214,7 @@ function SubExperienceList({
 								<li
 									key={j}
 									className="flex items-start gap-2">
-									<span className="text-gray-600 dark:text-gray-400 mt-1.5 text-xs">
+									<span className="text-muted-foreground mt-1.5 text-xs">
 										●
 									</span>
 									<span className="text-sm text-muted-foreground">

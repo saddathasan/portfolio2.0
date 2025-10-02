@@ -8,14 +8,10 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
 
 interface InfoCardProps {
 	className?: string;
 	children: React.ReactNode;
-	animate?: boolean;
-	delay?: number;
-	hover?: boolean;
 }
 
 interface InfoCardHeaderProps {
@@ -61,36 +57,15 @@ interface InfoCardActionProps {
 	fullWidth?: boolean;
 }
 
-// Root InfoCard Component
+// Root InfoCard Component - simplified without animations
 function InfoCard({
 	className,
 	children,
-	animate = true,
-	delay = 0,
-	hover = true,
 	...props
 }: InfoCardProps) {
-	const cardClasses = cn(
-		hover && "hover:shadow-lg transition-shadow duration-300",
-		className,
-	);
-
-	if (animate) {
-		return (
-			<motion.div
-				initial={{ opacity: 0, y: 20 }}
-				whileInView={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.4, delay }}
-				viewport={{ once: true }}
-				{...props}>
-				<Card className={cardClasses}>{children}</Card>
-			</motion.div>
-		);
-	}
-
 	return (
 		<Card
-			className={cardClasses}
+			className={cn("transition-colors hover:bg-accent/5", className)}
 			{...props}>
 			{children}
 		</Card>

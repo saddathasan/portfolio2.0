@@ -24,7 +24,7 @@ export const Route = createFileRoute("/contact")({
 					gap="lg">
 					{/* Contact Information */}
 					<ContentGrid.Item>
-						<ContactInfo direction="left">
+						<ContactInfo>
 							<h2 className="text-2xl font-semibold mb-6">
 								Let's Connect
 							</h2>

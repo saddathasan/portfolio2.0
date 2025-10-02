@@ -1,30 +1,23 @@
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
 
 interface ContentGridProps {
 	className?: string;
 	children: React.ReactNode;
 	columns?: 1 | 2 | 3 | 4;
 	gap?: "sm" | "md" | "lg" | "xl";
-	animate?: boolean;
-	staggerChildren?: boolean;
 }
 
 interface ContentGridItemProps {
 	className?: string;
 	children: React.ReactNode;
-	animate?: boolean;
-	delay?: number;
 }
 
-// Root ContentGrid Component
+// Root ContentGrid Component - simplified without animations
 function ContentGrid({
 	className,
 	children,
 	columns = 2,
 	gap = "lg",
-	animate = true,
-	staggerChildren = true,
 	...props
 }: ContentGridProps) {
 	const columnClasses = {
@@ -48,26 +41,6 @@ function ContentGrid({
 		className,
 	);
 
-	if (animate && staggerChildren) {
-		return (
-			<motion.div
-				className={gridClasses}
-				variants={{
-					visible: {
-						transition: {
-							staggerChildren: 0.1,
-						},
-					},
-				}}
-				initial="hidden"
-				whileInView="visible"
-				viewport={{ once: true }}
-				{...props}>
-				{children}
-			</motion.div>
-		);
-	}
-
 	return (
 		<div
 			className={gridClasses}
@@ -77,35 +50,12 @@ function ContentGrid({
 	);
 }
 
-// ContentGrid Item
+// ContentGrid Item - simplified without animations
 function ContentGridItem({
 	className,
 	children,
-	animate = true,
-	delay = 0,
 	...props
 }: ContentGridItemProps) {
-	if (animate) {
-		return (
-			<motion.div
-				className={className}
-				variants={{
-					hidden: { opacity: 0, y: 20 },
-					visible: {
-						opacity: 1,
-						y: 0,
-						transition: {
-							duration: 0.4,
-							delay,
-						},
-					},
-				}}
-				{...props}>
-				{children}
-			</motion.div>
-		);
-	}
-
 	return (
 		<div
 			className={className}
