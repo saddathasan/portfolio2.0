@@ -2,7 +2,7 @@ import { SkipLink } from "@/components/Accessibility";
 import { AppSidebar } from "@/components/AppSidebar";
 import { MobileNavigation } from "@/components/MobileNavigation";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { createRootRoute, Outlet } from "@tanstack/react-router";
+import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
 export const Route = createRootRoute({
@@ -49,12 +49,14 @@ export const Route = createRootRoute({
 					{/* Mobile App Bar with Hamburger Menu */}
 					<div className="sticky top-0 z-40 flex h-14 items-center justify-between border-b border-border/40 bg-background/95 backdrop-blur px-4 md:hidden">
 						<div className="flex items-center">
-							<span className="text-xl font-clash-display text-foreground">sh</span>
+							<Link to="/" className="text-xl font-clash-display text-foreground hover:opacity-80 transition-opacity">
+								sh
+							</Link>
 						</div>
 						<MobileNavigation
-							brand={{
-								children: "Saddat Hasan",
-							}}
+							// brand={{
+							// 	children: "sh",
+							// }}
 							links={[
 								{ to: "/", children: "Home" },
 								{ to: "/experience", children: "Experience" },

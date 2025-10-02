@@ -97,34 +97,45 @@ export function MobileNavigation({
 							variant="ghost"
 							size="icon"
 							className="h-10 w-10"
-							aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+							aria-label="Open navigation menu"
 						>
-							{isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+							<Menu className="h-6 w-6" />
 						</Button>
 					</SheetTrigger>
 				<SheetContent 
 					side="right" 
-					className="w-16 p-0 bg-background border-l border-border/40"
+					className="w-16 p-0 bg-background border-l border-border/40 [&>button:first-of-type]:!hidden"
 				>
 					<div className="flex flex-col h-full items-center">
-						{/* Header with brand */}
-						<div className="flex items-center justify-center h-14 w-full border-b border-border/40">
-							{brand && (
-								<Tooltip>
-									<TooltipTrigger asChild>
-										<Link
-											to={brand.to || "/"}
-											className="text-3xl font-uncut-sans text-foreground sidebar-icon-hover"
-											onClick={() => setIsOpen(false)}
-										>
-											{brand.children}
-										</Link>
-									</TooltipTrigger>
-									<TooltipContent side="left">
-										<p>{brand.children}</p>
-									</TooltipContent>
-								</Tooltip>
-							)}
+						{/* Header with brand and close button */}
+						<div className="flex items-center justify-between h-14 w-full px-2 border-b border-border/40">
+							<div className="flex-1">
+								{brand && (
+									<Tooltip>
+										<TooltipTrigger asChild>
+											<Link
+												to={brand.to || "/"}
+												className="text-3xl font-clash-display text-foreground sidebar-icon-hover"
+												onClick={() => setIsOpen(false)}
+											>
+												{brand.children}
+											</Link>
+										</TooltipTrigger>
+										<TooltipContent side="left">
+											<p>{brand.children}</p>
+										</TooltipContent>
+									</Tooltip>
+								)}
+							</div>
+							<Button
+								variant="ghost"
+								size="icon"
+								onClick={() => setIsOpen(false)}
+								className="h-8 w-8 flex-shrink-0"
+								aria-label="Close navigation menu"
+							>
+								<X className="h-5 w-5" />
+							</Button>
 						</div>
 
 						{/* Navigation Links - Icon Only */}
