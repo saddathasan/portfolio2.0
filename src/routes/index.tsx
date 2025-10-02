@@ -7,7 +7,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
 	return (
-		<div className="min-h-screen">
+		<div className="">
 			<div className="container mx-auto px-4 py-16">
 				<div className="max-w-4xl mx-auto space-y-16">
 					{/* Hero Section with Native Tailwind Font Weights */}

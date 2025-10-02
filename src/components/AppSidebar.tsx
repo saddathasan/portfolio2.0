@@ -93,10 +93,16 @@ export function AppSidebar({ brand, links = [], className }: AppSidebarProps) {
 			<Sidebar
 				variant="sidebar"
 				className={cn(
-					"w-16 border-r border-border/40 bg-transparent shadow-none",
+					"w-16 dev-border border-r border-border/40 bg-transparent shadow-none",
 					"data-[side=left]:border-r data-[side=right]:border-l",
 					className,
-				)}>
+				)}
+				style={
+					{
+						"--sidebar-width": "1rem",
+						"--sidebar-width-icon": "1rem",
+					} as React.CSSProperties
+				}>
 				<SidebarHeader className="">
 					<div className="flex items-center justify-center h-full w-full">
 						{brand && (
@@ -115,12 +121,12 @@ export function AppSidebar({ brand, links = [], className }: AppSidebarProps) {
 						)}
 					</div>
 				</SidebarHeader>
-				<SidebarContent className="flex flex-col h-full  justify-center items-center w-full">
-					<SidebarMenu className=" flex flex-col items-center justify-center gap-7">
+				<SidebarContent className="flex flex-col h-full justify-center items-center w-full">
+					<SidebarMenu className="flex flex-col items-center justify-center gap-7">
 						{links.map((link, index) => (
 							<SidebarMenuItem
 								key={index}
-								className=" items-center flex justify-center size-7">
+								className="items-center flex justify-center size-7">
 								<Tooltip>
 									<TooltipTrigger asChild>
 										<SidebarMenuButton
@@ -159,7 +165,7 @@ export function AppSidebar({ brand, links = [], className }: AppSidebarProps) {
 						))}
 					</SidebarMenu>
 				</SidebarContent>
-				<SidebarFooter className=" flex items-center justify-center">
+				<SidebarFooter className="flex items-center justify-center">
 					<ThemeToggle />
 				</SidebarFooter>
 			</Sidebar>

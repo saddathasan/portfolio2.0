@@ -9,7 +9,7 @@ export const Route = createRootRoute({
 	component: () => (
 		<>
 			<SkipLink targetId="main-content">Skip to main content</SkipLink>
-			<SidebarProvider>
+			<SidebarProvider className="">
 				{/* Desktop Sidebar - visible on desktop (≥768px), positioned on left */}
 				<AppSidebar
 					className="hidden md:flex"
@@ -45,11 +45,11 @@ export const Route = createRootRoute({
 						},
 					]}
 				/>
-				<SidebarInset className="md:ml-16">
+				<SidebarInset className="dev-border">
 					{/* Mobile App Bar with Hamburger Menu */}
 					<div className="sticky top-0 z-40 flex h-14 items-center justify-between border-b border-border/40 bg-background/95 backdrop-blur px-4 md:hidden">
 						<div className="flex items-center">
-							<span className="text-xl font-clash-display text-foreground">Saddat Hasan</span>
+							<span className="text-xl font-clash-display text-foreground">sh</span>
 						</div>
 						<MobileNavigation
 							brand={{
@@ -87,7 +87,7 @@ export const Route = createRootRoute({
 					</div>
 					<main
 						id="main-content"
-						className="min-h-[calc(100vh-8rem)] pb-4 md:min-h-[calc(100vh-4rem)]"
+						className=" p-4 h-full w-full"
 						tabIndex={-1}>
 						<Outlet />
 					</main>
