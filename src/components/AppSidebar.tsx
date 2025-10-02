@@ -1,28 +1,40 @@
+import {
+	AboutIcon,
+	ContactIcon,
+	ExperienceIcon,
+	GamesIcon,
+	GithubIcon,
+	HomeIcon,
+	LinkedinIcon,
+	ProjectsIcon,
+	ResumeIcon,
+	TwitterIcon,
+} from "@/components/icons/CustomIcons";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { Button } from "@/components/ui/button";
 import {
 	Sidebar,
 	SidebarContent,
+	SidebarFooter,
 	SidebarHeader,
 	SidebarMenu,
 	SidebarMenuButton,
 	SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { Link } from "@tanstack/react-router";
-import { Home, User, Briefcase, FolderOpen, Gamepad2, Mail, FileText } from "lucide-react";
 
 interface NavigationLinkItem {
-	to: string;
-	children: React.ReactNode;
-	icon?: React.ReactNode;
-}
-
-interface NavigationActionItem {
+	to?: string;
 	href?: string;
 	children: React.ReactNode;
-	external?: boolean;
 	icon?: React.ReactNode;
+	external?: boolean;
 }
 
 interface AppSidebarProps {
@@ -31,104 +43,126 @@ interface AppSidebarProps {
 		to?: string;
 	};
 	links?: NavigationLinkItem[];
-	actions?: NavigationActionItem[];
 	className?: string;
 }
 
-// Icon mapping for navigation items
-const getIconForRoute = (to: string) => {
+// Icon mapping for navigation items with minimum 36px size
+const getIconForRoute = (link: NavigationLinkItem) => {
+	const iconClassName = "h-7 w-7 min-h-[28px] min-w-[28px]"; // 28px minimum size
+
+	// Handle external links
+	if (link.href) {
+		if (link.href.includes("linkedin")) {
+			return <LinkedinIcon className={iconClassName} />;
+		}
+		if (link.href.includes("github")) {
+			return <GithubIcon className={iconClassName} />;
+		}
+		if (link.href.includes("x.com") || link.href.includes("twitter")) {
+			return <TwitterIcon className={iconClassName} />;
+		}
+		if (link.href.includes("resume")) {
+			return <ResumeIcon className={iconClassName} />;
+		}
+		return <ResumeIcon className={iconClassName} />;
+	}
+
+	// Handle internal routes
+	const to = link.to;
 	switch (to) {
 		case "/":
-			return <Home className="h-4 w-4" />;
+			return <HomeIcon className={iconClassName} />;
 		case "/experience":
-			return <Briefcase className="h-4 w-4" />;
+			return <ExperienceIcon className={iconClassName} />;
 		case "/projects":
-			return <FolderOpen className="h-4 w-4" />;
+			return <ProjectsIcon className={iconClassName} />;
 		case "/games":
-			return <Gamepad2 className="h-4 w-4" />;
+			return <GamesIcon className={iconClassName} />;
 		case "/about":
-			return <User className="h-4 w-4" />;
+			return <AboutIcon className={iconClassName} />;
 		case "/contact":
-			return <Mail className="h-4 w-4" />;
+			return <ContactIcon className={iconClassName} />;
 		default:
 			return null;
 	}
 };
 
-export function AppSidebar({
-	brand,
-	links = [],
-	actions = [],
-	className,
-}: AppSidebarProps) {
+export function AppSidebar({ brand, links = [], className }: AppSidebarProps) {
 	return (
-		<Sidebar variant="inset" className={cn("border-r", className)}>
-			<SidebarHeader className="border-b border-sidebar-border">
-				<div className="flex h-16 items-center px-4">
-					{brand && (
-						<Link
-							to={brand.to || "/"}
-							className="text-lg font-bold font- text-sidebar-foreground hover:text-sidebar-foreground/80 transition-colors"
-						>
-							{brand.children}
-						</Link>
-					)}
-				</div>
-			</SidebarHeader>
-			<SidebarContent>
-				<SidebarMenu>
-					{links.map((link, index) => (
-						<SidebarMenuItem key={index}>
-							<SidebarMenuButton asChild>
-								<Link
-									to={link.to}
-									className="flex items-center gap-2 w-full"
-								>
-									{getIconForRoute(link.to)}
-									<span>{link.children}</span>
-								</Link>
-							</SidebarMenuButton>
-						</SidebarMenuItem>
-					))}
-				</SidebarMenu>
-				
-				{/* Actions Section */}
-				{actions.length > 0 && (
-					<div className="mt-auto p-4 border-t border-sidebar-border">
-						<div className="space-y-2">
-							{actions.map((action, index) => (
-								<Button
-									key={index}
-									variant="outline"
-									size="sm"
-									className="w-full justify-start"
-									asChild={!!action.href}
-								>
-									{action.href ? (
-										<a
-											href={action.href}
-											target={action.external ? "_blank" : undefined}
-											rel={action.external ? "noopener noreferrer" : undefined}
-											className="flex items-center gap-2"
-										>
-											<FileText className="h-4 w-4" />
-											{action.children}
-										</a>
-									) : (
-										<span className="flex items-center gap-2">
-											{action.icon}
-											{action.children}
-										</span>
-									)}
-								</Button>
-							))}
-							<div className="pt-2">
-								<ThemeToggle />
-							</div>
-						</div>
+		<TooltipProvider>
+			<Sidebar
+				variant="sidebar"
+				className={cn(
+					"w-16 border-r border-border/40 bg-transparent shadow-none",
+					"data-[side=left]:border-r data-[side=right]:border-l",
+					className,
+				)}>
+				<SidebarHeader className="">
+					<div className="flex items-center justify-center h-full w-full">
+						{brand && (
+							<Tooltip>
+								<TooltipTrigger asChild>
+									<Link
+										to={brand.to || "/"}
+										className="flex items-center justify-center text-3xl font-uncut-sans text-sidebar-foreground sidebar-icon-hover">
+										{brand.children}
+									</Link>
+								</TooltipTrigger>
+								<TooltipContent side="right">
+									<p>{brand.children}</p>
+								</TooltipContent>
+							</Tooltip>
+						)}
 					</div>
-				)}
-			</SidebarContent>
-		</Sidebar>
+				</SidebarHeader>
+				<SidebarContent className="flex flex-col h-full  justify-center items-center w-full">
+					<SidebarMenu className=" flex flex-col items-center justify-center gap-7">
+						{links.map((link, index) => (
+							<SidebarMenuItem
+								key={index}
+								className=" items-center flex justify-center size-7">
+								<Tooltip>
+									<TooltipTrigger asChild>
+										<SidebarMenuButton
+											asChild
+											className="p-0 rounded-none !hover:bg-transparent hover:!bg-transparent sidebar-icon-hover">
+											{link.href ? (
+												<a
+													href={link.href}
+													target={
+														link.external
+															? "_blank"
+															: undefined
+													}
+													rel={
+														link.external
+															? "noopener noreferrer"
+															: undefined
+													}
+													className="flex items-center justify-center w-full h-full">
+													{getIconForRoute(link)}
+												</a>
+											) : (
+												<Link
+													to={link.to || "/"}
+													className="flex items-center justify-center w-full h-full">
+													{getIconForRoute(link)}
+												</Link>
+											)}
+										</SidebarMenuButton>
+									</TooltipTrigger>
+									<TooltipContent side="right">
+										<p>{link.children}</p>
+									</TooltipContent>
+								</Tooltip>
+							</SidebarMenuItem>
+						))}
+					</SidebarMenu>
+				</SidebarContent>
+				<SidebarFooter className=" flex items-center justify-center">
+					<ThemeToggle />
+				</SidebarFooter>
+			</Sidebar>
+		</TooltipProvider>
 	);
 }

@@ -60,43 +60,6 @@ export default {
     			extrabold: '800',
     			black: '900'
     		},
-    		fontVariationSettings: {
-    			'inter-thin': '"wght" 100',
-    			'inter-extralight': '"wght" 200',
-    			'inter-light': '"wght" 300',
-    			'inter-normal': '"wght" 400',
-    			'inter-medium': '"wght" 500',
-    			'inter-semibold': '"wght" 600',
-    			'inter-bold': '"wght" 700',
-    			'inter-extrabold': '"wght" 800',
-    			'inter-black': '"wght" 900',
-    			'cabinet-grotesk-thin': '"wght" 100',
-    			'cabinet-grotesk-extralight': '"wght" 200',
-    			'cabinet-grotesk-light': '"wght" 300',
-    			'cabinet-grotesk-normal': '"wght" 400',
-    			'cabinet-grotesk-medium': '"wght" 500',
-    			'cabinet-grotesk-semibold': '"wght" 600',
-    			'cabinet-grotesk-bold': '"wght" 700',
-    			'cabinet-grotesk-extrabold': '"wght" 800',
-    			'cabinet-grotesk-black': '"wght" 900',
-    			'clash-display-extralight': '"wght" 200',
-    			'clash-display-light': '"wght" 300',
-    			'clash-display-normal': '"wght" 400',
-    			'clash-display-medium': '"wght" 500',
-    			'clash-display-semibold': '"wght" 600',
-    			'clash-display-bold': '"wght" 700',
-    			'panchang-light': '"wght" 300',
-    			'panchang-normal': '"wght" 400',
-    			'panchang-medium': '"wght" 500',
-    			'panchang-semibold': '"wght" 600',
-    			'panchang-bold': '"wght" 700',
-    			'panchang-extrabold': '"wght" 800',
-    			'space-grotesk-light': '"wght" 300',
-    			'space-grotesk-normal': '"wght" 400',
-    			'space-grotesk-medium': '"wght" 500',
-    			'space-grotesk-semibold': '"wght" 600',
-    			'space-grotesk-bold': '"wght" 700'
-    		},
     		borderRadius: {
     			lg: 'var(--radius)',
     			md: 'calc(var(--radius) - 2px)',
@@ -156,5 +119,14 @@ export default {
     		}
     	}
     },
-	plugins: [require('tailwindcss-animate')],
+	plugins: [
+		require('tailwindcss-animate'),
+		function({ addUtilities }) {
+			addUtilities({
+				'.dev-border': {
+					'border': '1px dashed #ef4444',
+				}
+			})
+		}
+	],
 };
