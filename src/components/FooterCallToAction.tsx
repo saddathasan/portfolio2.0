@@ -78,7 +78,7 @@ function FooterTitle({
 
 	return (
 		<h2
-			className={cn("font-bold", sizeClasses[size], className)}
+			className={cn("font-bold font-title", sizeClasses[size], className)}
 			{...props}>
 			{children}
 		</h2>

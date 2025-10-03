@@ -49,7 +49,7 @@ function BiographyTitle({
 
 	return (
 		<h2
-			className={cn("font-semibold mb-4 font-sans", sizeClasses[size], className)}
+			className={cn("font-semibold mb-4 font-subtitle", sizeClasses[size], className)}
 			{...props}>
 			{children}
 		</h2>

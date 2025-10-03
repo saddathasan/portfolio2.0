@@ -60,7 +60,7 @@ function HeroTitle({ children, className, ...props }: HeroTitleProps) {
 	return (
 		<h1
 			className={cn(
-				"text-3xl md:text-4xl font-medium mb-4 text-foreground",
+				"text-3xl md:text-4xl font-medium mb-4 text-foreground font-subtitle",
 				className,
 			)}
 			{...props}>

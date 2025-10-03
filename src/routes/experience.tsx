@@ -26,7 +26,7 @@ export const Route = createFileRoute("/experience")({
 
 				{/* Mobile Skills Section */}
 				<div className="lg:hidden mt-12">
-					<h3 className="text-xl font-semibold mb-6">
+					<h3 className="text-xl font-semibold mb-6 font-subtitle">
 						Technical Skills
 					</h3>
 					<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -34,7 +34,7 @@ export const Route = createFileRoute("/experience")({
 							<div
 								key={category.title}
 								className="space-y-2">
-								<h4 className="font-medium text-gray-900 dark:text-gray-100">
+								<h4 className="font-medium text-gray-900 dark:text-gray-100 font-body">
 									{category.title}
 								</h4>
 								<p className="text-sm text-muted-foreground mb-3">

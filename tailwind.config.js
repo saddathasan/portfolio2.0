@@ -22,6 +22,11 @@ export default {
 					"Roboto Mono",
 					"monospace",
 				],
+				// Semantic font hierarchy
+				title: "var(--font-title)",
+				subtitle: "var(--font-subtitle)",
+				body: "var(--font-body)",
+				// Original font families (kept for compatibility)
 				inter: ["Inter Variable", "Inter", "system-ui", "sans-serif"],
 				"cabinet-grotesk": [
 					"Cabinet Grotesk Variable",
@@ -36,6 +41,11 @@ export default {
 				panchang: ["Panchang Variable", "system-ui", "sans-serif"],
 				"space-grotesk": [
 					"Space Grotesk Variable",
+					"system-ui",
+					"sans-serif",
+				],
+				"uncut-sans": [
+					"Uncut Sans Variable",
 					"system-ui",
 					"sans-serif",
 				],

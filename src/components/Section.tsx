@@ -60,7 +60,7 @@ function SectionHeader({
 	return (
 		<h2
 			className={cn(
-				"font-bold mb-8 leading-tight font-sans text-foreground",
+				"mb-8 leading-tight font-title font-medium text-foreground",
 				sizeClasses[size],
 				centered && "text-center",
 				className

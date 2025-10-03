@@ -53,6 +53,11 @@
 
 @layer base {
 	:root {
+		/* Semantic Font Hierarchy */
+		--font-title: 'Clash Display Variable', system-ui, sans-serif;
+		--font-subtitle: 'Space Grotesk Variable', system-ui, sans-serif;
+		--font-body: 'Uncut Sans Variable', system-ui, sans-serif;
+
 		/* Light theme - Lee Robinson minimal palette */
 		--background: 0 0% 100%; /* Pure white background */
 		--foreground: 0 0% 9%; /* Near black for text */
@@ -131,7 +136,7 @@
 		@apply border-border;
 	}
 	body {
-		@apply bg-background text-foreground font-sans;
+		@apply bg-background text-foreground font-body;
 	}
 
 	/* Simple solid background */

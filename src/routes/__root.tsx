@@ -21,7 +21,7 @@ export const Route = createRootRoute({
 					{/* Mobile App Bar with Hamburger Menu */}
 					<div className="sticky top-0 z-40 flex h-14 items-center justify-between border-b border-border/40 bg-background/95 backdrop-blur px-4 md:hidden">
 						<div className="flex items-center">
-							<Link to="/" className="text-xl font-clash-display text-foreground hover:opacity-80 transition-opacity">
+							<Link to="/" className="text-xl font-title text-foreground hover:opacity-80 transition-opacity">
 								sh
 							</Link>
 						</div>

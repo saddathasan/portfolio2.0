@@ -73,7 +73,7 @@ function NavigationBrand({
 		<Link
 			to={to}
 			className={cn(
-				"text-base font-medium text-foreground hover:text-muted-foreground transition-colors",
+				"text-base font-medium text-foreground hover:text-muted-foreground transition-colors font-body",
 				className
 			)}
 			{...props}>
