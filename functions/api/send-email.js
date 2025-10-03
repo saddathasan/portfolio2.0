@@ -1,7 +1,8 @@
 // Cloudflare Worker function for sending emails using Resend API
 // Clean implementation with no Node.js dependencies
 
-// Rate limiting store (using Cloudflare KV in production)
+// Rate limiting store (basic in-memory store for Cloudflare Workers)
+// Note: In production, consider using Cloudflare KV or Durable Objects for persistence
 const rateLimitStore = new Map();
 
 // Email validation regex
@@ -14,12 +15,16 @@ function sanitizeInput(input) {
               .trim();
 }
 
-// Rate limiting function
-function checkRateLimit(ip) {
+// Rate limiting function (simplified for Cloudflare Workers)
+function checkRateLimit(ip, env) {
+  // In Cloudflare Workers, we'll use a simple time-based approach
+  // For production, consider using Cloudflare KV or Durable Objects
   const now = Date.now();
   const windowMs = 60 * 1000; // 1 minute
-  const maxRequests = parseInt(process.env.RATE_LIMIT_MAX || '5');
+  const maxRequests = parseInt(env.RATE_LIMIT_MAX || '5');
   
+  // For now, we'll use a basic in-memory store that resets per request
+  // This is not ideal but works for basic protection
   const record = rateLimitStore.get(ip);
   
   if (!record || now > record.resetTime) {
@@ -63,7 +68,7 @@ export async function onRequestPost(context) {
                      'unknown';
     
     // Rate limiting
-    if (!checkRateLimit(clientIP)) {
+    if (!checkRateLimit(clientIP, env)) {
       console.log('Rate limit exceeded for IP:', clientIP);
       return new Response(JSON.stringify({
         success: false,
