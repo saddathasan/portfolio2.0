@@ -22,8 +22,8 @@ export function ResumeDownloadButton({
 			className={cn(
 				// Base styles
 				"group relative inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-body font-semibold text-base transition-all duration-300 ease-out overflow-hidden",
-				// Background gradient
-				"bg-gradient-to-r from-primary via-primary/90 to-primary/80",
+				// Background solid color
+				"bg-primary",
 				// Text colors
 				"text-primary-foreground",
 				// Border and shadow
