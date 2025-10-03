@@ -116,12 +116,12 @@ function GamesPage() {
 					animate={{ opacity: 1 }}
 					transition={{ delay: 1, duration: 0.6 }}
 					className="mt-8 p-6 bg-muted/20 rounded-lg border border-border/20">
-					<h3 className="text-lg font-semibold mb-3 text-primary">
+					<h3 className="text-lg font-semibold mb-3 text-primary font-subtitle">
 						How to Play
 					</h3>
 					<div className="grid md:grid-cols-2 gap-4 text-sm text-muted-foreground">
 						<div>
-							<h4 className="font-medium text-foreground mb-2">
+							<h4 className="font-medium text-foreground mb-2 font-body">
 								🎯 Objective
 							</h4>
 							<p>
@@ -130,7 +130,7 @@ function GamesPage() {
 							</p>
 						</div>
 						<div>
-							<h4 className="font-medium text-foreground mb-2">
+							<h4 className="font-medium text-foreground mb-2 font-body">
 								⌨️ Controls
 							</h4>
 							<p>
@@ -139,7 +139,7 @@ function GamesPage() {
 							</p>
 						</div>
 						<div>
-							<h4 className="font-medium text-foreground mb-2">
+							<h4 className="font-medium text-foreground mb-2 font-body">
 								💡 Features
 							</h4>
 							<p>
@@ -149,7 +149,7 @@ function GamesPage() {
 							</p>
 						</div>
 						<div>
-							<h4 className="font-medium text-foreground mb-2">
+							<h4 className="font-medium text-foreground mb-2 font-body">
 								🏆 Tips
 							</h4>
 							<p>

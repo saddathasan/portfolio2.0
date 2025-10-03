@@ -110,7 +110,7 @@ export function AppSidebar({ brand, links = [], className }: AppSidebarProps) {
 								<TooltipTrigger asChild>
 									<Link
 										to={brand.to || "/"}
-										className="flex items-center justify-center text-3xl font-clash-display text-sidebar-foreground sidebar-icon-hover">
+										className="flex items-center justify-center text-3xl font-title text-sidebar-foreground sidebar-icon-hover">
 										{brand.children}
 									</Link>
 								</TooltipTrigger>

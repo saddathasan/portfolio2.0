@@ -14,15 +14,13 @@ function Index() {
 				<div className="max-w-4xl mx-auto">
 					{/* Hero Section with Native Tailwind Font Weights */}
 					<section className="text-left space-y-2">
-						<HeroSection.Title className="font-clash-display text-4xl md:text-6xl tracking-tight">
+						<HeroSection.Title className="font-title text-4xl md:text-6xl tracking-tight">
 							Saddat Hasan
 						</HeroSection.Title>
-
-						<HeroSection.Subtitle className="font-cabinet-grotesk text-xl md:text-2xl font-medium text-muted-foreground">
+						<HeroSection.Subtitle className="font-subtitle text-xl md:text-2xl font-medium text-muted-foreground">
 							Software Engineer
 						</HeroSection.Subtitle>
-
-						<HeroSection.Description className="font-cabinet-grotesk text-lg font-normal leading-relaxed text-muted-foreground max-w-2xl">
+						<HeroSection.Description className="font-body text-lg font-normal leading-relaxed text-muted-foreground max-w-2xl">
 							Crafting digital experiences with modern web
 							technologies. Passionate about clean code, intuitive
 							design, and building products that make a

@@ -115,7 +115,7 @@ export function MobileNavigation({
 										<TooltipTrigger asChild>
 											<Link
 												to={brand.to || "/"}
-												className="text-3xl font-clash-display text-foreground sidebar-icon-hover"
+												className="text-3xl font-title text-foreground sidebar-icon-hover"
 												onClick={() => setIsOpen(false)}
 											>
 												{brand.children}
