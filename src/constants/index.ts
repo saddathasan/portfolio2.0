@@ -224,6 +224,7 @@ export const NAVIGATION_LINKS = [
   { to: "/", children: "Home" },
   { to: "/experience", children: "Experience" },
   { to: "/projects", children: "Projects" },
+  { to: "/bookmarks", children: "Bookmarks" },
   { to: "/games", children: "Games" },
   { to: "/about", children: "About" },
   { to: "/contact", children: "Contact" },
@@ -253,6 +254,7 @@ export const MOBILE_NAVIGATION_LINKS = [
   { to: "/", children: "Home" },
   { to: "/experience", children: "Experience" },
   { to: "/projects", children: "Projects" },
+  { to: "/bookmarks", children: "Bookmarks" },
   { to: "/about", children: "About" },
   { to: "/contact", children: "Contact" },
   {
