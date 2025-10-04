@@ -1,5 +1,6 @@
 import {
 	AboutIcon,
+	BookmarkIcon,
 	ContactIcon,
 	ExperienceIcon,
 	GamesIcon,
@@ -76,6 +77,8 @@ const getIconForRoute = (link: NavigationLinkItem) => {
 			return <ExperienceIcon className={iconClassName} />;
 		case "/projects":
 			return <ProjectsIcon className={iconClassName} />;
+		case "/bookmarks":
+			return <BookmarkIcon className={iconClassName} />;
 		case "/games":
 			return <GamesIcon className={iconClassName} />;
 		case "/about":

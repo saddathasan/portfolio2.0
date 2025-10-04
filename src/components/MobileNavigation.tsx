@@ -10,6 +10,7 @@ import {
 	AboutIcon,
 	ExperienceIcon,
 	ProjectsIcon,
+	BookmarkIcon,
 	GamesIcon,
 	ContactIcon,
 	ResumeIcon,
@@ -58,6 +59,9 @@ function getIconForRoute(link: LinkItem) {
 	}
 	if (route.includes("projects")) {
 		return <ProjectsIcon className={iconClassName} />;
+	}
+	if (route.includes("bookmarks")) {
+		return <BookmarkIcon className={iconClassName} />;
 	}
 	if (route.includes("games")) {
 		return <GamesIcon className={iconClassName} />;

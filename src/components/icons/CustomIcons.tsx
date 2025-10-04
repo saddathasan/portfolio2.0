@@ -116,3 +116,37 @@ export const TwitterIcon: React.FC<IconProps> = ({ className = "h-4 w-4" }) => (
     <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584l-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/>
   </svg>
 );
+
+export const BlogIcon: React.FC<IconProps> = ({ className = "h-4 w-4" }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    viewBox="0 0 24 24" 
+    className={className}
+    fill="currentColor"
+  >
+    <path d="M3 3h18a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm1 2v14h16V5H4zm2 2h12v2H6V7zm0 4h12v2H6v-2zm0 4h8v2H6v-2z"/>
+  </svg>
+);
+
+export const Blog2Icon: React.FC<IconProps> = ({ className = "h-4 w-4" }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    viewBox="0 0 24 24" 
+    className={className}
+    fill="currentColor"
+  >
+    <path d="M20 3H4c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2zM4 19V7h16l.002 12H4z"/>
+    <path d="M6 9h12v2H6zm0 4h12v2H6zm0 4h6v2H6z"/>
+  </svg>
+);
+
+export const BookmarkIcon: React.FC<IconProps> = ({ className = "h-4 w-4" }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    viewBox="0 0 768 1024" 
+    className={className}
+    fill="currentColor"
+  >
+    <path d="M704 1024L384 800L64 1024q-27 0-45.5-19T0 960V128q0-53 37.5-90.5T128 0h512q53 0 90.5 37.5T768 128v832q0 26-18.5 45t-45.5 19zM461 332l-77-172l-77 172l-179 24l132 129l-34 187l158-92l158 92l-34-187l132-129z"/>
+  </svg>
+);
