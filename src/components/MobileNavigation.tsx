@@ -8,6 +8,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import {
 	HomeIcon,
 	AboutIcon,
+	BlogIcon,
 	ExperienceIcon,
 	ProjectsIcon,
 	BookmarkIcon,
@@ -59,6 +60,9 @@ function getIconForRoute(link: LinkItem) {
 	}
 	if (route.includes("projects")) {
 		return <ProjectsIcon className={iconClassName} />;
+	}
+	if (route.includes("blog")) {
+		return <BlogIcon className={iconClassName} />;
 	}
 	if (route.includes("bookmarks")) {
 		return <BookmarkIcon className={iconClassName} />;

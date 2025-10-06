@@ -214,25 +214,26 @@ ${sanitizedMessage}
       messageId: info.messageId
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorDetails = error as Error & { code?: string; command?: string };
     console.error('Email sending error:', {
-      message: error.message,
-      code: error.code,
-      command: error.command,
-      stack: error.stack
+      message: errorDetails.message,
+      code: errorDetails.code,
+      command: errorDetails.command,
+      stack: errorDetails.stack
     });
 
     // Categorize errors for better user feedback
     let errorMessage = 'Failed to send email. Please try again later.';
     let errorCode = 'UNKNOWN_ERROR';
 
-    if (error.code === 'EAUTH') {
+    if (errorDetails.code === 'EAUTH') {
       errorMessage = 'Email authentication failed. Please contact support.';
       errorCode = 'AUTH_ERROR';
-    } else if (error.code === 'ECONNECTION' || error.code === 'ETIMEDOUT') {
+    } else if (errorDetails.code === 'ECONNECTION' || errorDetails.code === 'ETIMEDOUT') {
       errorMessage = 'Connection error. Please try again in a moment.';
       errorCode = 'CONNECTION_ERROR';
-    } else if (error.code === 'EMESSAGE') {
+    } else if (errorDetails.code === 'EMESSAGE') {
       errorMessage = 'Invalid message format. Please check your input.';
       errorCode = 'MESSAGE_ERROR';
     }
