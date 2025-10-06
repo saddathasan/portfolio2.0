@@ -42,9 +42,7 @@ interface AppState {
 	// Removed unused visitedPages and performanceMetrics - not used by any components
 
 	// Services
-	services: {
-		// Services removed for simplified implementation
-	};
+	services: Record<string, never>;
 
 	// Utility functions
 	trackEvent: (
@@ -175,9 +173,7 @@ export function AppProvider({ children }: AppProviderProps) {
 		// Removed unused visitedPages and performanceMetrics
 
 		// Services
-		services: {
-			// Services removed for simplified implementation
-		},
+		services: {},
 
 		// Utility functions
 		trackEvent,

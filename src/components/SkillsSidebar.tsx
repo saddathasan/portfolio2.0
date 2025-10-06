@@ -8,20 +8,20 @@ import {
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
-interface SkillCategory {
+interface LocalSkillCategory {
 	title: string;
 	description: string;
 	skills: string[];
 }
 
 interface SkillsSidebarProps {
-	skillCategories: SkillCategory[];
+	skillCategories: LocalSkillCategory[];
 	className?: string;
 	title?: string;
 }
 
 interface SkillCategoryCardProps {
-	category: SkillCategory;
+	category: LocalSkillCategory;
 	className?: string;
 }
 
