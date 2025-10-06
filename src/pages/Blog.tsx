@@ -223,8 +223,14 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
 // Main Blog Component
 // =============================================================================
 
+interface BlogSearchParams {
+  search?: string;
+  category?: string;
+  page?: string;
+}
+
 export const Blog: React.FC = () => {
-  const search = useSearch({ from: '/blog' });
+  const search = useSearch({ from: '/blog' }) as BlogSearchParams;
   const navigate = useNavigate({ from: '/blog' });
   const [filters, setFilters] = useState<BlogFilters>({
     search: search?.search || '',
