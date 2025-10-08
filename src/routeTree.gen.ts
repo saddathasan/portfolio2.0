@@ -9,6 +9,8 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WritingRouteImport } from './routes/writing'
+import { Route as RanksRouteImport } from './routes/ranks'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as GamesRouteImport } from './routes/games'
 import { Route as ExperienceRouteImport } from './routes/experience'
@@ -21,6 +23,16 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
+const WritingRoute = WritingRouteImport.update({
+  id: '/writing',
+  path: '/writing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RanksRoute = RanksRouteImport.update({
+  id: '/ranks',
+  path: '/ranks',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProjectsRoute = ProjectsRouteImport.update({
   id: '/projects',
   path: '/projects',
@@ -87,6 +99,8 @@ export interface FileRoutesByFullPath {
   '/experience': typeof ExperienceRoute
   '/games': typeof GamesRoute
   '/projects': typeof ProjectsRoute
+  '/ranks': typeof RanksRoute
+  '/writing': typeof WritingRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
 }
@@ -99,6 +113,8 @@ export interface FileRoutesByTo {
   '/experience': typeof ExperienceRoute
   '/games': typeof GamesRoute
   '/projects': typeof ProjectsRoute
+  '/ranks': typeof RanksRoute
+  '/writing': typeof WritingRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog': typeof BlogIndexRoute
 }
@@ -113,6 +129,8 @@ export interface FileRoutesById {
   '/experience': typeof ExperienceRoute
   '/games': typeof GamesRoute
   '/projects': typeof ProjectsRoute
+  '/ranks': typeof RanksRoute
+  '/writing': typeof WritingRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
 }
@@ -128,6 +146,8 @@ export interface FileRouteTypes {
     | '/experience'
     | '/games'
     | '/projects'
+    | '/ranks'
+    | '/writing'
     | '/blog/$slug'
     | '/blog/'
   fileRoutesByTo: FileRoutesByTo
@@ -140,6 +160,8 @@ export interface FileRouteTypes {
     | '/experience'
     | '/games'
     | '/projects'
+    | '/ranks'
+    | '/writing'
     | '/blog/$slug'
     | '/blog'
   id:
@@ -153,6 +175,8 @@ export interface FileRouteTypes {
     | '/experience'
     | '/games'
     | '/projects'
+    | '/ranks'
+    | '/writing'
     | '/blog/$slug'
     | '/blog/'
   fileRoutesById: FileRoutesById
@@ -167,10 +191,26 @@ export interface RootRouteChildren {
   ExperienceRoute: typeof ExperienceRoute
   GamesRoute: typeof GamesRoute
   ProjectsRoute: typeof ProjectsRoute
+  RanksRoute: typeof RanksRoute
+  WritingRoute: typeof WritingRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/writing': {
+      id: '/writing'
+      path: '/writing'
+      fullPath: '/writing'
+      preLoaderRoute: typeof WritingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ranks': {
+      id: '/ranks'
+      path: '/ranks'
+      fullPath: '/ranks'
+      preLoaderRoute: typeof RanksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/projects': {
       id: '/projects'
       path: '/projects'
@@ -273,6 +313,8 @@ const rootRouteChildren: RootRouteChildren = {
   ExperienceRoute: ExperienceRoute,
   GamesRoute: GamesRoute,
   ProjectsRoute: ProjectsRoute,
+  RanksRoute: RanksRoute,
+  WritingRoute: WritingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
