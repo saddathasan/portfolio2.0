@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as WritingRouteImport } from './routes/writing'
 import { Route as RanksRouteImport } from './routes/ranks'
 import { Route as ProjectsRouteImport } from './routes/projects'
+import { Route as PresentationRouteImport } from './routes/presentation'
 import { Route as GamesRouteImport } from './routes/games'
 import { Route as ExperienceRouteImport } from './routes/experience'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -20,7 +21,11 @@ import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PresentationIndexRouteImport } from './routes/presentation/index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as PresentationJsRouteImport } from './routes/presentation/js'
+import { Route as PresentationHtmlRouteImport } from './routes/presentation/html'
+import { Route as PresentationCssRouteImport } from './routes/presentation/css'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
 const WritingRoute = WritingRouteImport.update({
@@ -36,6 +41,11 @@ const RanksRoute = RanksRouteImport.update({
 const ProjectsRoute = ProjectsRouteImport.update({
   id: '/projects',
   path: '/projects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PresentationRoute = PresentationRouteImport.update({
+  id: '/presentation',
+  path: '/presentation',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GamesRoute = GamesRouteImport.update({
@@ -78,10 +88,30 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PresentationIndexRoute = PresentationIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PresentationRoute,
+} as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => BlogRoute,
+} as any)
+const PresentationJsRoute = PresentationJsRouteImport.update({
+  id: '/js',
+  path: '/js',
+  getParentRoute: () => PresentationRoute,
+} as any)
+const PresentationHtmlRoute = PresentationHtmlRouteImport.update({
+  id: '/html',
+  path: '/html',
+  getParentRoute: () => PresentationRoute,
+} as any)
+const PresentationCssRoute = PresentationCssRouteImport.update({
+  id: '/css',
+  path: '/css',
+  getParentRoute: () => PresentationRoute,
 } as any)
 const BlogSlugRoute = BlogSlugRouteImport.update({
   id: '/$slug',
@@ -98,11 +128,16 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/experience': typeof ExperienceRoute
   '/games': typeof GamesRoute
+  '/presentation': typeof PresentationRouteWithChildren
   '/projects': typeof ProjectsRoute
   '/ranks': typeof RanksRoute
   '/writing': typeof WritingRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/presentation/css': typeof PresentationCssRoute
+  '/presentation/html': typeof PresentationHtmlRoute
+  '/presentation/js': typeof PresentationJsRoute
   '/blog/': typeof BlogIndexRoute
+  '/presentation/': typeof PresentationIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -116,7 +151,11 @@ export interface FileRoutesByTo {
   '/ranks': typeof RanksRoute
   '/writing': typeof WritingRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/presentation/css': typeof PresentationCssRoute
+  '/presentation/html': typeof PresentationHtmlRoute
+  '/presentation/js': typeof PresentationJsRoute
   '/blog': typeof BlogIndexRoute
+  '/presentation': typeof PresentationIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -128,11 +167,16 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/experience': typeof ExperienceRoute
   '/games': typeof GamesRoute
+  '/presentation': typeof PresentationRouteWithChildren
   '/projects': typeof ProjectsRoute
   '/ranks': typeof RanksRoute
   '/writing': typeof WritingRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/presentation/css': typeof PresentationCssRoute
+  '/presentation/html': typeof PresentationHtmlRoute
+  '/presentation/js': typeof PresentationJsRoute
   '/blog/': typeof BlogIndexRoute
+  '/presentation/': typeof PresentationIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -145,11 +189,16 @@ export interface FileRouteTypes {
     | '/contact'
     | '/experience'
     | '/games'
+    | '/presentation'
     | '/projects'
     | '/ranks'
     | '/writing'
     | '/blog/$slug'
+    | '/presentation/css'
+    | '/presentation/html'
+    | '/presentation/js'
     | '/blog/'
+    | '/presentation/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -163,7 +212,11 @@ export interface FileRouteTypes {
     | '/ranks'
     | '/writing'
     | '/blog/$slug'
+    | '/presentation/css'
+    | '/presentation/html'
+    | '/presentation/js'
     | '/blog'
+    | '/presentation'
   id:
     | '__root__'
     | '/'
@@ -174,11 +227,16 @@ export interface FileRouteTypes {
     | '/contact'
     | '/experience'
     | '/games'
+    | '/presentation'
     | '/projects'
     | '/ranks'
     | '/writing'
     | '/blog/$slug'
+    | '/presentation/css'
+    | '/presentation/html'
+    | '/presentation/js'
     | '/blog/'
+    | '/presentation/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -190,6 +248,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   ExperienceRoute: typeof ExperienceRoute
   GamesRoute: typeof GamesRoute
+  PresentationRoute: typeof PresentationRouteWithChildren
   ProjectsRoute: typeof ProjectsRoute
   RanksRoute: typeof RanksRoute
   WritingRoute: typeof WritingRoute
@@ -216,6 +275,13 @@ declare module '@tanstack/react-router' {
       path: '/projects'
       fullPath: '/projects'
       preLoaderRoute: typeof ProjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/presentation': {
+      id: '/presentation'
+      path: '/presentation'
+      fullPath: '/presentation'
+      preLoaderRoute: typeof PresentationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/games': {
@@ -274,12 +340,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/presentation/': {
+      id: '/presentation/'
+      path: '/'
+      fullPath: '/presentation/'
+      preLoaderRoute: typeof PresentationIndexRouteImport
+      parentRoute: typeof PresentationRoute
+    }
     '/blog/': {
       id: '/blog/'
       path: '/'
       fullPath: '/blog/'
       preLoaderRoute: typeof BlogIndexRouteImport
       parentRoute: typeof BlogRoute
+    }
+    '/presentation/js': {
+      id: '/presentation/js'
+      path: '/js'
+      fullPath: '/presentation/js'
+      preLoaderRoute: typeof PresentationJsRouteImport
+      parentRoute: typeof PresentationRoute
+    }
+    '/presentation/html': {
+      id: '/presentation/html'
+      path: '/html'
+      fullPath: '/presentation/html'
+      preLoaderRoute: typeof PresentationHtmlRouteImport
+      parentRoute: typeof PresentationRoute
+    }
+    '/presentation/css': {
+      id: '/presentation/css'
+      path: '/css'
+      fullPath: '/presentation/css'
+      preLoaderRoute: typeof PresentationCssRouteImport
+      parentRoute: typeof PresentationRoute
     }
     '/blog/$slug': {
       id: '/blog/$slug'
@@ -303,6 +397,24 @@ const BlogRouteChildren: BlogRouteChildren = {
 
 const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
+interface PresentationRouteChildren {
+  PresentationCssRoute: typeof PresentationCssRoute
+  PresentationHtmlRoute: typeof PresentationHtmlRoute
+  PresentationJsRoute: typeof PresentationJsRoute
+  PresentationIndexRoute: typeof PresentationIndexRoute
+}
+
+const PresentationRouteChildren: PresentationRouteChildren = {
+  PresentationCssRoute: PresentationCssRoute,
+  PresentationHtmlRoute: PresentationHtmlRoute,
+  PresentationJsRoute: PresentationJsRoute,
+  PresentationIndexRoute: PresentationIndexRoute,
+}
+
+const PresentationRouteWithChildren = PresentationRoute._addFileChildren(
+  PresentationRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
@@ -312,6 +424,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   ExperienceRoute: ExperienceRoute,
   GamesRoute: GamesRoute,
+  PresentationRoute: PresentationRouteWithChildren,
   ProjectsRoute: ProjectsRoute,
   RanksRoute: RanksRoute,
   WritingRoute: WritingRoute,
