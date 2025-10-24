@@ -8,6 +8,7 @@ import {
 	GithubIcon,
 	HomeIcon,
 	LinkedinIcon,
+	PresentationIcon,
 	ProjectsIcon,
 	ResumeIcon,
 	TwitterIcon,
@@ -84,6 +85,8 @@ const getIconForRoute = (link: NavigationLinkItem) => {
 			return <BookmarkIcon className={iconClassName} />;
 		case "/games":
 			return <GamesIcon className={iconClassName} />;
+		case "/presentation":
+			return <PresentationIcon className={iconClassName} />;
 		case "/about":
 			return <AboutIcon className={iconClassName} />;
 		case "/contact":

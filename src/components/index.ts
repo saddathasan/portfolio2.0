@@ -1,4 +1,5 @@
 // Core Layout Components
+export { CodePreview } from "./CodePreview";
 export { ContentGrid } from "./ContentGrid";
 export { PageHeader } from "./PageHeader";
 export { PageLayout } from "./PageLayout";
@@ -20,7 +21,7 @@ export { ContactForm } from "./ContactForm";
 export { ContactInfo } from "./ContactInfo";
 export { ExperienceTimeline } from "./ExperienceTimeline";
 export { SkillsSidebar } from "./SkillsSidebar";
-export { default as SudokuGame } from './sudokuGame';
+export { default as SudokuGame } from "./sudokuGame";
 export { TechBadgeList } from "./TechBadgeList";
 
 // Global Components

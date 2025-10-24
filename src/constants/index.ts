@@ -221,66 +221,68 @@ export const DEV = {
 
 // Navigation constants
 export const NAVIGATION_LINKS = [
-  { to: "/", children: "Home" },
-  { to: "/experience", children: "Experience" },
-  { to: "/projects", children: "Projects" },
-  { to: "/blog", children: "Blog" },
-  { to: "/bookmarks", children: "Bookmarks" },
-  { to: "/games", children: "Games" },
-  { to: "/about", children: "About" },
-  { to: "/contact", children: "Contact" },
-  {
-    href: "/resume.pdf",
-    children: "Resume",
-    external: true,
-  },
-  {
-    href: "https://linkedin.com/in/saddathasan",
-    children: "LinkedIn",
-    external: true,
-  },
-  {
-    href: "https://github.com/saddathasan",
-    children: "GitHub",
-    external: true,
-  },
-  {
-    href: "https://x.com/saddathasan",
-    children: "X",
-    external: true,
-  },
+	{ to: "/", children: "Home" },
+	{ to: "/experience", children: "Experience" },
+	{ to: "/projects", children: "Projects" },
+	{ to: "/blog", children: "Blog" },
+	{ to: "/bookmarks", children: "Bookmarks" },
+	{ to: "/games", children: "Games" },
+	{ to: "/presentation", children: "Presentation" },
+	{ to: "/about", children: "About" },
+	{ to: "/contact", children: "Contact" },
+	{
+		href: "/resume.pdf",
+		children: "Resume",
+		external: true,
+	},
+	{
+		href: "https://linkedin.com/in/saddathasan",
+		children: "LinkedIn",
+		external: true,
+	},
+	{
+		href: "https://github.com/saddathasan",
+		children: "GitHub",
+		external: true,
+	},
+	{
+		href: "https://x.com/saddathasan",
+		children: "X",
+		external: true,
+	},
 ];
 
 export const MOBILE_NAVIGATION_LINKS = [
-  { to: "/", children: "Home" },
-  { to: "/experience", children: "Experience" },
-  { to: "/projects", children: "Projects" },
-  { to: "/blog", children: "Blog" },
-  { to: "/bookmarks", children: "Bookmarks" },
-  { to: "/about", children: "About" },
-  { to: "/contact", children: "Contact" },
-  {
-    href: "/resume.pdf",
-    children: "Resume",
-    external: true,
-  },
-  {
-    href: "https://linkedin.com/in/saddathasan",
-    children: "LinkedIn",
-    external: true,
-  },
-  {
-    href: "https://github.com/saddathasan",
-    children: "GitHub",
-    external: true,
-  },
-  {
-    href: "https://x.com/saddathasan",
-    children: "X (Twitter)",
-    external: true,
-  },
+	{ to: "/", children: "Home" },
+	{ to: "/experience", children: "Experience" },
+	{ to: "/projects", children: "Projects" },
+	{ to: "/blog", children: "Blog" },
+	{ to: "/bookmarks", children: "Bookmarks" },
+	{ to: "/presentation", children: "Presentation" },
+	{ to: "/about", children: "About" },
+	{ to: "/contact", children: "Contact" },
+	{
+		href: "/resume.pdf",
+		children: "Resume",
+		external: true,
+	},
+	{
+		href: "https://linkedin.com/in/saddathasan",
+		children: "LinkedIn",
+		external: true,
+	},
+	{
+		href: "https://github.com/saddathasan",
+		children: "GitHub",
+		external: true,
+	},
+	{
+		href: "https://x.com/saddathasan",
+		children: "X (Twitter)",
+		external: true,
+	},
 ];
 
 export const BRAND_CONFIG = {
-  children: "sh",
+	children: "sh",
 };
