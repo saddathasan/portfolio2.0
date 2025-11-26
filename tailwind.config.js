@@ -5,66 +5,8 @@ export default {
 	theme: {
 		extend: {
 			fontFamily: {
-				sans: [
-					"Inter Variable",
-					"Inter",
-					"system-ui",
-					"-apple-system",
-					"BlinkMacSystemFont",
-					"Segoe UI",
-					"Roboto",
-					"sans-serif",
-				],
-				mono: [
-					"SF Mono",
-					"Monaco",
-					"Inconsolata",
-					"Roboto Mono",
-					"monospace",
-				],
-				// Semantic font hierarchy
-				title: "var(--font-title)",
-				subtitle: "var(--font-subtitle)",
-				body: "var(--font-body)",
-				// Original font families (kept for compatibility)
-				inter: ["Inter Variable", "Inter", "system-ui", "sans-serif"],
-				"cabinet-grotesk": [
-					"Cabinet Grotesk Variable",
-					"system-ui",
-					"sans-serif",
-				],
-				"clash-display": [
-					"Clash Display Variable",
-					"system-ui",
-					"sans-serif",
-				],
-				panchang: ["Panchang Variable", "system-ui", "sans-serif"],
-				"space-grotesk": [
-					"Space Grotesk Variable",
-					"system-ui",
-					"sans-serif",
-				],
-				"uncut-sans": [
-					"Uncut Sans Variable",
-					"system-ui",
-					"sans-serif",
-				],
-			},
-			fontWeight: {
-				thin: "100",
-				extralight: "200",
-				light: "300",
-				normal: "400",
-				medium: "500",
-				semibold: "600",
-				bold: "700",
-				extrabold: "800",
-				black: "900",
-			},
-			borderRadius: {
-				lg: "var(--radius)",
-				md: "calc(var(--radius) - 2px)",
-				sm: "calc(var(--radius) - 4px)",
+				sans: ["Inter", "sans-serif"],
+				mono: ["JetBrains Mono", "monospace"],
 			},
 			colors: {
 				background: "hsl(var(--background))",
@@ -100,42 +42,43 @@ export default {
 				border: "hsl(var(--border))",
 				input: "hsl(var(--input))",
 				ring: "hsl(var(--ring))",
-				chart: {
-					1: "hsl(var(--chart-1))",
-					2: "hsl(var(--chart-2))",
-					3: "hsl(var(--chart-3))",
-					4: "hsl(var(--chart-4))",
-					5: "hsl(var(--chart-5))",
+			},
+			borderRadius: {
+				lg: "var(--radius)",
+				md: "calc(var(--radius) - 2px)",
+				sm: "calc(var(--radius) - 4px)",
+			},
+			animation: {
+				"accordion-down": "accordion-down 0.2s ease-out",
+				"accordion-up": "accordion-up 0.2s ease-out",
+				"gradient": "gradient 8s linear infinite",
+				"float": "float 6s ease-in-out infinite",
+			},
+			keyframes: {
+				"accordion-down": {
+					from: { height: "0" },
+					to: { height: "var(--radix-accordion-content-height)" },
 				},
-				sidebar: {
-					DEFAULT: "hsl(var(--sidebar-background))",
-					foreground: "hsl(var(--sidebar-foreground))",
-					primary: "hsl(var(--sidebar-primary))",
-					"primary-foreground":
-						"hsl(var(--sidebar-primary-foreground))",
-					accent: "hsl(var(--sidebar-accent))",
-					"accent-foreground":
-						"hsl(var(--sidebar-accent-foreground))",
-					border: "hsl(var(--sidebar-border))",
-					ring: "hsl(var(--sidebar-ring))",
+				"accordion-up": {
+					from: { height: "var(--radix-accordion-content-height)" },
+					to: { height: "0" },
+				},
+				gradient: {
+					"0%, 100%": {
+						"background-size": "200% 200%",
+						"background-position": "left center",
+					},
+					"50%": {
+						"background-size": "200% 200%",
+						"background-position": "right center",
+					},
+				},
+				float: {
+					"0%, 100%": { transform: "translateY(0)" },
+					"50%": { transform: "translateY(-10px)" },
 				},
 			},
 		},
 	},
-	plugins: [
-		require("tailwindcss-animate"),
-		function ({ addUtilities }) {
-			addUtilities({
-				".dev-border": {
-					border: "2px dashed #ef4444",
-				},
-				".dev-border-2": {
-					border: "1px dashed #006400",
-				},
-				".dev-border-3": {
-					border: "1px dashed #FF00BF",
-				},
-			});
-		},
-	],
+	plugins: [require("tailwindcss-animate")],
 };

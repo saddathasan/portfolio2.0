@@ -1,45 +1,80 @@
-import { SkipLink } from "@/components/Accessibility";
-import { AppSidebar } from "@/components/AppSidebar";
-import { MobileNavigation } from "@/components/MobileNavigation";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { BRAND_CONFIG, NAVIGATION_LINKS, MOBILE_NAVIGATION_LINKS } from "@/constants";
-import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
+import { Layout } from "@/components/Layout";
+import { Terminal } from "@/components/terminal/Terminal";
+import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
+import { useState, useEffect, createContext, useContext } from "react";
+
+// UI Mode Context
+interface UIModeContextType {
+	mode: "terminal" | "gui";
+	setMode: (mode: "terminal" | "gui") => void;
+}
+
+const UIModeContext = createContext<UIModeContextType>({
+	mode: "terminal",
+	setMode: () => {},
+});
+
+export const useUIMode = () => useContext(UIModeContext);
+
+function RootComponent() {
+	const [mode, setModeState] = useState<"terminal" | "gui">("terminal");
+
+	// Load preference from localStorage only if it was explicitly set
+	useEffect(() => {
+		const saved = localStorage.getItem("ui-mode");
+		// Only switch to GUI if user explicitly selected it before
+		if (saved === "gui") {
+			setModeState("gui");
+		}
+		// Otherwise, always default to terminal
+
+		// Listen for mode switch requests
+		const handleModeSwitch = (event: Event) => {
+			const customEvent = event as CustomEvent<string>;
+			if (customEvent.detail === "gui" || customEvent.detail === "terminal") {
+				setMode(customEvent.detail);
+			}
+		};
+
+		window.addEventListener("requestModeSwitch", handleModeSwitch);
+		return () => window.removeEventListener("requestModeSwitch", handleModeSwitch);
+	}, []);
+
+	const setMode = (newMode: "terminal" | "gui") => {
+		setModeState(newMode);
+		localStorage.setItem("ui-mode", newMode);
+	};
+
+	return (
+		<UIModeContext.Provider value={{ mode, setMode }}>
+			{mode === "terminal" ? (
+				<Terminal />
+			) : (
+				<>
+					<DarkModeEnsurer />
+					<Layout>
+						<Outlet />
+					</Layout>
+				</>
+			)}
+			{import.meta.env.DEV && <TanStackRouterDevtools position="bottom-right" />}
+		</UIModeContext.Provider>
+	);
+}
+
+// Component to ensure dark mode is applied
+function DarkModeEnsurer() {
+	useEffect(() => {
+		// Ensure dark class is present
+		if (!document.documentElement.classList.contains('dark')) {
+			document.documentElement.classList.add('dark');
+		}
+	}, []);
+	
+	return null;
+}
 
 export const Route = createRootRoute({
-	component: () => (
-		<>
-			<SkipLink targetId="main-content">Skip to main content</SkipLink>
-			<SidebarProvider className="md:pl-[3rem]">
-				{/* Desktop Sidebar - visible on desktop (≥768px), positioned on left */}
-				<AppSidebar
-					className="hidden md:flex"
-					brand={BRAND_CONFIG}
-					links={NAVIGATION_LINKS}
-				/>
-				<SidebarInset className="">
-					{/* Mobile App Bar with Hamburger Menu */}
-					<div className="sticky top-0 z-40 flex h-14 items-center justify-between border-b border-border/40 bg-background/95 backdrop-blur px-4 md:hidden">
-						<div className="flex items-center">
-							<Link to="/" className="text-xl font-title text-foreground hover:opacity-80 transition-opacity">
-								sh
-							</Link>
-						</div>
-						<MobileNavigation
-							// brand={BRAND_CONFIG}
-							links={MOBILE_NAVIGATION_LINKS}
-						/>
-					</div>
-					<main
-						id="main-content"
-						className="h-full w-full"
-						tabIndex={-1}>
-						<Outlet />
-					</main>
-					{/* <GlobalFooter /> */}
-				</SidebarInset>
-			</SidebarProvider>
-			{import.meta.env.DEV && <TanStackRouterDevtools position="bottom-right" />}
-		</>
-	),
+	component: RootComponent,
 });

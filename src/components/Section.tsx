@@ -1,124 +1,61 @@
-import { cn } from "@/lib/utils";
+import React from 'react';
+import { cn } from '@/lib/utils';
+import { motion } from 'framer-motion';
 
 interface SectionProps {
-	className?: string;
-	children: React.ReactNode;
-	animate?: boolean;
-	delay?: number;
+  id?: string;
+  title?: string;
+  subtitle?: string;
+  children: React.ReactNode;
+  className?: string;
+  fullWidth?: boolean;
 }
 
-interface SectionHeaderProps {
-	className?: string;
-	children: React.ReactNode;
-	centered?: boolean;
-	size?: "sm" | "md" | "lg" | "xl";
-	gradient?: boolean;
-}
-
-interface SectionContentProps {
-	className?: string;
-	children: React.ReactNode;
-	grid?: boolean;
-	columns?: 1 | 2 | 3 | 4;
-	gap?: "sm" | "md" | "lg" | "xl";
-	maxWidth?: "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "full";
-}
-
-// Root Section Component - minimal styling
-function Section({
-	className,
-	children,
-	...props
-}: Omit<SectionProps, 'animate' | 'delay'>) {
-	return (
-		<section
-			className={cn(
-				"py-16 px-4 max-w-4xl mx-auto",
-				className
-			)}
-			{...props}>
-			{children}
-		</section>
-	);
-}
-
-// Section Header - minimal styling
-function SectionHeader({
-	className,
-	children,
-	centered = false,
-	size = "lg",
-	...props
-}: Omit<SectionHeaderProps, 'gradient'>) {
-	const sizeClasses = {
-		sm: "text-2xl md:text-3xl",
-		md: "text-3xl md:text-4xl",
-		lg: "text-4xl md:text-5xl",
-		xl: "text-5xl md:text-6xl",
-	};
-
-	return (
-		<h2
-			className={cn(
-				"mb-8 leading-tight font-title font-medium text-foreground",
-				sizeClasses[size],
-				centered && "text-center",
-				className
-			)}
-			{...props}>
-			{children}
-		</h2>
-	);
-}
-
-// Section Content - minimal styling
-function SectionContent({
-	className,
-	children,
-	grid = false,
-	columns = 2,
-	gap = "md",
-	maxWidth = "4xl",
-	...props
-}: SectionContentProps) {
-	const gapClasses = {
-		sm: "gap-4",
-		md: "gap-6",
-		lg: "gap-8",
-		xl: "gap-12",
-	};
-
-	const maxWidthClasses = {
-		sm: "max-w-sm",
-		md: "max-w-md",
-		lg: "max-w-lg",
-		xl: "max-w-xl",
-		"2xl": "max-w-2xl",
-		"3xl": "max-w-3xl",
-		"4xl": "max-w-4xl",
-		full: "max-w-full",
-	};
-
-	const gridClasses = grid
-		? `grid grid-cols-1 md:grid-cols-${columns} ${gapClasses[gap]}`
-		: "";
-
-	return (
-		<div
-			className={cn(
-				"mx-auto",
-				maxWidthClasses[maxWidth],
-				gridClasses,
-				className
-			)}
-			{...props}>
-			{children}
-		</div>
-	);
-}
-
-// Compound exports
-Section.Header = SectionHeader;
-Section.Content = SectionContent;
-
-export { Section };
+export const Section: React.FC<SectionProps> = ({
+  id,
+  title,
+  subtitle,
+  children,
+  className,
+  fullWidth = false,
+}) => {
+  return (
+    <section
+      id={id}
+      className={cn(
+        'py-20 md:py-32 relative',
+        className
+      )}
+    >
+      <div className={cn('container mx-auto px-6', fullWidth ? 'max-w-none px-0' : '')}>
+        {(title || subtitle) && (
+          <div className="mb-16 md:mb-24">
+            {subtitle && (
+              <motion.span
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-primary font-mono text-sm tracking-wider uppercase block mb-2"
+              >
+                {subtitle}
+              </motion.span>
+            )}
+            {title && (
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+                className="text-3xl md:text-5xl font-bold tracking-tight"
+              >
+                {title}
+              </motion.h2>
+            )}
+            <div className="h-1 w-20 bg-primary mt-6 rounded-full opacity-50" />
+          </div>
+        )}
+        {children}
+      </div>
+    </section>
+  );
+};
