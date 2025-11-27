@@ -18,18 +18,6 @@ export function Terminal() {
 		inputRef.current?.focus();
 	}, [history]);
 
-	// Listen for mode switch event
-	useEffect(() => {
-		const handleSwitch = () => {
-			// Access the context to switch modes
-			const event = new CustomEvent("requestModeSwitch", { detail: "gui" });
-			window.dispatchEvent(event);
-		};
-
-		window.addEventListener("switchToGUI", handleSwitch);
-		return () => window.removeEventListener("switchToGUI", handleSwitch);
-	}, []);
-
 	// Focus input on click anywhere
 	const handleContainerClick = () => {
 		// Prevent focus stealing if user is selecting text

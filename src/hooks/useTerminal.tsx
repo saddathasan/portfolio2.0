@@ -51,7 +51,7 @@ export const useTerminal = () => {
 				case "help":
 					addToHistory(
 						cmd,
-						"Available commands: ls, cd, cat, clear, whoami, pwd, open, not-coder, help"
+						"Available commands: ls, cd, cat, clear, whoami, pwd, open, download, help"
 					);
 					break;
 
@@ -152,11 +152,20 @@ export const useTerminal = () => {
 				}
 
 				
-				case "not-coder":
-					addToHistory(cmd, "Switching to graphical interface...");
-					// Trigger mode switch via custom event
-					window.dispatchEvent(new CustomEvent("switchToGUI"));
+				case "download":
+				case "cv":
+				case "resume": {
+					// Trigger CV download
+					const cvUrl = "/resume.pdf"; // You should place your resume.pdf in the public folder
+					const link = document.createElement("a");
+					link.href = cvUrl;
+					link.download = "saddat_hasan_resume.pdf";
+					document.body.appendChild(link);
+					link.click();
+					document.body.removeChild(link);
+					addToHistory(cmd, "Downloading resume...");
 					break;
+				}
 
 				case "sudo":
 					addToHistory(cmd, "Permission denied: you are not the owner of this portfolio.");
