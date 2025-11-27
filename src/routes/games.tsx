@@ -12,25 +12,16 @@ function GamesPage() {
 
 	return (
 		<PageLayout>
-			<Section className="space-y-8">
+			<Section 
+				title="Sudoku Game" 
+				subtitle="🧩"
+				className="space-y-8"
+			>
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.6 }}
 					className="text-center space-y-4">
-					<motion.div
-						initial={{ scale: 0.8 }}
-						animate={{ scale: 1 }}
-						transition={{ delay: 0.2, duration: 0.5 }}
-						className="text-6xl mb-2">
-						🧩
-					</motion.div>
-					<Section.Header
-						size="xl"
-						centered
-						className="mb-2">
-						Sudoku Game
-					</Section.Header>
 					<motion.p
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}

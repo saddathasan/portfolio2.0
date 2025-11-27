@@ -1,144 +1,103 @@
-import { TechBadgeList } from "@/components/TechBadgeList";
-import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-} from "@/components/ui/card";
-import { cn } from "@/lib/utils";
-import type { Project } from "@/types";
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Github, ExternalLink, Folder } from 'lucide-react';
 
 interface ProjectCardProps {
-	project: Project;
-	index?: number;
-	className?: string;
+  title: string;
+  description: string;
+  tags: string[];
+  githubUrl?: string;
+  liveUrl?: string;
+  image?: string;
+  featured?: boolean;
 }
 
-interface ProjectCardHeaderProps {
-	title: string;
-	impact: string;
-	className?: string;
-}
+export const ProjectCard: React.FC<ProjectCardProps> = ({
+  title,
+  description,
+  tags,
+  githubUrl,
+  liveUrl,
+  image,
+  featured = false,
+}) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      whileHover={{ y: -5 }}
+      className="group relative rounded-2xl bg-card border border-border/50 overflow-hidden hover:border-primary/50 transition-colors h-full flex flex-col"
+    >
+      {/* Image Area */}
+      <div className="aspect-video w-full overflow-hidden bg-secondary/50 relative">
+        {image ? (
+          <img
+            src={image}
+            alt={title}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-muted-foreground/20">
+            <Folder className="w-20 h-20" />
+          </div>
+        )}
+        
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4 backdrop-blur-sm">
+          {githubUrl && (
+            <a
+              href={githubUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="p-3 rounded-full bg-background text-foreground hover:text-primary transition-colors"
+              title="View Code"
+            >
+              <Github className="w-6 h-6" />
+            </a>
+          )}
+          {liveUrl && (
+            <a
+              href={liveUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="p-3 rounded-full bg-background text-foreground hover:text-primary transition-colors"
+              title="View Live"
+            >
+              <ExternalLink className="w-6 h-6" />
+            </a>
+          )}
+        </div>
+      </div>
 
-interface ProjectCardContentProps {
-	description: string;
-	technologies: string[];
-	liveUrl?: string | null;
-	sourceUrl?: string | null;
-	className?: string;
-}
+      {/* Content */}
+      <div className="p-6 flex flex-col flex-grow">
+        <div className="flex items-start justify-between mb-4">
+          <h3 className="text-xl font-bold group-hover:text-primary transition-colors">
+            {title}
+          </h3>
+          {featured && (
+            <span className="text-xs font-mono text-accent bg-accent/10 px-2 py-1 rounded">
+              Featured
+            </span>
+          )}
+        </div>
+        
+        <p className="text-muted-foreground mb-6 line-clamp-3 flex-grow">
+          {description}
+        </p>
 
-// Root Project Card component - Lee Robinson ultra-minimal styling
-function ProjectCard({
-	project,
-	className,
-	...props
-}: Omit<ProjectCardProps, 'index'>) {
-	return (
-		<Card
-			className={cn(
-				"h-full flex flex-col border-0 shadow-none hover:bg-muted/30 transition-colors duration-200",
-				className,
-			)}
-			{...props}>
-			<ProjectCardHeader
-				title={project.title}
-				impact={project.impact}
-			/>
-			<ProjectCardContent
-				description={project.description}
-				technologies={project.technologies}
-				liveUrl={project.liveUrl}
-				sourceUrl={project.sourceUrl}
-			/>
-		</Card>
-	);
-}
-
-// Header with Lee Robinson ultra-minimal styling
-function ProjectCardHeader({
-	title,
-	impact,
-	className,
-	...props
-}: ProjectCardHeaderProps) {
-	return (
-		<div
-			className={cn(
-				"p-6 pb-3",
-				className,
-			)}
-			{...props}>
-			<h3 className="text-base font-medium text-foreground mb-1 line-clamp-2">
-				{title}
-			</h3>
-			<p className="text-sm text-muted-foreground line-clamp-1">
-				{impact}
-			</p>
-		</div>
-	);
-}
-
-// Content with minimal styling
-function ProjectCardContent({
-	description,
-	technologies,
-	liveUrl,
-	sourceUrl,
-	className,
-	...props
-}: ProjectCardContentProps) {
-	return (
-		<CardContent
-			className={cn(
-				"flex-1 flex flex-col p-6 pt-3",
-				className,
-			)}
-			{...props}>
-			<CardDescription className="text-sm text-muted-foreground mb-4 line-clamp-3 flex-1">
-				{description}
-			</CardDescription>
-			
-			<div className="space-y-4">
-				<TechBadgeList technologies={technologies} />
-				
-				<div className="flex gap-2">
-					{liveUrl && (
-						<Button
-							variant="default"
-							size="sm"
-							asChild
-							className="flex-1">
-							<a
-								href={liveUrl}
-								target="_blank"
-								rel="noopener noreferrer">
-								View Live
-							</a>
-						</Button>
-					)}
-					{sourceUrl && (
-						<Button
-							variant="outline"
-							size="sm"
-							asChild
-							className="flex-1">
-							<a
-								href={sourceUrl}
-								target="_blank"
-								rel="noopener noreferrer">
-								Source
-							</a>
-						</Button>
-					)}
-				</div>
-			</div>
-		</CardContent>
-	);
-}
-
-// Compound component structure
-ProjectCard.Header = ProjectCardHeader;
-ProjectCard.Content = ProjectCardContent;
-
-export { ProjectCard };
+        <div className="flex flex-wrap gap-2 mt-auto">
+          {tags.map((tag) => (
+            <span
+              key={tag}
+              className="text-xs font-mono text-primary/80 bg-primary/10 px-2 py-1 rounded"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    </motion.div>
+  );
+};

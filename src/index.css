@@ -90,59 +90,6 @@
 		--sidebar-primary-foreground: 0 0% 98%; /* Match main primary-foreground */
 		--sidebar-accent: 0 0% 96%; /* Match main accent */
 		--sidebar-accent-foreground: 0 0% 9%; /* Match main accent-foreground */
-		--sidebar-border: 0 0% 90%; /* Match main border */
-		--sidebar-ring: 0 0% 9%; /* Match main ring */
-	}
-
-	.dark {
-		/* Dark theme - Lee Robinson minimal palette */
-		--background: 0 0% 3%; /* Near black background */
-		--foreground: 0 0% 98%; /* Off-white text */
-		--card: 0 0% 3%; /* Near black cards */
-		--card-foreground: 0 0% 98%; /* Off-white text */
-		--popover: 0 0% 3%; /* Near black popover */
-		--popover-foreground: 0 0% 98%; /* Off-white text */
-		--primary: 0 0% 98%; /* Off-white primary */
-		--primary-foreground: 0 0% 9%; /* Near black text on primary */
-		--secondary: 0 0% 14%; /* Dark gray secondary */
-		--secondary-foreground: 0 0% 98%; /* Off-white text */
-		--muted: 0 0% 14%; /* Dark gray muted */
-		--muted-foreground: 0 0% 63%; /* Medium gray text */
-		--accent: 0 0% 14%; /* Dark gray accent */
-		--accent-foreground: 0 0% 98%; /* Off-white text */
-		--destructive: 0 62% 30%; /* Dark red for errors */
-		--destructive-foreground: 0 0% 98%; /* Off-white text */
-		--border: 0 0% 14%; /* Dark gray border */
-		--input: 0 0% 14%; /* Dark gray input */
-		--ring: 0 0% 83%; /* Light gray focus ring */
-		--chart-1: 0 0% 98%; /* Off-white */
-		--chart-2: 0 0% 63%; /* Medium gray */
-		--chart-3: 0 0% 45%; /* Darker gray */
-		--chart-4: 0 0% 25%; /* Very dark gray */
-		--chart-5: 0 0% 14%; /* Near black */
-		--sidebar-background: 0 0% 3%; /* Match main background */
-		--sidebar-foreground: 0 0% 98%; /* Match main foreground */
-		--sidebar-primary: 0 0% 98%; /* Match main primary */
-		--sidebar-primary-foreground: 0 0% 9%; /* Match main primary-foreground */
-		--sidebar-accent: 0 0% 14%; /* Match main accent */
-		--sidebar-accent-foreground: 0 0% 98%; /* Match main accent-foreground */
-		--sidebar-border: 0 0% 14%; /* Match main border */
-		--sidebar-ring: 0 0% 83%; /* Match main ring */
-	}
-}
-
-@layer base {
-	* {
-		@apply border-border;
-	}
-	body {
-		@apply bg-background text-foreground font-body;
-	}
-
-	/* Simple solid background */
-	body::before {
-		content: "";
-		position: fixed;
 		top: 0;
 		left: 0;
 		width: 100%;
@@ -150,6 +97,41 @@
 		background: hsl(var(--background));
 		pointer-events: none;
 		z-index: -1;
+	}
+
+	
+	.dark {
+		/* Dark theme - Terminal green accents on dark background */
+		--background: 222 47% 7%; /* Very dark navy blue-gray (#0d1117) */
+		--foreground: 210 20% 95%; /* Light gray-white text */
+		--card: 222 47% 11%; /* Slightly lighter dark cards */
+		--card-foreground: 210 20% 95%; /* Light gray-white text */
+		--popover: 222 47% 11%; /* Dark popover */
+		--popover-foreground: 210 20% 95%; /* Light text */
+		--primary: 120 100% 50%; /* Bright green (#00ff00) */
+		--primary-foreground: 222 47% 7%; /* Dark text on green */
+		--secondary: 222 47% 15%; /* Dark gray secondary */
+		--secondary-foreground: 210 20% 95%; /* Light text */
+		--muted: 222 47% 15%; /* Dark gray muted */
+		--muted-foreground: 210 10% 60%; /* Medium gray text */
+		--accent: 120 100% 40%; /* Darker green accent */
+		--accent-foreground: 210 20% 95%; /* Light text on green */
+		--destructive: 0 84% 60%; /* Red for errors */
+		--destructive-foreground: 210 20% 95%; /* Light text */
+		--border: 222 47% 20%; /* Dark border */
+		--input: 222 47% 15%; /* Dark input background */
+		--ring: 120 100% 50%; /* Green focus ring */
+		--chart-1: 120 100% 50%; /* Green */
+		--chart-2: 120 80% 40%; /* Darker green */
+		--chart-3: 160 50% 50%; /* Teal */
+		--chart-4: 80 50% 50%; /* Yellow-green */
+		--chart-5: 140 50% 50%; /* Mint */
+		--sidebar-background: 222 47% 7%; /* Match main background */
+		--sidebar-foreground: 210 20% 95%; /* Match main foreground */
+		--sidebar-primary: 120 100% 50%; /* Green */
+		--sidebar-primary-foreground: 222 47% 7%; /* Dark text */
+		--sidebar-accent: 222 47% 15%; /* Dark accent */
+		--sidebar-accent-foreground: 210 20% 95%; /* Light text */
 	}
 }
 
