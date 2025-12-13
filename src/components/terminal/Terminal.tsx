@@ -4,7 +4,7 @@ import { CommandInput } from "./CommandInput";
 import { OutputDisplay } from "./OutputDisplay";
 
 export function Terminal() {
-	const { history, currentPath, executeCommand } = useTerminal();
+	const { history, currentPath, fileSystem, executeCommand } = useTerminal();
 	const bottomRef = useRef<HTMLDivElement>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
 
@@ -70,13 +70,14 @@ export function Terminal() {
 			</div>
 
 			{/* Active Input */}
-			<div className="mt-2">
-				<CommandInput 
-					ref={inputRef}
-					currentPath={currentPath} 
-					onCommand={executeCommand} 
-				/>
-			</div>
+		<div className="mt-2">
+			<CommandInput 
+				ref={inputRef}
+				currentPath={currentPath}
+				fileSystem={fileSystem}
+				onCommand={executeCommand} 
+			/>
+		</div>
 
 			<div ref={bottomRef} />
 		</div>

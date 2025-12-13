@@ -189,6 +189,7 @@ export const useTerminal = () => {
 	return {
 		history: state.history,
 		currentPath: state.currentPath,
+		fileSystem: state.fileSystem,
 		executeCommand,
 	};
 };
