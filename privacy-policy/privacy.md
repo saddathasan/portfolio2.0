@@ -4,7 +4,7 @@
 
 ## Introduction
 
-The **IB Attendance Tracker** ("we", "our", or "the extension") is an internal productivity tool developed by **InfinitiBit** ("the Company") for its employees. This tool is designed to simplify daily attendance tracking within the company's ecosystem. We respect your privacy and are committed to protecting the limited data we collect. This Privacy Policy explains our data practices in compliance with the Chrome Web Store Developer Program Policies.
+The **IB Attendance Tracker** ("we", "our", or "the extension") is an internal productivity tool developed by **saddathasan** for InfinitiBit's employees. This tool is designed to simplify daily attendance tracking within the company's ecosystem. We respect your privacy and are committed to protecting the limited data we collect. This Privacy Policy explains our data practices in compliance with the Chrome Web Store Developer Program Policies.
 
 ## 1. Information We Collect
 
