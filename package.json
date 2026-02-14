@@ -53,6 +53,7 @@
 		"lowlight": "^3.3.0",
 		"lucide-react": "^0.515.0",
 		"nodemailer": "^7.0.6",
+		"octokit": "^5.0.5",
 		"prism-react-renderer": "^2.4.1",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",

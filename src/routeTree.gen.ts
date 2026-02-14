@@ -13,6 +13,7 @@ import { Route as WritingRouteImport } from './routes/writing'
 import { Route as RanksRouteImport } from './routes/ranks'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as PresentationRouteImport } from './routes/presentation'
+import { Route as GitProfileRouteImport } from './routes/git-profile'
 import { Route as GamesRouteImport } from './routes/games'
 import { Route as ExperienceRouteImport } from './routes/experience'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -26,6 +27,7 @@ import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as PresentationJsRouteImport } from './routes/presentation/js'
 import { Route as PresentationHtmlRouteImport } from './routes/presentation/html'
 import { Route as PresentationCssRouteImport } from './routes/presentation/css'
+import { Route as IbExtensionPrivacyPolicyRouteImport } from './routes/ib-extension/privacy-policy'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
 const WritingRoute = WritingRouteImport.update({
@@ -46,6 +48,11 @@ const ProjectsRoute = ProjectsRouteImport.update({
 const PresentationRoute = PresentationRouteImport.update({
   id: '/presentation',
   path: '/presentation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GitProfileRoute = GitProfileRouteImport.update({
+  id: '/git-profile',
+  path: '/git-profile',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GamesRoute = GamesRouteImport.update({
@@ -113,6 +120,12 @@ const PresentationCssRoute = PresentationCssRouteImport.update({
   path: '/css',
   getParentRoute: () => PresentationRoute,
 } as any)
+const IbExtensionPrivacyPolicyRoute =
+  IbExtensionPrivacyPolicyRouteImport.update({
+    id: '/ib-extension/privacy-policy',
+    path: '/ib-extension/privacy-policy',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const BlogSlugRoute = BlogSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -128,11 +141,13 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/experience': typeof ExperienceRoute
   '/games': typeof GamesRoute
+  '/git-profile': typeof GitProfileRoute
   '/presentation': typeof PresentationRouteWithChildren
   '/projects': typeof ProjectsRoute
   '/ranks': typeof RanksRoute
   '/writing': typeof WritingRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/ib-extension/privacy-policy': typeof IbExtensionPrivacyPolicyRoute
   '/presentation/css': typeof PresentationCssRoute
   '/presentation/html': typeof PresentationHtmlRoute
   '/presentation/js': typeof PresentationJsRoute
@@ -147,10 +162,12 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/experience': typeof ExperienceRoute
   '/games': typeof GamesRoute
+  '/git-profile': typeof GitProfileRoute
   '/projects': typeof ProjectsRoute
   '/ranks': typeof RanksRoute
   '/writing': typeof WritingRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/ib-extension/privacy-policy': typeof IbExtensionPrivacyPolicyRoute
   '/presentation/css': typeof PresentationCssRoute
   '/presentation/html': typeof PresentationHtmlRoute
   '/presentation/js': typeof PresentationJsRoute
@@ -167,11 +184,13 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/experience': typeof ExperienceRoute
   '/games': typeof GamesRoute
+  '/git-profile': typeof GitProfileRoute
   '/presentation': typeof PresentationRouteWithChildren
   '/projects': typeof ProjectsRoute
   '/ranks': typeof RanksRoute
   '/writing': typeof WritingRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/ib-extension/privacy-policy': typeof IbExtensionPrivacyPolicyRoute
   '/presentation/css': typeof PresentationCssRoute
   '/presentation/html': typeof PresentationHtmlRoute
   '/presentation/js': typeof PresentationJsRoute
@@ -189,11 +208,13 @@ export interface FileRouteTypes {
     | '/contact'
     | '/experience'
     | '/games'
+    | '/git-profile'
     | '/presentation'
     | '/projects'
     | '/ranks'
     | '/writing'
     | '/blog/$slug'
+    | '/ib-extension/privacy-policy'
     | '/presentation/css'
     | '/presentation/html'
     | '/presentation/js'
@@ -208,10 +229,12 @@ export interface FileRouteTypes {
     | '/contact'
     | '/experience'
     | '/games'
+    | '/git-profile'
     | '/projects'
     | '/ranks'
     | '/writing'
     | '/blog/$slug'
+    | '/ib-extension/privacy-policy'
     | '/presentation/css'
     | '/presentation/html'
     | '/presentation/js'
@@ -227,11 +250,13 @@ export interface FileRouteTypes {
     | '/contact'
     | '/experience'
     | '/games'
+    | '/git-profile'
     | '/presentation'
     | '/projects'
     | '/ranks'
     | '/writing'
     | '/blog/$slug'
+    | '/ib-extension/privacy-policy'
     | '/presentation/css'
     | '/presentation/html'
     | '/presentation/js'
@@ -248,10 +273,12 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   ExperienceRoute: typeof ExperienceRoute
   GamesRoute: typeof GamesRoute
+  GitProfileRoute: typeof GitProfileRoute
   PresentationRoute: typeof PresentationRouteWithChildren
   ProjectsRoute: typeof ProjectsRoute
   RanksRoute: typeof RanksRoute
   WritingRoute: typeof WritingRoute
+  IbExtensionPrivacyPolicyRoute: typeof IbExtensionPrivacyPolicyRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -282,6 +309,13 @@ declare module '@tanstack/react-router' {
       path: '/presentation'
       fullPath: '/presentation'
       preLoaderRoute: typeof PresentationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/git-profile': {
+      id: '/git-profile'
+      path: '/git-profile'
+      fullPath: '/git-profile'
+      preLoaderRoute: typeof GitProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/games': {
@@ -375,6 +409,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PresentationCssRouteImport
       parentRoute: typeof PresentationRoute
     }
+    '/ib-extension/privacy-policy': {
+      id: '/ib-extension/privacy-policy'
+      path: '/ib-extension/privacy-policy'
+      fullPath: '/ib-extension/privacy-policy'
+      preLoaderRoute: typeof IbExtensionPrivacyPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blog/$slug': {
       id: '/blog/$slug'
       path: '/$slug'
@@ -424,10 +465,12 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   ExperienceRoute: ExperienceRoute,
   GamesRoute: GamesRoute,
+  GitProfileRoute: GitProfileRoute,
   PresentationRoute: PresentationRouteWithChildren,
   ProjectsRoute: ProjectsRoute,
   RanksRoute: RanksRoute,
   WritingRoute: WritingRoute,
+  IbExtensionPrivacyPolicyRoute: IbExtensionPrivacyPolicyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
