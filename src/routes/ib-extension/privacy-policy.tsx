@@ -24,9 +24,8 @@ function PrivacyPolicy() {
 						Introduction
 					</h2>
 					<p className="leading-7 [&:not(:first-child)]:mt-6">
-						The <strong>IB Attendance Tracker</strong> ("we", "our",
-						or "the extension") is an internal productivity tool
-						developed by <strong>InfinitiBit</strong> ("the
+						The <strong>IB Attendance Tracker</strong> is an internal productivity tool
+						developed by 'saddat hasan' for <strong>InfinitiBit</strong> ("the
 						Company") for its employees. This tool is designed to
 						simplify daily attendance tracking within the company's
 						ecosystem. We respect your privacy and are committed to
@@ -191,7 +190,7 @@ function PrivacyPolicy() {
 					</p>
 					<div className="mt-4 rounded-md bg-muted p-4">
 						<p>
-							<strong>Company:</strong> hydra lab.
+							<strong>Developer:</strong> Saddat Hasan.
 						</p>
 						<p>
 							<strong>Email:</strong>{" "}
@@ -205,7 +204,7 @@ function PrivacyPolicy() {
 				</section>
 
 				<div className="pt-8 text-center text-sm text-muted-foreground">
-					&copy; {new Date().getFullYear()} InfinitiBit. All rights
+					&copy; {new Date().getFullYear()} Saddat Hasan. All rights
 					reserved.
 				</div>
 			</div>
