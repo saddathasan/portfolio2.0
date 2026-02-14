@@ -3,8 +3,13 @@ import { Octokit } from "octokit";
 // GitHub username for the portfolio
 const GITHUB_USERNAME = "saddathasan";
 
-// Create Octokit instance (no auth needed for public data)
-const octokit = new Octokit();
+// GitHub token from environment variable (required for GraphQL API)
+const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN;
+
+// Create Octokit instance with authentication
+const octokit = new Octokit({
+  auth: GITHUB_TOKEN,
+});
 
 export interface GitHubStats {
   totalContributions: number;
@@ -34,9 +39,19 @@ export interface GitHubStats {
   currentStreak: number;
 }
 
+// Get current year date range for contributions
+function getYearDateRange() {
+  const now = new Date();
+  const year = now.getFullYear();
+  return {
+    from: `${year}-01-01T00:00:00Z`,
+    to: `${year}-12-31T23:59:59Z`,
+  };
+}
+
 // GraphQL query for user stats
 const USER_STATS_QUERY = `
-query($username: String!) {
+query($username: String!, $from: DateTime!, $to: DateTime!) {
   user(login: $username) {
     followers {
       totalCount
@@ -70,7 +85,11 @@ query($username: String!) {
         }
       }
     }
-    contributionsCollection {
+    contributionsCollection(from: $from, to: $to) {
+      totalCommitContributions
+      totalPullRequestContributions
+      totalIssueContributions
+      totalRepositoryContributions
       contributionCalendar {
         totalContributions
         weeks {
@@ -145,6 +164,8 @@ function calculateStreaks(
 }
 
 export async function fetchGitHubStats(): Promise<GitHubStats> {
+  const dateRange = getYearDateRange();
+  
   try {
     const response = await octokit.graphql<{
       user: {
@@ -170,6 +191,7 @@ export async function fetchGitHubStats(): Promise<GitHubStats> {
           }[];
         };
         contributionsCollection: {
+          totalCommitContributions: number;
           contributionCalendar: {
             totalContributions: number;
             weeks: {
@@ -182,7 +204,11 @@ export async function fetchGitHubStats(): Promise<GitHubStats> {
           };
         };
       };
-    }>(USER_STATS_QUERY, { username: GITHUB_USERNAME });
+    }>(USER_STATS_QUERY, { 
+      username: GITHUB_USERNAME,
+      from: dateRange.from,
+      to: dateRange.to,
+    });
 
     const user = response.user;
     const calendar = user.contributionsCollection.contributionCalendar;

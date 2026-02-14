@@ -51,7 +51,7 @@ export const useTerminal = () => {
 				case "help":
 					addToHistory(
 						cmd,
-						"Available commands: ls, cd, cat, clear, whoami, pwd, open, download, help"
+						"Available commands: ls, cd, cat, clear, whoami, pwd, open, download, git, help"
 					);
 					break;
 
@@ -164,6 +164,19 @@ export const useTerminal = () => {
 					link.click();
 					document.body.removeChild(link);
 					addToHistory(cmd, "Downloading resume...");
+					break;
+				}
+
+				case "git": {
+					if (arg === "profile" || arg === "wrapped") {
+						addToHistory(trimmedInput, "Opening Git Profile...");
+						window.location.href = "/git-profile";
+					} else if (arg === "log" || arg === "status") {
+						addToHistory(trimmedInput, "Opening Git Profile...");
+						window.location.href = "/git-profile";
+					} else {
+						addToHistory(trimmedInput, "Usage: git profile | git wrapped | git log");
+					}
 					break;
 				}
 
