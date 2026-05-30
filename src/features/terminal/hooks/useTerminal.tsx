@@ -1,9 +1,8 @@
-import {
-	initialFileSystem,
-	resolvePath,
-	type TerminalState,
-} from "@/features/terminal/lib/terminal";
+import { useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { initialFileSystem, type TerminalState } from "@/features/terminal/lib/terminal";
+import { commands, findCommand } from "@/features/terminal/engine/registry";
+import type { CommandContext } from "@/features/terminal/engine/types";
 
 export const useTerminal = () => {
 	const [state, setState] = useState<TerminalState>({
@@ -12,6 +11,7 @@ export const useTerminal = () => {
 		fileSystem: initialFileSystem,
 	});
 
+	const routerNavigate = useNavigate();
 	const initialized = useRef(false);
 
 	const addToHistory = useCallback(
@@ -38,160 +38,51 @@ export const useTerminal = () => {
 
 	const executeCommand = useCallback(
 		(input: string) => {
-			const trimmedInput = input.trim();
-			if (!trimmedInput) {
+			const trimmed = input.trim();
+			if (!trimmed) {
 				addToHistory("", "");
 				return;
 			}
 
-			const [cmd, ...args] = trimmedInput.split(" ");
-			const arg = args.join(" ");
+			const [name, ...args] = trimmed.split(/\s+/);
+			const command = findCommand(name);
 
-			switch (cmd) {
-				case "help":
-					addToHistory(
-						cmd,
-						"Available commands: ls, cd, cat, clear, whoami, pwd, open, download, git, help"
-					);
-					break;
+			if (!command) {
+				addToHistory(trimmed, `${name}: command not found (type 'help')`);
+				return;
+			}
 
-				case "clear":
-					clearHistory();
-					break;
+			const ctx: CommandContext = {
+				input: trimmed,
+				args,
+				argStr: args.join(" "),
+				currentPath: state.currentPath,
+				fileSystem: state.fileSystem,
+				commands,
+				history: state.history.map((h) => h.command).filter(Boolean),
+				setPath: (path) => setState((prev) => ({ ...prev, currentPath: path })),
+				clear: clearHistory,
+				navigate: (to) => routerNavigate({ to: to as never }),
+				openUrl: (url) => window.open(url, "_blank", "noopener,noreferrer"),
+			};
 
-				case "pwd":
-					addToHistory(cmd, "/" + state.currentPath.join("/"));
-					break;
-
-				case "whoami":
-					addToHistory(
-						cmd,
-						"Saddat Hasan - Software Engineer (Type 'cat about.md' for more)"
-					);
-					break;
-
-				case "ls": {
-					const targetPath = arg || ".";
-					const { node } = resolvePath(
-						state.currentPath,
-						targetPath,
-						state.fileSystem
-					);
-
-					if (!node) {
-						addToHistory(cmd, `ls: cannot access '${targetPath}': No such file or directory`);
-					} else if (node.type === "file") {
-						addToHistory(cmd, node.name);
-					} else {
-						// We don't need getDirectoryContents if we just want names from resolved node
-						const resolved = resolvePath(state.currentPath, targetPath, state.fileSystem);
-						if (resolved.node && resolved.node.children) {
-							const names = Object.values(resolved.node.children).map(child => {
-								return child.type === 'directory' ? `${child.name}/` : child.name;
-							}).join("  ");
-							addToHistory(cmd, names);
-						} else {
-							addToHistory(cmd, "");
-						}
-					}
-					break;
-				}
-
-				case "cd": {
-					const targetPath = arg || "/";
-					const { node, newPath } = resolvePath(
-						state.currentPath,
-						targetPath,
-						state.fileSystem
-					);
-
-					if (!node) {
-						addToHistory(cmd, `cd: ${targetPath}: No such file or directory`);
-					} else if (node.type !== "directory") {
-						addToHistory(cmd, `cd: ${targetPath}: Not a directory`);
-					} else {
-						setState((prev) => ({ ...prev, currentPath: newPath }));
-						addToHistory(cmd, "");
-					}
-					break;
-				}
-
-				case "cat": {
-					if (!arg) {
-						addToHistory(cmd, "cat: missing operand");
-						return;
-					}
-					const { node } = resolvePath(
-						state.currentPath,
-						arg,
-						state.fileSystem
-					);
-
-					if (!node) {
-						addToHistory(cmd, `cat: ${arg}: No such file or directory`);
-					} else if (node.type === "directory") {
-						addToHistory(cmd, `cat: ${arg}: Is a directory`);
-					} else {
-						addToHistory(cmd, node.content as unknown as string);
-					}
-					break;
-				}
-				
-				case "open": {
-					if (!arg) {
-						addToHistory(cmd, "open: missing operand");
-						return;
-					}
-					if (arg.startsWith("http")) {
-						window.open(arg, "_blank");
-						addToHistory(cmd, `Opening ${arg}...`);
-					} else {
-						addToHistory(cmd, `open: ${arg}: Invalid URL`);
-					}
-					break;
-				}
-
-				
-				case "download":
-				case "cv":
-				case "resume": {
-					// Trigger CV download
-					const cvUrl = "/resume.pdf"; // You should place your resume.pdf in the public folder
-					const link = document.createElement("a");
-					link.href = cvUrl;
-					link.download = "saddat_hasan_resume.pdf";
-					document.body.appendChild(link);
-					link.click();
-					document.body.removeChild(link);
-					addToHistory(cmd, "Downloading resume...");
-					break;
-				}
-
-				case "git": {
-					if (arg === "profile" || arg === "wrapped") {
-						addToHistory(trimmedInput, "Opening Git Profile...");
-						window.location.href = "/git-profile";
-					} else if (arg === "log" || arg === "status") {
-						addToHistory(trimmedInput, "Opening Git Profile...");
-						window.location.href = "/git-profile";
-					} else {
-						addToHistory(trimmedInput, "Usage: git profile | git wrapped | git log");
-					}
-					break;
-				}
-
-				case "sudo":
-					addToHistory(cmd, "Permission denied: you are not the owner of this portfolio.");
-					break;
-
-				default:
-					addToHistory(cmd, `${cmd}: command not found`);
+			const output = command.run(ctx);
+			// `undefined` => render nothing (e.g. `clear`). Everything else (incl. "") prints.
+			if (output !== undefined) {
+				addToHistory(trimmed, output as React.ReactNode);
 			}
 		},
-		[state.currentPath, state.fileSystem, addToHistory, clearHistory]
+		[
+			state.currentPath,
+			state.fileSystem,
+			state.history,
+			addToHistory,
+			clearHistory,
+			routerNavigate,
+		]
 	);
 
-	// Auto-run ls on startup
+	// Auto-run `ls` on first mount.
 	useEffect(() => {
 		if (!initialized.current) {
 			initialized.current = true;

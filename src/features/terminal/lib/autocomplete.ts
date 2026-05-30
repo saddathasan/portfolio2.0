@@ -1,31 +1,15 @@
+import { commandNames } from "../engine/registry";
 import type { FileSystemNode } from "./terminal";
 
-// Available terminal commands
-export const AVAILABLE_COMMANDS = [
-	"help",
-	"ls",
-	"cd",
-	"cat",
-	"clear",
-	"whoami",
-	"pwd",
-	"open",
-	"download",
-	"cv",
-	"resume",
-	"sudo",
-] as const;
-
-export type TerminalCommand = typeof AVAILABLE_COMMANDS[number];
-
 /**
- * Get command suggestions based on partial input
+ * Get command suggestions based on partial input.
+ * Sourced from the command registry, so new commands autocomplete automatically.
  */
 export function getCommandSuggestions(partialCommand: string): string[] {
 	if (!partialCommand) return [];
-	
+
 	const lower = partialCommand.toLowerCase();
-	return AVAILABLE_COMMANDS.filter(cmd => cmd.startsWith(lower));
+	return commandNames.filter((cmd) => cmd.startsWith(lower)).sort();
 }
 
 /**
