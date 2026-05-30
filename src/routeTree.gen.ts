@@ -9,55 +9,22 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as WritingRouteImport } from './routes/writing'
-import { Route as RanksRouteImport } from './routes/ranks'
 import { Route as ProjectsRouteImport } from './routes/projects'
-import { Route as PresentationRouteImport } from './routes/presentation'
 import { Route as GitProfileRouteImport } from './routes/git-profile'
-import { Route as GamesRouteImport } from './routes/games'
 import { Route as ExperienceRouteImport } from './routes/experience'
 import { Route as ContactRouteImport } from './routes/contact'
-import { Route as BookmarksRouteImport } from './routes/bookmarks'
-import { Route as BlogRouteImport } from './routes/blog'
-import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as PresentationIndexRouteImport } from './routes/presentation/index'
-import { Route as BlogIndexRouteImport } from './routes/blog.index'
-import { Route as PresentationJsRouteImport } from './routes/presentation/js'
-import { Route as PresentationHtmlRouteImport } from './routes/presentation/html'
-import { Route as PresentationCssRouteImport } from './routes/presentation/css'
 import { Route as IbExtensionPrivacyPolicyRouteImport } from './routes/ib-extension/privacy-policy'
-import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
-const WritingRoute = WritingRouteImport.update({
-  id: '/writing',
-  path: '/writing',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RanksRoute = RanksRouteImport.update({
-  id: '/ranks',
-  path: '/ranks',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ProjectsRoute = ProjectsRouteImport.update({
   id: '/projects',
   path: '/projects',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PresentationRoute = PresentationRouteImport.update({
-  id: '/presentation',
-  path: '/presentation',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const GitProfileRoute = GitProfileRouteImport.update({
   id: '/git-profile',
   path: '/git-profile',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const GamesRoute = GamesRouteImport.update({
-  id: '/games',
-  path: '/games',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ExperienceRoute = ExperienceRouteImport.update({
@@ -70,21 +37,6 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BookmarksRoute = BookmarksRouteImport.update({
-  id: '/bookmarks',
-  path: '/bookmarks',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BlogRoute = BlogRouteImport.update({
-  id: '/blog',
-  path: '/blog',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminRoute = AdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -95,208 +47,83 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PresentationIndexRoute = PresentationIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => PresentationRoute,
-} as any)
-const BlogIndexRoute = BlogIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => BlogRoute,
-} as any)
-const PresentationJsRoute = PresentationJsRouteImport.update({
-  id: '/js',
-  path: '/js',
-  getParentRoute: () => PresentationRoute,
-} as any)
-const PresentationHtmlRoute = PresentationHtmlRouteImport.update({
-  id: '/html',
-  path: '/html',
-  getParentRoute: () => PresentationRoute,
-} as any)
-const PresentationCssRoute = PresentationCssRouteImport.update({
-  id: '/css',
-  path: '/css',
-  getParentRoute: () => PresentationRoute,
-} as any)
 const IbExtensionPrivacyPolicyRoute =
   IbExtensionPrivacyPolicyRouteImport.update({
     id: '/ib-extension/privacy-policy',
     path: '/ib-extension/privacy-policy',
     getParentRoute: () => rootRouteImport,
   } as any)
-const BlogSlugRoute = BlogSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => BlogRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/admin': typeof AdminRoute
-  '/blog': typeof BlogRouteWithChildren
-  '/bookmarks': typeof BookmarksRoute
   '/contact': typeof ContactRoute
   '/experience': typeof ExperienceRoute
-  '/games': typeof GamesRoute
   '/git-profile': typeof GitProfileRoute
-  '/presentation': typeof PresentationRouteWithChildren
   '/projects': typeof ProjectsRoute
-  '/ranks': typeof RanksRoute
-  '/writing': typeof WritingRoute
-  '/blog/$slug': typeof BlogSlugRoute
   '/ib-extension/privacy-policy': typeof IbExtensionPrivacyPolicyRoute
-  '/presentation/css': typeof PresentationCssRoute
-  '/presentation/html': typeof PresentationHtmlRoute
-  '/presentation/js': typeof PresentationJsRoute
-  '/blog/': typeof BlogIndexRoute
-  '/presentation/': typeof PresentationIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/admin': typeof AdminRoute
-  '/bookmarks': typeof BookmarksRoute
   '/contact': typeof ContactRoute
   '/experience': typeof ExperienceRoute
-  '/games': typeof GamesRoute
   '/git-profile': typeof GitProfileRoute
   '/projects': typeof ProjectsRoute
-  '/ranks': typeof RanksRoute
-  '/writing': typeof WritingRoute
-  '/blog/$slug': typeof BlogSlugRoute
   '/ib-extension/privacy-policy': typeof IbExtensionPrivacyPolicyRoute
-  '/presentation/css': typeof PresentationCssRoute
-  '/presentation/html': typeof PresentationHtmlRoute
-  '/presentation/js': typeof PresentationJsRoute
-  '/blog': typeof BlogIndexRoute
-  '/presentation': typeof PresentationIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/admin': typeof AdminRoute
-  '/blog': typeof BlogRouteWithChildren
-  '/bookmarks': typeof BookmarksRoute
   '/contact': typeof ContactRoute
   '/experience': typeof ExperienceRoute
-  '/games': typeof GamesRoute
   '/git-profile': typeof GitProfileRoute
-  '/presentation': typeof PresentationRouteWithChildren
   '/projects': typeof ProjectsRoute
-  '/ranks': typeof RanksRoute
-  '/writing': typeof WritingRoute
-  '/blog/$slug': typeof BlogSlugRoute
   '/ib-extension/privacy-policy': typeof IbExtensionPrivacyPolicyRoute
-  '/presentation/css': typeof PresentationCssRoute
-  '/presentation/html': typeof PresentationHtmlRoute
-  '/presentation/js': typeof PresentationJsRoute
-  '/blog/': typeof BlogIndexRoute
-  '/presentation/': typeof PresentationIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/about'
-    | '/admin'
-    | '/blog'
-    | '/bookmarks'
     | '/contact'
     | '/experience'
-    | '/games'
     | '/git-profile'
-    | '/presentation'
     | '/projects'
-    | '/ranks'
-    | '/writing'
-    | '/blog/$slug'
     | '/ib-extension/privacy-policy'
-    | '/presentation/css'
-    | '/presentation/html'
-    | '/presentation/js'
-    | '/blog/'
-    | '/presentation/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
-    | '/admin'
-    | '/bookmarks'
     | '/contact'
     | '/experience'
-    | '/games'
     | '/git-profile'
     | '/projects'
-    | '/ranks'
-    | '/writing'
-    | '/blog/$slug'
     | '/ib-extension/privacy-policy'
-    | '/presentation/css'
-    | '/presentation/html'
-    | '/presentation/js'
-    | '/blog'
-    | '/presentation'
   id:
     | '__root__'
     | '/'
     | '/about'
-    | '/admin'
-    | '/blog'
-    | '/bookmarks'
     | '/contact'
     | '/experience'
-    | '/games'
     | '/git-profile'
-    | '/presentation'
     | '/projects'
-    | '/ranks'
-    | '/writing'
-    | '/blog/$slug'
     | '/ib-extension/privacy-policy'
-    | '/presentation/css'
-    | '/presentation/html'
-    | '/presentation/js'
-    | '/blog/'
-    | '/presentation/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  AdminRoute: typeof AdminRoute
-  BlogRoute: typeof BlogRouteWithChildren
-  BookmarksRoute: typeof BookmarksRoute
   ContactRoute: typeof ContactRoute
   ExperienceRoute: typeof ExperienceRoute
-  GamesRoute: typeof GamesRoute
   GitProfileRoute: typeof GitProfileRoute
-  PresentationRoute: typeof PresentationRouteWithChildren
   ProjectsRoute: typeof ProjectsRoute
-  RanksRoute: typeof RanksRoute
-  WritingRoute: typeof WritingRoute
   IbExtensionPrivacyPolicyRoute: typeof IbExtensionPrivacyPolicyRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/writing': {
-      id: '/writing'
-      path: '/writing'
-      fullPath: '/writing'
-      preLoaderRoute: typeof WritingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ranks': {
-      id: '/ranks'
-      path: '/ranks'
-      fullPath: '/ranks'
-      preLoaderRoute: typeof RanksRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/projects': {
       id: '/projects'
       path: '/projects'
@@ -304,25 +131,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/presentation': {
-      id: '/presentation'
-      path: '/presentation'
-      fullPath: '/presentation'
-      preLoaderRoute: typeof PresentationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/git-profile': {
       id: '/git-profile'
       path: '/git-profile'
       fullPath: '/git-profile'
       preLoaderRoute: typeof GitProfileRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/games': {
-      id: '/games'
-      path: '/games'
-      fullPath: '/games'
-      preLoaderRoute: typeof GamesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/experience': {
@@ -339,27 +152,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/bookmarks': {
-      id: '/bookmarks'
-      path: '/bookmarks'
-      fullPath: '/bookmarks'
-      preLoaderRoute: typeof BookmarksRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog': {
-      id: '/blog'
-      path: '/blog'
-      fullPath: '/blog'
-      preLoaderRoute: typeof BlogRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin': {
-      id: '/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AdminRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -374,41 +166,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/presentation/': {
-      id: '/presentation/'
-      path: '/'
-      fullPath: '/presentation/'
-      preLoaderRoute: typeof PresentationIndexRouteImport
-      parentRoute: typeof PresentationRoute
-    }
-    '/blog/': {
-      id: '/blog/'
-      path: '/'
-      fullPath: '/blog/'
-      preLoaderRoute: typeof BlogIndexRouteImport
-      parentRoute: typeof BlogRoute
-    }
-    '/presentation/js': {
-      id: '/presentation/js'
-      path: '/js'
-      fullPath: '/presentation/js'
-      preLoaderRoute: typeof PresentationJsRouteImport
-      parentRoute: typeof PresentationRoute
-    }
-    '/presentation/html': {
-      id: '/presentation/html'
-      path: '/html'
-      fullPath: '/presentation/html'
-      preLoaderRoute: typeof PresentationHtmlRouteImport
-      parentRoute: typeof PresentationRoute
-    }
-    '/presentation/css': {
-      id: '/presentation/css'
-      path: '/css'
-      fullPath: '/presentation/css'
-      preLoaderRoute: typeof PresentationCssRouteImport
-      parentRoute: typeof PresentationRoute
-    }
     '/ib-extension/privacy-policy': {
       id: '/ib-extension/privacy-policy'
       path: '/ib-extension/privacy-policy'
@@ -416,60 +173,16 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IbExtensionPrivacyPolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog/$slug': {
-      id: '/blog/$slug'
-      path: '/$slug'
-      fullPath: '/blog/$slug'
-      preLoaderRoute: typeof BlogSlugRouteImport
-      parentRoute: typeof BlogRoute
-    }
   }
 }
-
-interface BlogRouteChildren {
-  BlogSlugRoute: typeof BlogSlugRoute
-  BlogIndexRoute: typeof BlogIndexRoute
-}
-
-const BlogRouteChildren: BlogRouteChildren = {
-  BlogSlugRoute: BlogSlugRoute,
-  BlogIndexRoute: BlogIndexRoute,
-}
-
-const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
-
-interface PresentationRouteChildren {
-  PresentationCssRoute: typeof PresentationCssRoute
-  PresentationHtmlRoute: typeof PresentationHtmlRoute
-  PresentationJsRoute: typeof PresentationJsRoute
-  PresentationIndexRoute: typeof PresentationIndexRoute
-}
-
-const PresentationRouteChildren: PresentationRouteChildren = {
-  PresentationCssRoute: PresentationCssRoute,
-  PresentationHtmlRoute: PresentationHtmlRoute,
-  PresentationJsRoute: PresentationJsRoute,
-  PresentationIndexRoute: PresentationIndexRoute,
-}
-
-const PresentationRouteWithChildren = PresentationRoute._addFileChildren(
-  PresentationRouteChildren,
-)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  AdminRoute: AdminRoute,
-  BlogRoute: BlogRouteWithChildren,
-  BookmarksRoute: BookmarksRoute,
   ContactRoute: ContactRoute,
   ExperienceRoute: ExperienceRoute,
-  GamesRoute: GamesRoute,
   GitProfileRoute: GitProfileRoute,
-  PresentationRoute: PresentationRouteWithChildren,
   ProjectsRoute: ProjectsRoute,
-  RanksRoute: RanksRoute,
-  WritingRoute: WritingRoute,
   IbExtensionPrivacyPolicyRoute: IbExtensionPrivacyPolicyRoute,
 }
 export const routeTree = rootRouteImport

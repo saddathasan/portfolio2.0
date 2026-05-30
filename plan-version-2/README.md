@@ -20,7 +20,7 @@ This folder is the **execution plan** for the portfolio revamp. Read [`00-master
 
 ## How to work this across sessions
 1. **One phase at a time.** Don't start a phase until the previous one's "Definition of Done" is checked.
-2. **One branch per phase**, e.g. `feat/revamp-phase-0`. Open a PR when the phase's DoD is met.
+2. **All revamp work lives on the long-lived `version-2` branch.** Commit per task-group with clear messages; the phase docs' "branch" lines are superseded by this single branch.
 3. At the **start of a session**, open the current phase doc, read its "Session log" + "Handoff notes", and pick up the first unchecked task.
 4. At the **end of a session**, tick completed boxes, append a row to the phase's "Session log", and write a one-line "Handoff note" for next time.
 5. **Quality gate every session:** `pnpm build` (or `npm run build`) + `pnpm lint` must stay green before you stop. Never leave the tree broken between sessions.

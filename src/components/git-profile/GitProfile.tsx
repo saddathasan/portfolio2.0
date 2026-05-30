@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Github, Flame, Code, Users, BookOpen } from "lucide-react";
 import { fetchGitHubStats } from "@/lib/github";
@@ -8,17 +8,40 @@ import { ContributionGrid } from "./ContributionGrid";
 import { RepoCard } from "./RepoCard";
 import "./git-profile.css";
 
+type GitHubStats = Awaited<ReturnType<typeof fetchGitHubStats>>;
+
+// Module-level cache so navigating away and back doesn't refetch (replaces react-query).
+let statsCache: GitHubStats | null = null;
+let statsPromise: Promise<GitHubStats> | null = null;
+
 export function GitProfile() {
-  const { data: stats, isLoading, error } = useQuery({
-    queryKey: ["github-stats"],
-    queryFn: fetchGitHubStats,
-    staleTime: 1000 * 60 * 30, // 30 minutes - data doesn't change often
-    gcTime: 1000 * 60 * 60, // 1 hour cache
-    refetchOnWindowFocus: false, // Don't refetch when window regains focus
-    refetchOnMount: false, // Don't refetch when component remounts
-    refetchOnReconnect: false, // Don't refetch on reconnect
-    retry: 1, // Only retry once on failure
-  });
+  const [stats, setStats] = useState<GitHubStats | null>(statsCache);
+  const [isLoading, setIsLoading] = useState(!statsCache);
+  const [error, setError] = useState<unknown>(null);
+
+  useEffect(() => {
+    if (statsCache) return;
+    let active = true;
+    statsPromise = statsPromise ?? fetchGitHubStats();
+    statsPromise
+      .then((data) => {
+        statsCache = data;
+        if (active) {
+          setStats(data);
+          setIsLoading(false);
+        }
+      })
+      .catch((err) => {
+        statsPromise = null;
+        if (active) {
+          setError(err);
+          setIsLoading(false);
+        }
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   if (isLoading) {
     return (

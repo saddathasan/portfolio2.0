@@ -135,7 +135,11 @@
 ## Session log
 | Date | What got done | Build green? | Handoff note (start here next time) |
 |------|---------------|--------------|-------------------------------------|
-| | | | |
+| 2026-05-31 | Branch `version-2` created from `feat/privacy-page` HEAD (main was stale). Groups A–F complete + G fonts. Removed all cut routes/pages/components/hooks/context/lib/data; deleted both email backends (`api/`, `functions/api/`) + `dev-server.js`; contact route now a `mailto:` CTA (ContactForm deleted); removed `supabase/`, `vercel.json`, dead root scripts; trimmed dead deps from `package.json` manifest; unwired QueryClient+AuthProvider from `main.tsx`; refactored `GitProfile` off react-query → module-cached fetch hook; rewrote `components/index.ts` barrel; deleted 11 orphan components; cut 3 unused fonts (Inter/Cabinet/Panchang). **Bundle: 1,299 kB → 271 kB JS (379 → 70 kB gz); fonts 1.5 MB → 423 kB.** | ✅ (via `./node_modules/.bin/tsc -b && vite build`; lint 0 errors / 13 pre-existing warnings) | **START HERE:** (1) Run `pnpm install` in a real terminal to migrate the pnpm v10→v11 store, prune node_modules, and sync `pnpm-lock.yaml`/`package-lock.json` to the trimmed manifest — `pnpm <script>` currently fails in non-TTY because of this. (2) Then do **Group H** (folder restructure) as a focused pass. (3) Decide Group G deep token-unification timing (currently intertwined with Phase 1 terminal skin / Phase 2 GUI skin — may be cleaner to do alongside those). |
 
 ## Handoff notes
-_(Write the single most useful sentence for your next session here.)_
+- **Lockfiles are intentionally out of sync** with `package.json` (deps removed from manifest, still physically in `node_modules`). Build/lint verified via direct `./node_modules/.bin/*` binaries. A `pnpm install` (with TTY) is required to reconcile — do this first next session.
+- **Group F consolidation was scoped down on purpose:** only dead (0-importer) components were deleted. The remaining nav/footer/hero duplicates (`Navbar`/`Navigation`/`Layout`, `Hero`/`HeroSection`, `Footer`/`FooterCallToAction`) are still imported by current routes and will be replaced by single components during the **Phase 2** GUI redesign — don't force-delete them now.
+- **`__root.tsx` still force-adds `.dark` globally** (terminal depends on it). Scoping this to the terminal container is a Phase 1/2 task, not done yet.
+- `functions/` dir is now empty (Phase 3 recreates `functions/api/github.ts`). Empty dirs aren't tracked by git.
+- The `dist/` build artifacts are present from verification — gitignored, ignore.

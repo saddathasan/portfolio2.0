@@ -9,4 +9,3 @@ export { useMediaQuery } from './useMediaQuery';
 export { usePrefersReducedMotion } from './usePrefersReducedMotion';
 export { useScrollPosition } from './useScrollPosition';
 export { useFocusManagement } from './useFocusManagement';
-export { useSudoku } from './useSudoku';

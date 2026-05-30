@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Section } from "@/components/Section";
-import { ContactForm } from "@/components/ContactForm";
 import { contactInfo, contactPageInfo } from "@/data/contact";
 import { Mail, Linkedin, Github, MapPin } from "lucide-react";
+
+const EMAIL = "saddathasan94@gmail.com";
 
 export const Route = createFileRoute("/contact")({
 	component: Contact,
@@ -53,9 +54,18 @@ function Contact() {
 						</div>
 					</div>
 
-					{/* Contact Form */}
-					<div className="bg-card/30 p-8 rounded-3xl border border-border/50 backdrop-blur-sm">
-						<ContactForm responseTime={contactPageInfo.responseTime} />
+					{/* Direct email CTA (no form) */}
+					<div className="bg-card/30 p-8 rounded-3xl border border-border/50 backdrop-blur-sm flex flex-col justify-center gap-6">
+						<div>
+							<h3 className="text-2xl font-bold mb-2">Send me an email</h3>
+							<p className="text-muted-foreground">{contactPageInfo.responseTime}</p>
+						</div>
+						<a
+							href={`mailto:${EMAIL}`}
+							className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-all w-fit"
+						>
+							<Mail className="w-5 h-5" /> {EMAIL}
+						</a>
 					</div>
 				</div>
 			</Section>

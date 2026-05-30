@@ -1,85 +1,29 @@
-// Core Layout Components
-export { CodePreview } from "./CodePreview";
-export { ContentGrid } from "./ContentGrid";
+// Component barrel — surviving components after the v2 Phase 0 cleanup.
+// NOTE: nav/footer/hero duplicates (Navbar/Navigation/Layout, Hero/HeroSection,
+// Footer/FooterCallToAction) are intentionally NOT consolidated here yet — that
+// happens in Phase 2 when the GUI pages are redesigned around a single Nav/Footer/Hero.
+
+// Layout
 export { PageHeader } from "./PageHeader";
 export { PageLayout } from "./PageLayout";
 export { Section } from "./Section";
 
-// Navigation Components
-export { FooterCallToAction } from "./FooterCallToAction";
-export { Navigation } from "./Navigation";
-
-// Content Components
-export { AnimatedCard } from "./AnimatedCard";
-export { HeroSection } from "./HeroSection";
+// Content
+export { Hero } from "./Hero";
 export { InfoCard } from "./InfoCard";
 export { ProjectCard } from "./ProjectCard";
+export { SkillBadge } from "./SkillBadge";
+export { TechBadgeList } from "./TechBadgeList";
 
-// Specialized Components
-export { BiographySection } from "./BiographySection";
-export { ContactForm } from "./ContactForm";
+// Specialized
 export { ContactInfo } from "./ContactInfo";
 export { ExperienceTimeline } from "./ExperienceTimeline";
 export { SkillsSidebar } from "./SkillsSidebar";
-export { default as SudokuGame } from "./sudokuGame";
-export { TechBadgeList } from "./TechBadgeList";
 
-// Global Components
-export { GlobalFooter } from "./GlobalFooter";
+// Global
+export { Footer } from "./Footer";
 export { ThemeToggle } from "./ThemeToggle";
+export { SEO } from "./SEO";
 
-// Re-export all UI components
+// Re-export all UI primitives
 export * from "./ui";
-
-/**
- * Portfolio Component Library
- *
- * This is a comprehensive, modular component library built using the compound component pattern.
- * All components are designed to be reusable, composable, and maintainable.
- *
- * Key Features:
- * - Compound component pattern for maximum flexibility
- * - TypeScript support with proper typing
- * - Consistent animation and theming
- * - Responsive design built-in
- * - Accessible by default
- *
- * Usage Examples:
- *
- * Page Layout:
- * ```tsx
- * <PageLayout.Container>
- *   <PageLayout.Main>
- *     <PageHeader>
- *       <PageHeader.Title>Page Title</PageHeader.Title>
- *       <PageHeader.Description>Description</PageHeader.Description>
- *     </PageHeader>
- *     <Section>
- *       <Section.Header>Section Title</Section.Header>
- *       <Section.Content>Content here</Section.Content>
- *     </Section>
- *   </PageLayout.Main>
- * </PageLayout.Container>
- * ```
- *
- * Navigation:
- * ```tsx
- * <Navigation>
- *   <Navigation.Brand>Brand</Navigation.Brand>
- *   <Navigation.Links>
- *     <Navigation.Link to="/">Home</Navigation.Link>
- *   </Navigation.Links>
- *   <Navigation.Actions>
- *     <Navigation.Action href="/resume">Resume</Navigation.Action>
- *   </Navigation.Actions>
- * </Navigation>
- * ```
- *
- * Content Grid:
- * ```tsx
- * <ContentGrid columns={3} staggerChildren>
- *   <ContentGrid.Item>Item 1</ContentGrid.Item>
- *   <ContentGrid.Item>Item 2</ContentGrid.Item>
- * </ContentGrid>
- * ```
- */

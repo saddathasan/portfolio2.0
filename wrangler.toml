@@ -7,17 +7,7 @@ compatibility_date = "2024-01-01"
 compatibility_date = "2024-01-01"
 
 # Environment variables (set these in Cloudflare Dashboard)
-# GMAIL_USER = "your-gmail@gmail.com"
-# GMAIL_APP_PASSWORD = "your-app-password"
-# RECIPIENT_EMAIL = "saddathasan94@gmail.com"
-# SMTP_HOST = "smtp.gmail.com"
-# SMTP_PORT = "587"
-# SMTP_SECURE = "false"
-# RATE_LIMIT_MAX = "5"
-# EMAILJS_SERVICE_ID = "your-service-id"
-# EMAILJS_TEMPLATE_ID = "your-template-id"
-# EMAILJS_USER_ID = "your-user-id"
-# GMAIL_ACCESS_TOKEN = "your-access-token"
+# GITHUB_TOKEN = "..."   # Phase 3: server-side git-profile proxy (functions/api/github.ts)
 
 # Build configuration
 [build]

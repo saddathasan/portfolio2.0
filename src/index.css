@@ -2,35 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Variable Font Declarations */
-@font-face {
-	font-family: 'Inter Variable';
-	src: url('./fonts/InterVF.ttf') format('truetype-variations');
-	font-weight: 100 900;
-	font-style: normal;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: 'Cabinet Grotesk Variable';
-	src: url('./fonts/CabinetGrotesk-Variable.ttf') format('truetype-variations');
-	font-weight: 100 900;
-	font-style: normal;
-	font-display: swap;
-}
-
+/* Variable Font Declarations — GUI faces only (terminal mono added in Phase 1) */
 @font-face {
 	font-family: 'Clash Display Variable';
 	src: url('./fonts/ClashDisplayVF.ttf') format('truetype-variations');
 	font-weight: 200 700;
-	font-style: normal;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: 'Panchang Variable';
-	src: url('./fonts/Panchang-Variable.ttf') format('truetype-variations');
-	font-weight: 300 800;
 	font-style: normal;
 	font-display: swap;
 }
