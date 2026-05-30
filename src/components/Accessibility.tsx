@@ -1,6 +1,6 @@
-import { useApp } from "@/context/AppContext";
-import { useFocusManagement } from "@/hooks/useFocusManagement";
-import { cn } from "@/utils";
+import { useApp } from "@/shared/context/AppContext";
+import { useFocusManagement } from "@/shared/hooks/useFocusManagement";
+import { cn } from "@/shared/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
 

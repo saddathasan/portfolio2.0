@@ -26,4 +26,4 @@ export { ThemeToggle } from "./ThemeToggle";
 export { SEO } from "./SEO";
 
 // Re-export all UI primitives
-export * from "./ui";
+export * from "@/shared/ui";

@@ -4,8 +4,8 @@ import {
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+} from "@/shared/ui/card";
+import { cn } from "@/shared/lib/utils";
 
 interface ContactInfoProps {
 	className?: string;

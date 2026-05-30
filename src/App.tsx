@@ -1,7 +1,7 @@
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { HelmetProvider } from "react-helmet-async";
 import { routeTree } from "./routeTree.gen";
-import { AppProvider } from "./context/AppContext";
+import { AppProvider } from "@/shared/context/AppContext";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { AnnouncementProvider } from "./components/Accessibility";
 

@@ -1,4 +1,4 @@
-import { Terminal } from "@/components/terminal/Terminal";
+import { Terminal } from "@/features/terminal/components/Terminal";
 import { createRootRoute, Outlet, useLocation } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { useEffect } from "react";

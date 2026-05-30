@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { useTheme } from "@/hooks/useTheme";
+import { Button } from "@/shared/ui/button";
+import { useTheme } from "@/shared/hooks/useTheme";
 
 export function ThemeToggle() {
 	const { isDark, toggle } = useTheme();

@@ -1,4 +1,4 @@
-import type { HeroInfo, Stat } from '@/types';
+import type { HeroInfo, Stat } from '@/shared/types';
 
 export const heroInfo: HeroInfo = {
 	name: "Saddat Hasan",

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from '@tanstack/react-router';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Code2, Github, Linkedin, Mail } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 
 const navItems = [
   { name: 'Home', path: '/' },

@@ -1,4 +1,4 @@
-import type { SkillCategory } from "@/types";
+import type { SkillCategory } from "@/shared/types";
 
 export const skills: SkillCategory[] = [
 	{

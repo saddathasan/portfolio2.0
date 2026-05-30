@@ -1,14 +1,14 @@
 import { TechBadgeList } from "@/components/TechBadgeList";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/shared/ui/badge";
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from "@/components/ui/card";
-import { cn } from "@/lib/utils";
-import type { Experience } from "@/types";
+} from "@/shared/ui/card";
+import { cn } from "@/shared/lib/utils";
+import type { Experience } from "@/shared/types";
 
 interface ExperienceTimelineProps {
 	experiences: Experience[];

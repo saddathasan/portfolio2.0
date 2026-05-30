@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { config } from '@/config';
-import { useApp } from '@/context/AppContext';
+import { config } from '@/shared/config';
+import { useApp } from '@/shared/context/AppContext';
 
 // SEO component props interface
 interface SEOProps {

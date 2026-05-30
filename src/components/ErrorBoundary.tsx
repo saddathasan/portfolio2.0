@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { ErrorBoundaryState, ErrorInfo } from "@/types";
+import { Button } from "@/shared/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/card";
+import type { ErrorBoundaryState, ErrorInfo } from "@/shared/types";
 import React from "react";
 
 interface ErrorBoundaryProps {

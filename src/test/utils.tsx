@@ -1,5 +1,5 @@
-import { AppProvider } from "@/context/AppContext";
-import type { Certificate, Experience, Project, SkillCategory } from "@/types";
+import { AppProvider } from "@/shared/context/AppContext";
+import type { Certificate, Experience, Project, SkillCategory } from "@/shared/types";
 import React, { type ReactElement, type ReactNode } from "react";
 
 // Mock render types
