@@ -111,6 +111,18 @@ export function getAutocompleteSuggestions(
 }
 
 /**
+ * Apply a specific chosen suggestion to the input, preserving the command prefix
+ * for path-style commands (e.g. "cat " + "about.md").
+ */
+export function applySuggestion(input: string, suggestion: string): string {
+	const parsed = parseInputForAutocomplete(input);
+	if (parsed.type === "path" && parsed.command) {
+		return `${parsed.command} ${suggestion}`;
+	}
+	return suggestion;
+}
+
+/**
  * Complete the input with the best suggestion
  */
 export function completeInput(
