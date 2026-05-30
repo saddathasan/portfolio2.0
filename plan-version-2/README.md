@@ -13,8 +13,8 @@ This folder is the **execution plan** for the portfolio revamp. Read [`00-master
 | # | Doc | Goal | Est. sessions | Status |
 |---|-----|------|---------------|--------|
 | 0 | [`01-phase-0-cleanup.md`](./01-phase-0-cleanup.md) | Strip cruft, one router, one design system, feature-based structure | 2–3 | ✅ Done (deep token-unify + `app/`/`styles/` folders deferred to Phase 1/2) |
-| 1 | [`02-phase-1-terminal.md`](./02-phase-1-terminal.md) | Terminal v2: agnoster prompt, command registry, autocomplete, history, `gui` switch | 3–4 | ◐ Next up |
-| 2 | [`03-phase-2-elegant-gui.md`](./03-phase-2-elegant-gui.md) | Elegant GUI site: one nav/footer/hero, redesigned pages, `mailto:` contact | 3–4 | ☐ Not started |
+| 1 | [`02-phase-1-terminal.md`](./02-phase-1-terminal.md) | Terminal v2: agnoster prompt, command registry, autocomplete, history, `gui` switch | 3–4 | ✅ Done (`gui`→`/about` temp; token-unify deferred to P2) |
+| 2 | [`03-phase-2-elegant-gui.md`](./03-phase-2-elegant-gui.md) | Elegant GUI site: one nav/footer/hero, redesigned pages, `mailto:` contact | 3–4 | ◐ Next up |
 | 3 | [`04-phase-3-blog-seo-perf.md`](./04-phase-3-blog-seo-perf.md) | MDX blog (terminal + GUI), SSG prerender, SEO, Core Web Vitals | 4–5 | ☐ Not started |
 | 4 | [`05-phase-4-optional.md`](./05-phase-4-optional.md) | Optional polish: easter eggs, CRT texture, analytics, GUI dark mode | open | ☐ Not started |
 

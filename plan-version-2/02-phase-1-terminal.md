@@ -83,7 +83,10 @@ All objectives met, gates green, no `window.location.href` left in terminal code
 ## Session log
 | Date | What got done | Build green? | Handoff note |
 |------|---------------|--------------|--------------|
-| | | | |
+| 2026-05-31 | **All groups A–H complete.** Command registry (`engine/{types,registry}.ts` + `commands/{filesystem,info,navigation,system}.ts`); `useTerminal` drives the registry with client-side router nav (no reload). Agnoster powerline `Prompt` (CSS clip-path separators) + JetBrains Mono (`@fontsource-variable`, self-hosted). ARIA autocomplete (listbox/option, arrow-nav, Tab cycle, Esc). ↑/↓ history persisted to localStorage, Ctrl+L, `role=log` live region. Shared ⌘K `CommandPalette` (radix Dialog) mounted in `__root`. `gui` escape-hatch hint + chip. Vitest + 11 engine tests. Commits ceff977, c81cc85. | ✅ build + lint (0 err) + `pnpm test` 11/11 + dev :5175 transforms 200 | **Phase 1 DONE → start Phase 2 (elegant GUI).** Carry-overs to handle in Phase 2: (1) `gui` command currently navigates to `/about` — retarget to `/home` once that route exists (TODO marked in `commands/navigation.ts`); (2) scope the global `.dark` in `__root.tsx` + finish Group G token-unification when building the GUI light skin; (3) GUI pages still use old components in `src/components/` — redesign into `features/elegant/`. |
 
 ## Handoff notes
-_(next-session pointer)_
+- **`gui` → `/about` is temporary.** Search `TODO(phase-2)` in `src/features/terminal/commands/navigation.ts`.
+- **CommandPalette** lists nav + résumé/email/social actions; it does NOT yet run arbitrary terminal commands (could add in Phase 4). It's mounted globally in `routes/__root.tsx`.
+- New deps added this phase: `@fontsource-variable/jetbrains-mono` (dep), `vitest` (devDep). Lockfile is synced.
+- Manual UX to eyeball in the browser when convenient: agnoster arrows render crisply; Tab/↑↓/Esc/⌘K all behave; `gui` + `git profile` navigate without a full reload.
