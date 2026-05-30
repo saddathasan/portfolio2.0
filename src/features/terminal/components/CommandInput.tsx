@@ -171,6 +171,18 @@ export const CommandInput = forwardRef<HTMLInputElement, CommandInputProps>(
 						autoFocus
 						spellCheck={false}
 						autoComplete="off"
+						autoCorrect="off"
+						autoCapitalize="off"
+						{...{
+							// Opt out of input-hijacking extensions (Grammarly, 1Password,
+							// LastPass, AI writing assistants) that wrap the field & break typing.
+							"data-gramm": "false",
+							"data-gramm_editor": "false",
+							"data-enable-grammarly": "false",
+							"data-1p-ignore": "true",
+							"data-lpignore": "true",
+							"data-form-type": "other",
+						}}
 						role="combobox"
 						aria-expanded={showSuggestions}
 						aria-controls="terminal-suggestions"
