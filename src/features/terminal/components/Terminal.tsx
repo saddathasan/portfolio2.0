@@ -23,6 +23,19 @@ export function Terminal() {
 		inputRef.current?.focus();
 	}, [history]);
 
+	// Reliably focus on (re)mount — e.g. after a client-side back-navigation from
+	// /git-profile — and whenever the window regains focus. rAF ensures the input
+	// is painted before we focus it.
+	useEffect(() => {
+		const focusInput = () => inputRef.current?.focus();
+		const raf = requestAnimationFrame(focusInput);
+		window.addEventListener("focus", focusInput);
+		return () => {
+			cancelAnimationFrame(raf);
+			window.removeEventListener("focus", focusInput);
+		};
+	}, []);
+
 	// Focus input on click anywhere (unless the user is selecting text)
 	const handleContainerClick = () => {
 		const selection = window.getSelection();
