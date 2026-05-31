@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
+import { getPathSuggestions } from "../lib/autocomplete";
 import { initialFileSystem, resolvePath } from "../lib/terminal";
 import { commands, findCommand } from "./registry";
 import type { CommandContext } from "./types";
@@ -118,6 +119,22 @@ describe("blog (terminal)", () => {
 		const out = findCommand("cat")!.run(ctx) as { displayType: string; slug: string };
 		expect(out.displayType).toBe("blog-post");
 		expect(out.slug).toBe("hello-world");
+	});
+
+	it("`cat <slug>` works from /blog even though posts are nested in categories", () => {
+		const ctx = makeCtx({
+			args: ["hello-world"],
+			argStr: "hello-world",
+			currentPath: ["blog"], // sitting at /blog, post is in /blog/general
+		});
+		const out = findCommand("cat")!.run(ctx) as { displayType: string; slug: string };
+		expect(out.displayType).toBe("blog-post");
+		expect(out.slug).toBe("hello-world");
+	});
+
+	it("autocomplete offers post slugs while in /blog", () => {
+		const names = getPathSuggestions("hel", ["blog"], initialFileSystem);
+		expect(names).toContain("hello-world.md");
 	});
 
 	it("`open <slug>` navigates to the GUI article", () => {

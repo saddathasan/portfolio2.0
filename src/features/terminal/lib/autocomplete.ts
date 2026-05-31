@@ -1,5 +1,5 @@
 import { commandNames } from "../engine/registry";
-import type { FileSystemNode } from "./terminal";
+import { blogPostFileNames, type FileSystemNode } from "./terminal";
 
 /**
  * Get command suggestions based on partial input.
@@ -29,12 +29,19 @@ function getDirectoryChildren(
 			return [];
 		}
 	}
-	
+
 	// Return children names
 	if (node.type === "directory" && node.children) {
-		return Object.keys(node.children);
+		const names = Object.keys(node.children);
+		// At /blog the children are category folders; also offer every post
+		// filename so `cat <slug>` completes (posts live one level deeper, but
+		// the listing + cat treat them as flat).
+		if (currentPath.length === 1 && currentPath[0] === "blog") {
+			return [...names, ...blogPostFileNames(fileSystem)];
+		}
+		return names;
 	}
-	
+
 	return [];
 }
 

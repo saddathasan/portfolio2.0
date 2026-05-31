@@ -184,7 +184,7 @@ function ContactView({ data }: { data: ContactInfo[] }) {
 
 // `ls /blog` (and category dirs): an aligned, dashed TUI table.
 function BlogListingView({ data }: { data: BlogListingPayload }) {
-	const cols = "grid grid-cols-[6.5rem_7rem_4.5rem_1fr] gap-x-3";
+	const cols = "grid grid-cols-[6rem_6rem_4rem_1fr] gap-x-3";
 	return (
 		<div className="mb-4 max-w-2xl">
 			<SectionLabel>{data.heading}</SectionLabel>
@@ -197,7 +197,7 @@ function BlogListingView({ data }: { data: BlogListingPayload }) {
 							<span>date</span>
 							<span>category</span>
 							<span>read</span>
-							<span>title</span>
+							<span>slug · title</span>
 						</div>
 						{data.rows.map((r) => (
 							<div
@@ -207,13 +207,19 @@ function BlogListingView({ data }: { data: BlogListingPayload }) {
 								<span className="tabular-nums text-gray-500">{r.date}</span>
 								<span className="text-gray-400">{r.category}</span>
 								<span className="tabular-nums text-gray-500">{r.read}</span>
-								<span className="text-gray-200">{r.title}</span>
+								<span className="min-w-0">
+									{/* The slug is what you `cat` — show it brightly, title dim. */}
+									<span className="text-gray-100">{r.slug}</span>
+									<span className="text-gray-500"> · {r.title}</span>
+								</span>
 							</div>
 						))}
 					</div>
 					<div className="mt-2 text-xs text-gray-600">
-						{data.rows.length} {data.rows.length === 1 ? "post" : "posts"} · cat
-						&lt;slug&gt; to read — e.g. cat {data.rows[0].slug}
+						{data.rows.length} {data.rows.length === 1 ? "post" : "posts"} · type{" "}
+						<span className="text-gray-400">cat {data.rows[0].slug}</span> to read
+						(or <span className="text-gray-400">open {data.rows[0].slug}</span> for
+						the GUI)
 					</div>
 				</>
 			)}

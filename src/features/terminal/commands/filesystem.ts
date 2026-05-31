@@ -1,4 +1,4 @@
-import { resolvePath } from "../lib/terminal";
+import { findBlogPostNode, resolvePath } from "../lib/terminal";
 import type { Command, TerminalOutput } from "../engine/types";
 
 export const filesystemCommands: Command[] = [
@@ -46,6 +46,12 @@ export const filesystemCommands: Command[] = [
 			// `.md` is optional for posts: `cat hello-world` finds hello-world.md.
 			if (!node && !argStr.endsWith(".md")) {
 				node = resolvePath(currentPath, `${argStr}.md`, fileSystem).node;
+			}
+			// Blog posts are nested under /blog/<category>/, but the listing is
+			// flat — so a bare slug resolves to the post from anywhere (e.g.
+			// `cat hello-world` while sitting in /blog). Slugs are unique.
+			if (!node) {
+				node = findBlogPostNode(fileSystem, argStr);
 			}
 			if (!node) return `cat: ${argStr}: No such file or directory`;
 			if (node.type === "directory") return `cat: ${argStr}: Is a directory`;
