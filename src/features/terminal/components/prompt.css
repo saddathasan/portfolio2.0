@@ -1,0 +1,47 @@
+/* oh-my-zsh agnoster-style powerline prompt.
+   Separators are drawn with CSS clip-path (no Nerd Font / Powerline glyphs required). */
+
+.agn-prompt {
+	--agn-ctx-bg: #2d333b;
+	--agn-ctx-fg: #adbac7;
+	--agn-path-bg: #1f6feb;
+	--agn-path-fg: #ffffff;
+	--agn-git-bg: #2ea043;
+	--agn-git-fg: #06120a;
+
+	display: inline-flex;
+	align-items: stretch;
+	height: 1.2em;        /* overall pill height — top/bottom thickness. Lower = slimmer. */
+	line-height: 1.2em;   /* keep equal to height so text stays vertically centered */
+	font-weight: 600;
+	user-select: none;
+	vertical-align: middle;
+}
+
+.agn-seg {
+	display: inline-flex;
+	align-items: center;
+	padding: 0 0.6em;
+	white-space: nowrap;
+}
+
+.agn-seg-icon {
+	opacity: 0.85;
+	margin-right: 0.4em;
+}
+
+/* The arrow: a right-pointing triangle filled with the LEFT segment colour,
+   sitting on the NEXT segment's colour (transparent for the final one). */
+.agn-sep {
+	position: relative;
+	width: 0.7em;
+	align-self: stretch;
+	background: var(--agn-next, transparent);
+}
+.agn-sep::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: var(--agn-prev);
+	clip-path: polygon(0 0, 0 100%, 100% 50%);
+}

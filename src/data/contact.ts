@@ -1,3 +1,5 @@
+import { profile, social, currentRole, formatPeriod } from "./site";
+
 export interface ContactInfo {
 	icon: string;
 	title: string;
@@ -13,43 +15,45 @@ export interface CurrentPosition {
 	period: string;
 }
 
+// Selector off site.ts — edit content in site.ts, not here.
+const ICONS: Record<string, string> = {
+	GitHub: "🐱",
+	LinkedIn: "💼",
+	X: "🐦",
+};
+
 export const contactInfo: ContactInfo[] = [
 	{
 		icon: "📧",
 		title: "Email",
 		description: "Send me a message",
-		content: "saddathasan94@gmail.com",
-		link: "mailto:saddathasan94@gmail.com",
+		content: profile.email,
+		link: `mailto:${profile.email}`,
 	},
-	{
-		icon: "💼",
-		title: "LinkedIn",
-		description: "Connect professionally",
-		content: "linkedin.com/in/saddathasan",
-		link: "https://linkedin.com/in/saddathasan",
+	...social.map((s) => ({
+		icon: ICONS[s.label] ?? "🔗",
+		title: s.label,
+		description: "Connect with me",
+		content: s.href.replace(/^https?:\/\//, ""),
+		link: s.href,
 		isExternal: true,
-	},
-	{
-		icon: "🐱",
-		title: "GitHub",
-		description: "View my code",
-		content: "github.com/saddathasan",
-		link: "https://github.com/saddathasan",
-		isExternal: true,
-	},
+	})),
 	{
 		icon: "🌐",
 		title: "Location",
 		description: "Based in",
-		content: "Dhaka, Bangladesh",
+		content: profile.location,
 	},
 ];
 
-export const currentPosition: CurrentPosition = {
-	title: "Software Engineer",
-	company: "InfinitiBit GmbH",
-	period: "Feb 2025 - Present",
-};
+const current = currentRole();
+export const currentPosition: CurrentPosition = current
+	? {
+			title: current.role.title,
+			company: current.company.company,
+			period: formatPeriod(current.role.start, current.role.end) || "Present",
+		}
+	: { title: profile.title, company: "", period: "Present" };
 
 export const contactPageInfo = {
 	title: "Get In Touch",

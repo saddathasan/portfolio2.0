@@ -1,0 +1,139 @@
+# Phase 2 — Elegant GUI Site (visitor mode)
+
+> **Goal:** Build the refined, **light, editorial** GUI site a recruiter can scan in 20 seconds and a hiring manager can read in 5 minutes. One nav, one footer, one hero. Distinctive non-Inter type, generous whitespace, asymmetric layouts. Contact is a `mailto:` link — no form. This is the deliberate opposite of the terminal.
+>
+> **Prerequisites:** Phase 1 merged. · **Estimated sessions:** 3–4. · **Branch:** `feat/revamp-phase-2`.
+
+---
+
+## Objectives
+1. A cohesive **light editorial** design system (tokens, type scale, spacing rhythm) that passes the "AI slop" test — no cyan-on-dark, no glassmorphism, no identical card grids, no big rounded icons over headings.
+2. Pages `/home`, `/about`, `/projects`, `/experience`, `/contact` redesigned and consistent.
+3. **One** `Nav` and **one** `Footer`, single-sourced from `src/data`.
+4. Mode-switching works both ways (terminal ⇄ GUI), no full reloads, preference remembered.
+5. Visible **"Download résumé"** CTA (hero/about/footer); contact = prominent `mailto:` + copy-to-clipboard + socials.
+
+## Out of scope
+- Blog (Phase 3) — but leave a `/blog` nav slot/placeholder.
+- SSG/SEO tooling and JSON-LD (Phase 3) — though write semantic, accessible HTML now so Phase 3 is easy.
+
+## Pre-flight
+- [ ] `git checkout -b feat/revamp-phase-2`.
+- [ ] Re-read [`00-master-plan.md`](./00-master-plan.md) §6.2 (visitor skin) and §8 (pages). Skim the `/frontend-design` guidance: commit to ONE bold-but-refined direction.
+- [ ] Add the X handle to `src/data/contact.ts` (`https://x.com/ekjongoru`).
+
+---
+
+## Task group A — Design system (light, editorial)
+- [ ] Define GUI tokens with modern CSS (`oklch`, `color-mix`, optional `light-dark()`): warm off-white bg, near-black tinted text, ONE restrained accent (links/CTAs only). Tint neutrals toward the accent hue.
+- [ ] Type: **Clash Display** (display/headings) + **Uncut Sans** (body), optional **Space Grotesk** eyebrow/UI. Fluid sizes via `clamp()`. Modular scale. Preload the LCP heading font; add fallback `size-adjust` to prevent CLS.
+- [ ] Spacing rhythm: varied, not uniform padding. Establish a scale and use tight groupings + generous separations.
+- [ ] Motion: framer-motion, sparingly; one orchestrated page-load stagger; exponential ease-out; all gated on `usePrefersReducedMotion`.
+
+## Task group B — Shared chrome
+- [ ] Build ONE `Nav` (`shared/components/Nav`): brand, links (Home/About/Projects/Experience/Contact, + Blog slot), résumé button, a `>_ terminal` affordance, ⌘K hook. Responsive (adapt, don't amputate — no hidden critical actions on mobile).
+- [ ] Build ONE `Footer`: socials (GitHub/LinkedIn/X), email `mailto:`, résumé, copyright. Single-sourced from `src/data/contact.ts`.
+- [ ] Delete any leftover duplicate nav/footer components missed in Phase 0.
+
+## Task group C — Pages
+**Home** (`/home`)
+- [ ] Hero: name, role (**Full-Stack & DevOps Engineer**), one-line value prop, primary CTA + résumé. Text-first, left-aligned, asymmetric — not a centered template.
+- [ ] Highlights strip: years of experience, core stack, notable clients (Dell/Microsoft per `data/about.ts`) — woven in, NOT a hero-metric template.
+- [ ] Featured projects (3) → cards linking live + repo. Contact CTA. A discreet `> back to terminal` link.
+
+**About** (`/about`)
+- [ ] Bio, "what I do", education, **Download résumé** button.
+
+**Projects** (`/projects`)
+- [ ] Filterable grid; filter uses `useDeferredValue` for snappy INP. Each card → live + repo. 3–6 emphasized, not 20.
+
+**Experience** (`/experience`)
+- [ ] Clean vertical timeline from `data/experience.ts`.
+
+**Contact** (`/contact`)
+- [ ] **No form.** Prominent email as `mailto:` with copy-to-clipboard; social links; location. Friendly, simple.
+- [ ] **Toasts (`sonner`):** fire a concise toast on copy-email ("Email copied") and on résumé download ("Downloading résumé…"). Auto-dismiss, bottom or top-right, styled to the light theme, reduced-motion aware. Don't toast navigation or anything the user can already see.
+
+## Task group D — Mode switching
+- [ ] GUI → terminal: `>_ terminal` button + ⌘K "Open terminal" → `navigate('/')`.
+- [ ] Terminal → GUI: already wired in Phase 1 (`gui`). Verify round-trip with no full reload.
+- [ ] Returning-visitor nicety: if `preferredMode==='gui'`, show a subtle, dismissible banner on `/` offering to continue in GUI — **never auto-redirect** (protects SEO + intent).
+
+## Task group E — Accessibility
+- [ ] Semantic landmarks (`header`/`main`/`footer`/`nav`), skip-to-content link.
+- [ ] On route change, move focus to the page `<h1>` (use existing `useFocusManagement`).
+- [ ] WCAG AA contrast in the light theme; visible focus rings; labeled interactive elements.
+
+---
+
+## Verification / quality gates
+- [ ] `pnpm build` + `pnpm lint` green.
+- [ ] **AI-slop test:** would someone say "an AI made this"? If yes, revise. It should look hand-designed/editorial.
+- [ ] Keyboard-only: nav, links, résumé, mode-switch, copy-email all reachable.
+- [ ] Mobile (≤375px) and tablet layouts adapt (not just shrink); no horizontal scroll.
+- [ ] Terminal ⇄ GUI round-trips with no full document reload; preference persists.
+- [ ] Lighthouse a11y ≥ 95 on the GUI pages (perf tuned in Phase 3).
+
+## Definition of Done
+All pages redesigned + consistent, one nav/one footer, mode-switch both ways, contact is `mailto:`, résumé CTA present, a11y green. Open PR `feat/revamp-phase-2`.
+
+---
+
+## Locked design decisions (2026-05-31)
+Confirmed with user via research + Q&A. **Aesthetic mandate: "Simplicity is the ultimate sophistication."**
+- **Direction:** a *blend* of warm-editorial + Swiss-monochrome — i.e. **warm-paper Swiss base, editorial asymmetry, confident big display type, a whisper of serif.** (User couldn't pick one of the three pure options; explicitly wanted the blend.)
+- **Palette:** **near-monochrome** — warm bone paper + deep warm-ink. **No color accent** (the "accent" is just a deeper ink / hairline). Never pure #fff or #000. Grounded in 2026 trend research (Pantone "Cloud Dancer" warm off-white CotY; deep-brown "new black"; single-hue restraint).
+- **Type:** keep repo fonts — **Clash Display** (display) + **Uncut Sans** (body). User OK with adding more if needed. A "whisper of serif" italic line currently uses a system serif stack (`Newsreader`/`Iowan`/Palatino/Georgia); **TODO: optionally self-host Newsreader or Fraunces** if the serif touch is kept.
+- **Theme:** GUI is **light-only** (dark mode = the terminal). Tokens are scoped under `.gui-root` so they never collide with the global `.dark`.
+
+### Visual references shared with user (the lane)
+rauno.me · paco.me · leerob.com · emilkowal.ski · antfu.me · [Awwwards minimal](https://www.awwwards.com/awwwards/collections/minimal/) · [Awwwards editorial](https://www.awwwards.com/inspiration/editorial-layout)
+
+### What exists now (prototype to react to)
+- `src/features/elegant/elegant.css` — **the scoped design system** (`.gui-root` tokens: `--paper*`, `--ink*`, `--line*`, fonts, fluid spacing; helper classes `.gui-eyebrow`, `.gui-display`, `.gui-serif`, `.gui-link`, `.gui-rule`). Self-contained; does NOT depend on shadcn `--background` vars or fight `.dark`.
+- `src/features/elegant/components/Hero.tsx` — editorial asymmetric hero (8/4 grid), real data from `data/about.ts` + `data/contact.ts`, single framer-motion load stagger (transform/opacity, reduced-motion safe).
+- `src/features/elegant/components/Nav.tsx` — slim editorial top bar (wordmark + text links + `↗ terminal`). Links to /home, /projects, /about, /contact, /.
+- `src/features/elegant/components/GuiHome.tsx` — wraps everything in `.gui-root`.
+- `src/routes/home.tsx` — `/home` route (route tree regenerated). **Live at `/home`, HTTP 200, typecheck clean.**
+
+## Resume reconciliation — confirmed data decisions (2026-05-31)
+Source: `docs/saddat_hasan_resume_fsd1.md`. Confirmed with user:
+- **Title everywhere:** Full-Stack & DevOps Engineer. Rewrite bio/intro from the resume's Professional Summary.
+- **Skills:** enrich with resume's DevOps/AI set — Terraform, Azure, IAM, Linux, Claude Code, Cursor, GitHub Copilot.
+- **InfinitiBit = promotion history** (3 stacked roles: Frontend SE → Full-stack → Full-stack & DevOps). ⚠️ STILL NEED exact role dates from user.
+- **Talvette dates:** Jun 2023 – Jan 2025 (resume wins over old site's Oct 2023 – Feb 2025).
+- **WPP Production** "(formerly Wunderman Thompson Studios)" — use `formerName`.
+- **DRK-CBD:** PROJECT ONLY — remove the experience entry, keep as a shipped project.
+- **Projects:** add **Ria Medic Shop as the lead** (POS & ERP, medical retail, React + PostgreSQL + RBAC + inventory + dashboards, Nov 2024–Present). Trim the "Current Portfolio Site" self-reference. ⚠️ STILL NEED Ria backend/stack + live link (likely private/no link).
+- **Certificates:** keep all 6. **Phone:** keep OFF the site. **X handle:** keep. **Education dates:** keep 2016–2020.
+
+### Planned data model (`src/data/site.ts`) — typed single source of truth
+- Dates as `"YYYY-MM"` strings + one `formatPeriod()` helper → renders "Feb 2025 – Present".
+- `Company { id, company, formerName?, url?, location?, roles: Role[] }`; `Role { title, start, end|null, type?, highlights?, technologies? }` (promotions = multiple roles).
+- `Project { …, featured?, order? }` controls Selected-work + lead ordering.
+- Existing data files (`heroInfo`/`aboutInfo`/`experiences`/`projects`/`skills`/`certificates`/`contactInfo`) become thin **selectors** off `site.ts` so terminal + GUI keep working unchanged.
+- Upgrade elegant `ExperienceSection` to render stacked promotion roles.
+- **Branch:** `feat/site-data-model`, stacked on `feat/elegant-gui-home`.
+
+## Session log
+| Date | What got done | Build green? | Handoff note |
+|------|---------------|--------------|--------------|
+| 2026-05-31 | Locked design direction. Built scoped design system + prototype hero. | typecheck ✓ | (superseded below) |
+| 2026-05-31 | **Branch `feat/site-data-model`** (stacked): built typed `src/data/site.ts` single source of truth + resume reconciliation (promotion history, Talvette dates, WPP rename, DRK-CBD→project, Ria lead). Legacy data files → selectors. Elegant sections read site.ts. | tsc + build ✓ | InfinitiBit role dates left blank in site.ts for user to fill. Ria backend stack guessed (React/TS/PostgreSQL/RBAC/Node) — user to confirm. |
+| 2026-05-31 | **Branch `feat/git-profile-elegant`** (stacked): redesigned git-profile into the elegant warm-dark system. Reuses `.gui-root .gui-dark` tokens + the home's `Reveal`; stats → editorial figures (no card boxes/icons); pinned repos → hairline rows; language bar quieted (kept real GitHub colours); **contribution heatmap recoloured to warm-ink monochrome**; slim top bar (← Home / terminal); deleted `git-profile.css` (297 lines). | tsc + build ✓ | Heatmap monochrome is a judgement call — flip back to GitHub green if user prefers. git-profile now imports from `@/features/elegant` (Reveal + tokens) — consider extracting the design system to `src/shared` later. |
+| 2026-05-31 | **Branch `feat/retire-old-pages`** (stacked): went TRUE single-page. `gui` command + ⌘K palette now target `/home` (+ in-page hashes); removed home's "All work/Full history" deep links; old routes (/about,/projects,/experience,/contact) → **redirects to /home#section**; old `/index` inert; **deleted all of `src/components/` except ErrorBoundary** (20 dead files). Bundle 322→299KB. | tsc + build ✓ | git-profile is the one remaining non-elegant feature (own styling) — ask user if it should be restyled. |
+| 2026-05-31 | Revised to rauno/paco quiet register; **committed dark palette**; wired tokens into tailwind.config. Built full **single-page home** (Hero + About/Work/Experience/Stack/Education/Certificates/Contact) with **data-driven section registry** (`sections.config.tsx` — reorder array → page/numbering/nav all follow). Modular content-only sections + primitives (Reveal/Section/WorkRow). **Committed as `feat/elegant-gui-home`** (off `version-2`). Signed off by user. | typecheck + `vite build` ✓ | NEXT: push `feat/elegant-gui-home` + open PR into `version-2` (awaiting user OK on base/remote). Then `feat/site-data-model` branch — but FIRST get the 2 ⚠️ items above (InfinitiBit role dates, Ria stack/link). |
+
+| 2026-05-31 | **Branch `feat/terminal-rework`** (terminal output de-slop, Phase 1 follow-up): replaced gradient/emoji/cyan-JSON output with near-monochrome views (about/project/skills/experience/contact); dim chrome; dashed TUI separators; kept JetBrains Mono; removed JsonViewer. | tsc + build ✓ | Merged to version-2. |
+| 2026-05-31 | **Integrated everything into `version-2`** (fast-forward) and pushed to origin. PR #18 merged; #19–#21 closed as merged-by-integration; terminal-rework merged. version-2 tip = `3d6a48e`. | tsc + build ✓ | version-2 holds the entire revamp to date. |
+
+## Remaining to finish Phase 2 — ✅ DONE (branch `feat/phase-2-finishers`, 2026-05-31)
+- [x] **Accessibility:** skip-to-content link (in `__root`); `<main id="main-content" tabIndex=-1>` landmarks on GUI home, git-profile, and terminal container; visible focus rings (`.gui-root :focus-visible` + terminal link focus-visible); WCAG-AA contrast verified on the warm-dark palette (ink-muted ≈ 4.8:1 on paper). _Route-change auto-focus intentionally skipped — it conflicts with the `/home#section` hash scrolling; the skip-link covers the keyboard path._
+- [x] **Contact copy-email + `sonner` toast:** email has a `copy` button → clipboard + "Email copied" toast; Toaster themed dark (bottom-right).
+- [x] **Returning-visitor banner:** on `/`, if `preferredMode==='gui'` and not dismissed this session, a quiet dashed banner offers `open gui` / `dismiss` — never auto-redirects.
+- [x] **`__root.tsx` `.dark` cleanup:** removed the runtime class-juggling effect; `.dark` is set statically in `index.html` (whole site is dark).
+
+## Handoff notes
+**Phase 2 is ~90% done and fully integrated on `version-2`.** Two intentional, user-chosen deviations from the original doc: the GUI is warm-**dark** editorial (not light), and it's a **single-page** site (not separate pages — `/about|projects|experience|contact` redirect to `/home#section`).
+**Next session:** knock out the 4 "Remaining to finish Phase 2" items above (≈1 session), then start **Phase 3** ([`04-phase-3-blog-seo-perf.md`](./04-phase-3-blog-seo-perf.md)) — MDX blog + SSG/SEO + CWV + the git-token Pages Function (which also unlocks the full/private GitHub contribution stats). Final step after Phase 3: merge `version-2 → main` to deploy live on Cloudflare Pages (`saddathasan.dev`).
+_Still optional: self-host a serif (Newsreader/Fraunces) for the `.gui-serif` line; fill the InfinitiBit role dates in `site.ts`._
