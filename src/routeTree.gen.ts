@@ -30,12 +30,12 @@ const HomeRoute = HomeRouteImport.update({
   id: '/home',
   path: '/home',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any).lazy(() => import('./routes/home.lazy').then((d) => d.Route))
 const GitProfileRoute = GitProfileRouteImport.update({
   id: '/git-profile',
   path: '/git-profile',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any).lazy(() => import('./routes/git-profile.lazy').then((d) => d.Route))
 const ExperienceRoute = ExperienceRouteImport.update({
   id: '/experience',
   path: '/experience',
@@ -60,7 +60,7 @@ const BlogIndexRoute = BlogIndexRouteImport.update({
   id: '/blog/',
   path: '/blog/',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any).lazy(() => import('./routes/blog.index.lazy').then((d) => d.Route))
 const IbExtensionPrivacyPolicyRoute =
   IbExtensionPrivacyPolicyRouteImport.update({
     id: '/ib-extension/privacy-policy',
@@ -71,12 +71,16 @@ const BlogCategoryIndexRoute = BlogCategoryIndexRouteImport.update({
   id: '/blog/$category/',
   path: '/blog/$category/',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any).lazy(() =>
+  import('./routes/blog.$category.index.lazy').then((d) => d.Route),
+)
 const BlogCategorySlugRoute = BlogCategorySlugRouteImport.update({
   id: '/blog/$category/$slug',
   path: '/blog/$category/$slug',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any).lazy(() =>
+  import('./routes/blog.$category.$slug.lazy').then((d) => d.Route),
+)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute

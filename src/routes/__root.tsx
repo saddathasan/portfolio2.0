@@ -1,8 +1,17 @@
-import { Terminal } from "@/features/terminal/components/Terminal";
 import { CommandPalette } from "@/shared/components/CommandPalette";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { createRootRoute, Outlet, useLocation } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
+import { lazy, Suspense } from "react";
+
+// The terminal engine (+ its blog virtual FS and MDX bodies) is the heaviest
+// shared code; lazy-load it so it only ships on the `/` route, not as baseline
+// for the GUI/blog routes. The fallback is just the terminal's dark surface.
+const Terminal = lazy(() =>
+	import("@/features/terminal/components/Terminal").then((m) => ({
+		default: m.Terminal,
+	})),
+);
 
 // `.dark` is set statically on <html> in index.html — the whole site is dark
 // (terminal + GUI), so no runtime class juggling is needed.
@@ -23,7 +32,13 @@ function RootComponent() {
 			{/* Keyed by path so a thrown route resets the boundary on navigation
 			    instead of bricking the whole SPA until a hard reload. */}
 			<ErrorBoundary key={location.pathname}>
-				{isTerminalRoute ? <Terminal /> : <Outlet />}
+				{isTerminalRoute ? (
+					<Suspense fallback={<div className="min-h-screen bg-[#0d1117]" />}>
+						<Terminal />
+					</Suspense>
+				) : (
+					<Outlet />
+				)}
 			</ErrorBoundary>
 			<CommandPalette />
 			{import.meta.env.DEV && <TanStackRouterDevtools position="bottom-right" />}

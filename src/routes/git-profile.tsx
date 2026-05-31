@@ -1,10 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { GitProfile } from "@/features/git-profile/components";
 
-export const Route = createFileRoute("/git-profile")({
-	component: GitProfilePage,
-});
-
-function GitProfilePage() {
-	return <GitProfile />;
-}
+// Component lives in git-profile.lazy.tsx so octokit + the git-profile UI
+// code-split out of every other route's initial bundle.
+export const Route = createFileRoute("/git-profile")({});

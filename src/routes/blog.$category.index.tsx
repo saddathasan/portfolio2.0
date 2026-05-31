@@ -1,11 +1,4 @@
-import { createFileRoute, useParams } from "@tanstack/react-router";
-import { CategoryView } from "@/features/blog/components/CategoryView";
+import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/blog/$category/")({
-	component: CategoryRoute,
-});
-
-function CategoryRoute() {
-	const { category } = useParams({ from: "/blog/$category/" });
-	return <CategoryView category={category} />;
-}
+// Component in blog.$category.index.lazy.tsx (code-split).
+export const Route = createFileRoute("/blog/$category/")({});

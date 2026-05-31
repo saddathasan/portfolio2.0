@@ -1,14 +1,4 @@
-import { createFileRoute, notFound, useParams } from "@tanstack/react-router";
-import { Article } from "@/features/blog/components/Article";
-import { getBySlug } from "@/features/blog/lib";
+import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/blog/$category/$slug")({
-	component: ArticleRoute,
-});
-
-function ArticleRoute() {
-	const { slug } = useParams({ from: "/blog/$category/$slug" });
-	const post = getBySlug(slug);
-	if (!post) throw notFound();
-	return <Article post={post} />;
-}
+// Component in blog.$category.$slug.lazy.tsx (code-split — pulls the post body).
+export const Route = createFileRoute("/blog/$category/$slug")({});

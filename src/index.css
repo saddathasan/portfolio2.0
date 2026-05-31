@@ -12,14 +12,6 @@
 }
 
 @font-face {
-	font-family: 'Space Grotesk Variable';
-	src: url('./fonts/SpaceGroteskVF.ttf') format('truetype-variations');
-	font-weight: 300 700;
-	font-style: normal;
-	font-display: swap;
-}
-
-@font-face {
 	font-family: 'Uncut Sans Variable';
 	src: url('./fonts/UncutSans-Variable.ttf') format('truetype-variations');
 	font-weight: 100 900;
@@ -31,7 +23,6 @@
 	:root {
 		/* Semantic Font Hierarchy */
 		--font-title: 'Clash Display Variable', system-ui, sans-serif;
-		--font-subtitle: 'Space Grotesk Variable', system-ui, sans-serif;
 		--font-body: 'Uncut Sans Variable', system-ui, sans-serif;
 
 		/* Light theme - Lee Robinson minimal palette */
