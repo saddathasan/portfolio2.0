@@ -105,9 +105,14 @@ export function Terminal() {
 		>
 			<ReturningVisitorHint onOpen={() => executeCommand("gui")} />
 
-			{/* ASCII Art Banner — dim, decorative. Scrolls within itself on narrow
-			    screens so the wide art never pushes the page sideways. */}
-			<pre className="mb-6 select-none overflow-x-auto text-[10px] leading-tight text-gray-700 md:text-xs">
+			{/* ASCII Art Banner — dim, decorative. The art is ~78 chars wide, so
+			    its font-size scales with the viewport to always fit one line
+			    (it would otherwise clip off-screen on phones), capped at 0.75rem
+			    on desktop. */}
+			<pre
+				className="mb-6 select-none overflow-hidden leading-tight text-gray-700"
+				style={{ fontSize: "clamp(5px, 1.85vw, 0.75rem)" }}
+			>
 				{BANNER}
 			</pre>
 
@@ -138,9 +143,9 @@ export function Terminal() {
 			<div className="space-y-2" role="log" aria-live="polite" aria-label="Terminal output">
 				{history.map((entry, index) => (
 					<div key={index} className="space-y-1">
-						<div className="flex items-center gap-2 text-sm md:text-base">
+						<div className="flex flex-wrap items-center gap-2 text-sm md:text-base">
 							<Prompt path={entry.path} />
-							<span className="text-gray-100">{entry.command}</span>
+							<span className="break-all text-gray-100">{entry.command}</span>
 						</div>
 						<div className="pl-0 md:pl-4">
 							<OutputDisplay content={entry.output} />
