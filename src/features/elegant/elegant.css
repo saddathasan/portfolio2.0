@@ -1,0 +1,104 @@
+/* ───────────────────────────────────────────────────────────────────────────
+   Elegant GUI — warm-paper, near-monochrome design tokens.
+
+   Scoped under `.gui-root` so they are fully independent of the terminal's
+   global `.dark` shadcn theme. These vars back the Tailwind utilities defined
+   in tailwind.config.js (`bg-paper`, `text-ink`, `border-line`, `font-display`),
+   so component markup is plain Tailwind. Only the things Tailwind can't express
+   inline — design tokens, the animated underline, ::selection — live here.
+
+   Aesthetic: "Simplicity is the ultimate sophistication."
+   Quiet, single-column, monochrome (rauno.me / paco.me sweet spot), with a
+   whisper of warmth in the paper and one serif-italic line.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.gui-root {
+	/* ── LIGHT palette (warm paper) — default. ──
+	   "paper" = page surface, "ink" = what's written on it. */
+	--paper: #faf8f5; /* barely-warm off-white, never #fff */
+	--paper-raised: #ffffff;
+	--paper-sunk: #f3f1ec;
+
+	--ink: #1a1714; /* warm near-black, never #000 */
+	--ink-soft: #4b463f; /* body copy */
+	--ink-muted: #8c847a; /* labels, captions, secondary */
+
+	--line: #e9e4da; /* hairline rules */
+	--line-strong: #dcd5c8;
+
+	/* Type */
+	--font-display: "Clash Display Variable", system-ui, sans-serif;
+	--font-body: "Uncut Sans Variable", system-ui, sans-serif;
+	--font-serif: "Newsreader", "Iowan Old Style", "Palatino Linotype", Palatino,
+		Georgia, serif; /* the single "whisper of serif" line */
+
+	background-color: var(--paper);
+	color: var(--ink);
+	font-family: var(--font-body);
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+	min-height: 100vh;
+}
+
+/* ── DARK palette (warm "dim paper") — applied via `.gui-dark` on .gui-root. ──
+   Warm dark espresso surface + warm off-white ink. Deliberately NOT the
+   terminal's cool #0d1117 — this is an elegant warm dark, easy on the eyes
+   (no pure black, no pure white). Same names: paper = surface, ink = text. */
+.gui-root.gui-dark {
+	--paper: #1a1612;
+	--paper-raised: #221e18;
+	--paper-sunk: #131009;
+
+	--ink: #ece6da; /* warm off-white text, not pure #fff */
+	--ink-soft: #c3bcae; /* body copy */
+	--ink-muted: #8f8979; /* labels, captions, secondary */
+
+	--line: #2c2820; /* hairline rules */
+	--line-strong: #3b352b;
+}
+
+/* Considered selection, not default browser blue */
+.gui-root ::selection {
+	background: var(--ink);
+	color: var(--paper);
+}
+
+/* Text link: ink, with a hairline underline that wipes in on hover.
+   Pseudo-element + transform — awkward to express as inline Tailwind. */
+.gui-link {
+	position: relative;
+	color: inherit;
+	text-decoration: none;
+	transition: opacity 0.25s ease;
+}
+.gui-link::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	bottom: -2px;
+	width: 100%;
+	height: 1px;
+	background: currentColor;
+	transform: scaleX(0);
+	transform-origin: left;
+	transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.gui-link:hover::after {
+	transform: scaleX(1);
+}
+
+/* Smooth anchor scrolling on the single-page GUI (the document is the scroll
+   container). Scoped to when the body hosts the GUI to avoid touching the
+   terminal. Disabled under reduced-motion. */
+body:has(.gui-root) {
+	scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.gui-link::after {
+		transition: none;
+	}
+	body:has(.gui-root) {
+		scroll-behavior: auto;
+	}
+}

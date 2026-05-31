@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ProjectsRouteImport } from './routes/projects'
+import { Route as HomeRouteImport } from './routes/home'
 import { Route as GitProfileRouteImport } from './routes/git-profile'
 import { Route as ExperienceRouteImport } from './routes/experience'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -20,6 +21,11 @@ import { Route as IbExtensionPrivacyPolicyRouteImport } from './routes/ib-extens
 const ProjectsRoute = ProjectsRouteImport.update({
   id: '/projects',
   path: '/projects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HomeRoute = HomeRouteImport.update({
+  id: '/home',
+  path: '/home',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GitProfileRoute = GitProfileRouteImport.update({
@@ -60,6 +66,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/experience': typeof ExperienceRoute
   '/git-profile': typeof GitProfileRoute
+  '/home': typeof HomeRoute
   '/projects': typeof ProjectsRoute
   '/ib-extension/privacy-policy': typeof IbExtensionPrivacyPolicyRoute
 }
@@ -69,6 +76,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/experience': typeof ExperienceRoute
   '/git-profile': typeof GitProfileRoute
+  '/home': typeof HomeRoute
   '/projects': typeof ProjectsRoute
   '/ib-extension/privacy-policy': typeof IbExtensionPrivacyPolicyRoute
 }
@@ -79,6 +87,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/experience': typeof ExperienceRoute
   '/git-profile': typeof GitProfileRoute
+  '/home': typeof HomeRoute
   '/projects': typeof ProjectsRoute
   '/ib-extension/privacy-policy': typeof IbExtensionPrivacyPolicyRoute
 }
@@ -90,6 +99,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/experience'
     | '/git-profile'
+    | '/home'
     | '/projects'
     | '/ib-extension/privacy-policy'
   fileRoutesByTo: FileRoutesByTo
@@ -99,6 +109,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/experience'
     | '/git-profile'
+    | '/home'
     | '/projects'
     | '/ib-extension/privacy-policy'
   id:
@@ -108,6 +119,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/experience'
     | '/git-profile'
+    | '/home'
     | '/projects'
     | '/ib-extension/privacy-policy'
   fileRoutesById: FileRoutesById
@@ -118,6 +130,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   ExperienceRoute: typeof ExperienceRoute
   GitProfileRoute: typeof GitProfileRoute
+  HomeRoute: typeof HomeRoute
   ProjectsRoute: typeof ProjectsRoute
   IbExtensionPrivacyPolicyRoute: typeof IbExtensionPrivacyPolicyRoute
 }
@@ -129,6 +142,13 @@ declare module '@tanstack/react-router' {
       path: '/projects'
       fullPath: '/projects'
       preLoaderRoute: typeof ProjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/home': {
+      id: '/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof HomeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/git-profile': {
@@ -182,6 +202,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   ExperienceRoute: ExperienceRoute,
   GitProfileRoute: GitProfileRoute,
+  HomeRoute: HomeRoute,
   ProjectsRoute: ProjectsRoute,
   IbExtensionPrivacyPolicyRoute: IbExtensionPrivacyPolicyRoute,
 }

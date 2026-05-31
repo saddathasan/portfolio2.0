@@ -7,6 +7,10 @@ export default {
 			fontFamily: {
 				sans: ["Inter", "sans-serif"],
 				mono: ["JetBrains Mono", "monospace"],
+				// Elegant GUI faces (tokens live under `.gui-root` in elegant.css)
+				display: ["var(--font-display)"],
+				body: ["var(--font-body)"],
+				serif: ["var(--font-serif)"],
 			},
 			colors: {
 				background: "hsl(var(--background))",
@@ -42,6 +46,23 @@ export default {
 				border: "hsl(var(--border))",
 				input: "hsl(var(--input))",
 				ring: "hsl(var(--ring))",
+				// Elegant GUI palette — warm paper + warm ink, near-monochrome.
+				// Values resolve from `.gui-root` (see elegant.css). Used only
+				// inside the GUI, so they never collide with the shadcn/.dark theme.
+				paper: {
+					DEFAULT: "var(--paper)",
+					raised: "var(--paper-raised)",
+					sunk: "var(--paper-sunk)",
+				},
+				ink: {
+					DEFAULT: "var(--ink)",
+					soft: "var(--ink-soft)",
+					muted: "var(--ink-muted)",
+				},
+				line: {
+					DEFAULT: "var(--line)",
+					strong: "var(--line-strong)",
+				},
 			},
 			borderRadius: {
 				lg: "var(--radius)",

@@ -79,10 +79,33 @@ All pages redesigned + consistent, one nav/one footer, mode-switch both ways, co
 
 ---
 
+## Locked design decisions (2026-05-31)
+Confirmed with user via research + Q&A. **Aesthetic mandate: "Simplicity is the ultimate sophistication."**
+- **Direction:** a *blend* of warm-editorial + Swiss-monochrome — i.e. **warm-paper Swiss base, editorial asymmetry, confident big display type, a whisper of serif.** (User couldn't pick one of the three pure options; explicitly wanted the blend.)
+- **Palette:** **near-monochrome** — warm bone paper + deep warm-ink. **No color accent** (the "accent" is just a deeper ink / hairline). Never pure #fff or #000. Grounded in 2026 trend research (Pantone "Cloud Dancer" warm off-white CotY; deep-brown "new black"; single-hue restraint).
+- **Type:** keep repo fonts — **Clash Display** (display) + **Uncut Sans** (body). User OK with adding more if needed. A "whisper of serif" italic line currently uses a system serif stack (`Newsreader`/`Iowan`/Palatino/Georgia); **TODO: optionally self-host Newsreader or Fraunces** if the serif touch is kept.
+- **Theme:** GUI is **light-only** (dark mode = the terminal). Tokens are scoped under `.gui-root` so they never collide with the global `.dark`.
+
+### Visual references shared with user (the lane)
+rauno.me · paco.me · leerob.com · emilkowal.ski · antfu.me · [Awwwards minimal](https://www.awwwards.com/awwwards/collections/minimal/) · [Awwwards editorial](https://www.awwwards.com/inspiration/editorial-layout)
+
+### What exists now (prototype to react to)
+- `src/features/elegant/elegant.css` — **the scoped design system** (`.gui-root` tokens: `--paper*`, `--ink*`, `--line*`, fonts, fluid spacing; helper classes `.gui-eyebrow`, `.gui-display`, `.gui-serif`, `.gui-link`, `.gui-rule`). Self-contained; does NOT depend on shadcn `--background` vars or fight `.dark`.
+- `src/features/elegant/components/Hero.tsx` — editorial asymmetric hero (8/4 grid), real data from `data/about.ts` + `data/contact.ts`, single framer-motion load stagger (transform/opacity, reduced-motion safe).
+- `src/features/elegant/components/Nav.tsx` — slim editorial top bar (wordmark + text links + `↗ terminal`). Links to /home, /projects, /about, /contact, /.
+- `src/features/elegant/components/GuiHome.tsx` — wraps everything in `.gui-root`.
+- `src/routes/home.tsx` — `/home` route (route tree regenerated). **Live at `/home`, HTTP 200, typecheck clean.**
+
 ## Session log
 | Date | What got done | Build green? | Handoff note |
 |------|---------------|--------------|--------------|
-| | | | |
+| 2026-05-31 | Locked design direction (above). Built scoped design system + editorial Hero + slim Nav + `/home` route as a prototype for user to react to. | typecheck ✓ | Awaiting user's reaction to the live hero before building the remaining pages / Footer / mode-switch banner. Do NOT mass-build pages until the hero look is signed off. |
 
 ## Handoff notes
-_(next-session pointer)_
+**Next session, start here:**
+1. Read the user's feedback on the `/home` hero (look/feel iteration). The design system in `elegant.css` is the single source of truth — tune tokens there, not inline.
+2. Once hero is signed off → build **Footer** (Task B), then redesign **/projects, /about, /experience, /contact** (Task C) reusing `.gui-root` + helper classes. Retarget the terminal `gui` command from `/about` → `/home` (`src/features/terminal/commands/navigation.ts`).
+3. Then mode-switch niceties (Task D), a11y pass (Task E), then the global `.dark` scoping cleanup in `__root.tsx` (currently force-adds `.dark` to `<html>`; the GUI is immune via `.gui-root`, but tidy this when wiring full mode-switch).
+4. Add X handle (`https://x.com/ekjongoru`) to `src/data/contact.ts` (still pending).
+5. Decide whether to self-host a serif (Newsreader/Fraunces) for the `.gui-serif` line.
+_Note: working on branch `feat/privacy-page` currently (not the planned `feat/revamp-phase-2`) — confirm branch strategy with user._
