@@ -26,6 +26,9 @@ export function TopBar() {
 							</a>
 						))}
 					</div>
+					<Link to="/git-profile" className="gui-link text-ink-soft">
+						GitHub
+					</Link>
 					<Link to="/" className="gui-link text-ink-muted">
 						terminal ↗
 					</Link>

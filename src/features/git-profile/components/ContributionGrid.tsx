@@ -18,15 +18,15 @@ interface ContributionGridProps {
 // GitHub-green palette so the heatmap matches the design system. The ink token
 // is warm off-white; increasing opacity = more contributions.
 function levelStyle(count: number): React.CSSProperties {
+	// Empty days get a faint tint so the grid is still legible; busier days glow.
 	const opacity =
-		count === 0 ? 0 : count < 3 ? 0.22 : count < 6 ? 0.42 : count < 10 ? 0.66 : 0.92;
-	return {
-		backgroundColor: count === 0 ? "var(--paper-sunk)" : `rgb(236 230 218 / ${opacity})`,
-	};
+		count === 0 ? 0.06 : count < 3 ? 0.24 : count < 6 ? 0.45 : count < 10 ? 0.68 : 0.92;
+	return { backgroundColor: `rgb(236 230 218 / ${opacity})` };
 }
 
 export function ContributionGrid({ calendar, delay = 0 }: ContributionGridProps) {
-	const recentWeeks = calendar.weeks.slice(-20);
+	// Show the full trailing-year window (ending today), like github.com.
+	const recentWeeks = calendar.weeks;
 
 	return (
 		<Reveal delay={delay}>
@@ -36,7 +36,7 @@ export function ContributionGrid({ calendar, delay = 0 }: ContributionGridProps)
 				</h2>
 				{calendar.totalContributions != null ? (
 					<span className="text-[0.82rem] tabular-nums text-ink-muted">
-						{calendar.totalContributions.toLocaleString()} this year
+						{calendar.totalContributions.toLocaleString()} in the past year
 					</span>
 				) : null}
 			</div>

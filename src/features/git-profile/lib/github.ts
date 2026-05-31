@@ -3,13 +3,12 @@ import { Octokit } from "octokit";
 // GitHub username for the portfolio
 const GITHUB_USERNAME = "saddathasan";
 
-// GitHub token from environment variable (required for GraphQL API)
+// GitHub token from environment variable (required for GraphQL API).
+// NOTE(phase-3): move this behind a Cloudflare Pages Function — never ship a
+// real token to the client bundle.
 const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN;
 
-// Create Octokit instance with authentication
-const octokit = new Octokit({
-  auth: GITHUB_TOKEN,
-});
+const octokit = new Octokit({ auth: GITHUB_TOKEN });
 
 export interface GitHubStats {
   totalContributions: number;
@@ -39,35 +38,34 @@ export interface GitHubStats {
   currentStreak: number;
 }
 
-// Get current year date range for contributions
-function getYearDateRange() {
-  const now = new Date();
-  const year = now.getFullYear();
-  return {
-    from: `${year}-01-01T00:00:00Z`,
-    to: `${year}-12-31T23:59:59Z`,
-  };
+// Trailing 12 months ending today — GitHub's contributionsCollection allows a
+// max 1-year window, and this matches what github.com/<user> shows. (The old
+// "calendar year" range made the recent-weeks slice land on future, empty
+// weeks, so the heatmap rendered blank.)
+function getContributionRange() {
+  const to = new Date();
+  const from = new Date(to);
+  from.setFullYear(to.getFullYear() - 1);
+  from.setDate(from.getDate() + 1);
+  return { from: from.toISOString(), to: to.toISOString() };
 }
 
-// GraphQL query for user stats
 const USER_STATS_QUERY = `
 query($username: String!, $from: DateTime!, $to: DateTime!) {
   user(login: $username) {
-    followers {
-      totalCount
-    }
-    following {
-      totalCount
-    }
-    repositories(first: 100, ownerAffiliations: OWNER, orderBy: {field: STARGAZERS, direction: DESC}) {
+    followers { totalCount }
+    following { totalCount }
+    repositories(first: 100, ownerAffiliations: OWNER, isFork: false, orderBy: {field: STARGAZERS, direction: DESC}) {
       totalCount
       nodes {
         name
         stargazerCount
         forkCount
-        primaryLanguage {
-          name
-          color
+        languages(first: 10, orderBy: {field: SIZE, direction: DESC}) {
+          edges {
+            size
+            node { name color }
+          }
         }
       }
     }
@@ -78,18 +76,12 @@ query($username: String!, $from: DateTime!, $to: DateTime!) {
           description
           stargazerCount
           forkCount
-          primaryLanguage {
-            name
-          }
+          primaryLanguage { name }
           url
         }
       }
     }
     contributionsCollection(from: $from, to: $to) {
-      totalCommitContributions
-      totalPullRequestContributions
-      totalIssueContributions
-      totalRepositoryContributions
       contributionCalendar {
         totalContributions
         weeks {
@@ -105,41 +97,46 @@ query($username: String!, $from: DateTime!, $to: DateTime!) {
 }
 `;
 
-// Calculate language percentages from repositories
+interface LanguageEdge {
+  size: number;
+  node: { name: string; color: string | null };
+}
+
+// Language composition by BYTES of code across non-fork repos (this is how
+// GitHub computes it), aggregated and reduced to the top 6.
 function calculateLanguages(
-  repos: { primaryLanguage: { name: string; color: string } | null }[]
+  repos: { languages: { edges: LanguageEdge[] } }[]
 ): { name: string; percentage: number; color: string }[] {
-  const langCount: Record<string, { count: number; color: string }> = {};
+  const bytes: Record<string, { size: number; color: string }> = {};
 
   for (const repo of repos) {
-    if (repo.primaryLanguage) {
-      const lang = repo.primaryLanguage.name;
-      if (!langCount[lang]) {
-        langCount[lang] = { count: 0, color: repo.primaryLanguage.color };
+    for (const { size, node } of repo.languages?.edges ?? []) {
+      if (!bytes[node.name]) {
+        bytes[node.name] = { size: 0, color: node.color || "#8b8b8b" };
       }
-      langCount[lang].count++;
+      bytes[node.name].size += size;
     }
   }
 
-  const total = Object.values(langCount).reduce((sum, l) => sum + l.count, 0);
+  const total = Object.values(bytes).reduce((sum, l) => sum + l.size, 0) || 1;
 
-  return Object.entries(langCount)
-    .map(([name, { count, color }]) => ({
+  return Object.entries(bytes)
+    .map(([name, { size, color }]) => ({
       name,
-      percentage: Math.round((count / total) * 100),
-      color: color || "#ccc",
+      percentage: Math.round((size / total) * 100),
+      color,
     }))
+    .filter((l) => l.percentage > 0)
     .sort((a, b) => b.percentage - a.percentage)
     .slice(0, 6);
 }
 
-// Calculate contribution streaks
+// Streaks across all days in the window.
 function calculateStreaks(
   weeks: { contributionDays: { contributionCount: number; date: string }[] }[]
 ): { longest: number; current: number } {
   const allDays = weeks.flatMap((w) => w.contributionDays);
   let longest = 0;
-  let current = 0;
   let streak = 0;
 
   for (const day of allDays) {
@@ -151,21 +148,18 @@ function calculateStreaks(
     }
   }
 
-  // Current streak (from most recent day backwards)
+  let current = 0;
   for (let i = allDays.length - 1; i >= 0; i--) {
-    if (allDays[i].contributionCount > 0) {
-      current++;
-    } else {
-      break;
-    }
+    if (allDays[i].contributionCount > 0) current++;
+    else break;
   }
 
   return { longest, current };
 }
 
 export async function fetchGitHubStats(): Promise<GitHubStats> {
-  const dateRange = getYearDateRange();
-  
+  const range = getContributionRange();
+
   try {
     const response = await octokit.graphql<{
       user: {
@@ -177,7 +171,7 @@ export async function fetchGitHubStats(): Promise<GitHubStats> {
             name: string;
             stargazerCount: number;
             forkCount: number;
-            primaryLanguage: { name: string; color: string } | null;
+            languages: { edges: LanguageEdge[] };
           }[];
         };
         pinnedItems: {
@@ -191,7 +185,6 @@ export async function fetchGitHubStats(): Promise<GitHubStats> {
           }[];
         };
         contributionsCollection: {
-          totalCommitContributions: number;
           contributionCalendar: {
             totalContributions: number;
             weeks: {
@@ -204,10 +197,10 @@ export async function fetchGitHubStats(): Promise<GitHubStats> {
           };
         };
       };
-    }>(USER_STATS_QUERY, { 
+    }>(USER_STATS_QUERY, {
       username: GITHUB_USERNAME,
-      from: dateRange.from,
-      to: dateRange.to,
+      from: range.from,
+      to: range.to,
     });
 
     const user = response.user;
