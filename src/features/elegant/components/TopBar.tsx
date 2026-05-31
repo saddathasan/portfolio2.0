@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { rememberMode } from "@/shared/lib/mode";
 import { homeSections } from "../sections.config";
 
 // Nav items derive from the same registry — any section with a `navLabel`
@@ -32,7 +33,11 @@ export function TopBar() {
 					<Link to="/git-profile" className="gui-link text-ink-soft">
 						GitHub
 					</Link>
-					<Link to="/" className="gui-link text-ink-muted">
+					<Link
+						to="/"
+						onClick={() => rememberMode("terminal")}
+						className="gui-link text-ink-muted"
+					>
 						terminal ↗
 					</Link>
 				</div>

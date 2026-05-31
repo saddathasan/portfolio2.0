@@ -1,5 +1,6 @@
 import "@/features/elegant/elegant.css";
 import { Link } from "@tanstack/react-router";
+import { rememberMode } from "@/shared/lib/mode";
 
 // Slim top bar — wordmark + escape hatches. Mirrors the git-profile chrome so
 // the secondary pages feel like one site. Solid paper + hairline, no glass.
@@ -20,7 +21,11 @@ function BlogTopBar() {
 					<Link to="/home" className="gui-link text-ink-muted">
 						← Home
 					</Link>
-					<Link to="/" className="gui-link text-ink-muted">
+					<Link
+						to="/"
+						onClick={() => rememberMode("terminal")}
+						className="gui-link text-ink-muted"
+					>
 						terminal ↗
 					</Link>
 				</div>

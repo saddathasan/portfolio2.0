@@ -1,6 +1,7 @@
 import "@/features/elegant/elegant.css";
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { rememberMode } from "@/shared/lib/mode";
 import { SEO } from "@/shared/seo/SEO";
 import { fetchGitHubStats } from "@/features/git-profile/lib/github";
 import { Reveal } from "@/features/elegant/components/primitives/Reveal";
@@ -30,7 +31,11 @@ function GitTopBar() {
 					<Link to="/home" className="gui-link text-ink-soft">
 						← Home
 					</Link>
-					<Link to="/" className="gui-link text-ink-muted">
+					<Link
+						to="/"
+						onClick={() => rememberMode("terminal")}
+						className="gui-link text-ink-muted"
+					>
 						terminal ↗
 					</Link>
 				</div>
