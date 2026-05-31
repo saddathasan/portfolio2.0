@@ -43,7 +43,7 @@ function DefaultErrorFallback({ error, resetError }: ErrorFallbackProps) {
 						refreshing the page or contact support if the problem
 						persists.
 					</p>
-					{process.env.NODE_ENV === "development" && (
+					{import.meta.env.DEV && (
 						<details className="mt-4">
 							<summary className="cursor-pointer text-sm font-medium text-muted-foreground hover:text-foreground">
 								Error Details (Development)
@@ -109,7 +109,7 @@ class ErrorBoundary extends React.Component<
 		}
 
 		// Log error in development
-		if (process.env.NODE_ENV === "development") {
+		if (import.meta.env.DEV) {
 			console.error("ErrorBoundary caught an error:", error, errorInfo);
 		}
 	}

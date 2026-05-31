@@ -176,7 +176,7 @@ export const FEATURES = {
 	ANIMATIONS: true,
 	ANALYTICS: false,
 	A11Y_FEATURES: true,
-	DEVELOPMENT_TOOLS: process.env.NODE_ENV === "development",
+	DEVELOPMENT_TOOLS: import.meta.env.DEV,
 } as const;
 
 // Component variants
@@ -213,10 +213,10 @@ export const A11Y = {
 
 // Development
 export const DEV = {
-	LOG_LEVEL: process.env.NODE_ENV === "development" ? "debug" : "error",
+	LOG_LEVEL: import.meta.env.DEV ? "debug" : "error",
 	SHOW_GRID: false,
 	SHOW_BREAKPOINTS: false,
-	ENABLE_DEVTOOLS: process.env.NODE_ENV === "development",
+	ENABLE_DEVTOOLS: import.meta.env.DEV,
 } as const;
 
 // Navigation constants

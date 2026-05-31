@@ -1,0 +1,35 @@
+---
+title: "Hello, world — and welcome to the blog"
+description: "A short note on why this site has a blog, and how the same post renders in both the terminal and the GUI."
+publishedAt: "2026-05-31"
+category: "general"
+tags: ["meta", "writing"]
+---
+
+I write to think. Most of what I learn at work — a build that finally went green,
+a footgun I tripped over twice, a pattern that turned out to be worth the cost —
+evaporates unless I write it down. So this is the notebook.
+
+Posts live as a single MDX file each. The interesting part is that they render
+**two ways** from that one source:
+
+- In the **GUI** you're reading the magazine version — proper typography,
+  highlighted code, the works.
+- In the **terminal**, the same post is a file you can `cat`. Try it:
+
+```sh
+blog
+cd general
+cat hello-world
+```
+
+No second copy, no CMS — the post *is* a node in the terminal's virtual
+filesystem, so tab-completion and `ls` work on it for free.
+
+## What I'll write about
+
+Mostly the seam between application code and the platform it runs on: React
+architecture decisions, CI/CD that doesn't fight you, and the occasional
+infrastructure post-mortem. Short and specific over long and general.
+
+That's it. More soon.

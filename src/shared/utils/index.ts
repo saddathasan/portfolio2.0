@@ -410,7 +410,7 @@ export const performanceUtils = {
 	 * Debounces a function
 	 */
 	debounce: <T extends unknown[]>(fn: (...args: T) => void, delay: number) => {
-		let timeoutId: NodeJS.Timeout;
+		let timeoutId: ReturnType<typeof setTimeout>;
 		return (...args: T) => {
 			clearTimeout(timeoutId);
 			timeoutId = setTimeout(() => fn(...args), delay);
