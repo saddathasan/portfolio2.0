@@ -92,6 +92,38 @@ export const onRequestGet: PagesFunction<Env> = async ({ env, request }) => {
 		return json({ error: "Server token not configured (GITHUB_TOKEN)" }, 500);
 	}
 
+	// Probe: /api/github?probe does the GitHub fetch + reads the body, but skips
+	// the JSON.parse / re-stringify, and reports status/timing/size. Isolates a
+	// fetch/network failure from a parse-CPU limit. Returns 200 with diagnostics.
+	if (new URL(request.url).searchParams.has("probe")) {
+		const t0 = Date.now();
+		let res: Response;
+		try {
+			res = await fetch("https://api.github.com/graphql", {
+				method: "POST",
+				headers: {
+					authorization: `bearer ${token}`,
+					"content-type": "application/json",
+					"user-agent": "saddathasan-portfolio",
+				},
+				body: JSON.stringify({
+					query: USER_STATS_QUERY,
+					variables: { username: GITHUB_USERNAME, ...contributionRange() },
+				}),
+			});
+		} catch (e) {
+			return json({ stage: "fetch-threw", ms: Date.now() - t0, message: e instanceof Error ? e.message : String(e) }, 200);
+		}
+		const fetchMs = Date.now() - t0;
+		let text = "";
+		try {
+			text = await res.text();
+		} catch (e) {
+			return json({ stage: "text-threw", ghStatus: res.status, fetchMs, message: e instanceof Error ? e.message : String(e) }, 200);
+		}
+		return json({ stage: "ok", ghStatus: res.status, fetchMs, totalMs: Date.now() - t0, bytes: text.length, sample: text.slice(0, 300) }, 200);
+	}
+
 	try {
 		const { from, to } = contributionRange();
 
