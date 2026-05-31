@@ -37,7 +37,7 @@ export function ContributionGrid({ calendar, delay = 0 }: ContributionGridProps)
 				</h2>
 				{calendar.totalContributions != null ? (
 					<span className="text-[0.82rem] tabular-nums text-ink-muted">
-						{calendar.totalContributions.toLocaleString()} in the past year
+						{calendar.totalContributions.toLocaleString()} public · past year
 					</span>
 				) : null}
 			</div>

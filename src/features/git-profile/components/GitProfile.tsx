@@ -14,8 +14,6 @@ type GitHubStats = Awaited<ReturnType<typeof fetchGitHubStats>>;
 let statsCache: GitHubStats | null = null;
 let statsPromise: Promise<GitHubStats> | null = null;
 
-const YEAR = new Date().getFullYear();
-
 // Slim top bar — wordmark + the two escape hatches (home / terminal).
 function GitTopBar() {
 	return (
@@ -116,7 +114,7 @@ export function GitProfile() {
 			<header className="pt-[14vh] pb-16">
 				<Reveal>
 					<p className="text-[0.72rem] font-medium uppercase tracking-[0.18em] text-ink-muted">
-						GitHub · {YEAR}
+						GitHub · public activity
 					</p>
 				</Reveal>
 				<Reveal delay={0.08}>
@@ -125,16 +123,27 @@ export function GitProfile() {
 					</h1>
 				</Reveal>
 				<Reveal delay={0.16}>
-					<p className="mt-5 max-w-[44ch] text-[1.02rem] leading-[1.7] text-ink-soft">
-						Contributions, languages and projects — pulled live from{" "}
-						<span className="text-ink">@saddathasan</span> on GitHub.
+					<p className="mt-5 max-w-[46ch] text-[1.02rem] leading-[1.7] text-ink-soft">
+						A live snapshot of my <span className="text-ink">public</span> activity
+						on GitHub — contributions, languages and projects. Day-to-day private
+						&amp; client work isn&apos;t shown here.
 					</p>
+				</Reveal>
+				<Reveal delay={0.24}>
+					<a
+						href="https://github.com/saddathasan"
+						target="_blank"
+						rel="noreferrer"
+						className="gui-link mt-6 inline-block text-[0.92rem] text-ink"
+					>
+						Full profile ↗
+					</a>
 				</Reveal>
 			</header>
 
 			{/* Stats */}
 			<section className="grid grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-4">
-				<StatCard title="Contributions" value={stats.totalContributions} delay={0} />
+				<StatCard title="Public contributions" value={stats.totalContributions} delay={0} />
 				<StatCard title="Repositories" value={stats.totalRepositories} delay={0.05} />
 				<StatCard title="Followers" value={stats.followers} delay={0.1} />
 				<StatCard
@@ -168,7 +177,8 @@ export function GitProfile() {
 			)}
 
 			<footer className="mt-20 border-t border-line py-8 text-[0.8rem] text-ink-muted">
-				Stats fetched live from the GitHub API.
+				Public stats, fetched live from the GitHub API. Private &amp; organization
+				work isn&apos;t included.
 			</footer>
 		</Shell>
 	);
