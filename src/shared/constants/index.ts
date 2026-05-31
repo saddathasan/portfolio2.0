@@ -141,7 +141,7 @@ export const SEO = {
 		"Full Stack",
 	],
 	SITE_URL: "https://saddathasan.vercel.app",
-	OG_IMAGE: "/og-image.jpg",
+	OG_IMAGE: "/og.png",
 } as const;
 
 // Performance thresholds

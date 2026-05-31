@@ -5,7 +5,7 @@
 /* Variable Font Declarations — GUI faces only (terminal mono added in Phase 1) */
 @font-face {
 	font-family: 'Clash Display Variable';
-	src: url('./fonts/ClashDisplayVF.ttf') format('truetype-variations');
+	src: url('./fonts/ClashDisplayVF.woff2') format('woff2-variations');
 	font-weight: 200 700;
 	font-style: normal;
 	font-display: swap;
@@ -13,7 +13,7 @@
 
 @font-face {
 	font-family: 'Uncut Sans Variable';
-	src: url('./fonts/UncutSans-Variable.ttf') format('truetype-variations');
+	src: url('./fonts/UncutSans-Variable.woff2') format('woff2-variations');
 	font-weight: 100 900;
 	font-style: normal;
 	font-display: swap;
@@ -191,22 +191,20 @@
 	}
 }
 
+/* Buttons get NO focus box or ring in any state — intentional, per design.
+   A subtle press (scale) is the only click feedback. Links and form fields
+   keep their own visible focus styles for keyboard accessibility. (What was
+   here — a 4px UA focus ring on :focus + a stray prefers-color-scheme:light
+   override — was leftover Vite-starter cruft that fought the design system.) */
+button {
+	transition: transform 0.12s cubic-bezier(0.22, 1, 0.36, 1);
+}
 button:focus,
 button:focus-visible {
-	outline: 4px auto -webkit-focus-ring-color;
+	outline: none;
 }
-
-@media (prefers-color-scheme: light) {
-	:root {
-		color: #213547;
-		background-color: #ffffff;
-	}
-	a:hover {
-		color: #747bff;
-	}
-	button {
-		background-color: #f9f9f9;
-	}
+button:active {
+	transform: scale(0.95);
 }
 
 
