@@ -26,6 +26,9 @@ export function TopBar() {
 							</a>
 						))}
 					</div>
+					<Link to="/blog" className="gui-link text-ink-soft">
+						Writing
+					</Link>
 					<Link to="/git-profile" className="gui-link text-ink-soft">
 						GitHub
 					</Link>

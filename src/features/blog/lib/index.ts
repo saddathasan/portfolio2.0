@@ -1,4 +1,5 @@
 import matter from "gray-matter";
+import type { MDXComponents } from "mdx/types";
 import readingTime from "reading-time";
 import type { ComponentType } from "react";
 import { frontmatterSchema, type Frontmatter } from "./schema";
@@ -16,6 +17,8 @@ import { frontmatterSchema, type Frontmatter } from "./schema";
    surfaces during `vite build` (the index is imported by prerendered routes).
    ─────────────────────────────────────────────────────────────────────────── */
 
+export type MDXBody = ComponentType<{ components?: MDXComponents }>;
+
 export interface Post {
 	slug: string;
 	/** Path of the source file, e.g. "/src/blog/general/hello-world.mdx". */
@@ -24,20 +27,23 @@ export interface Post {
 	readingTime: string; // e.g. "4 min read"
 	readingMinutes: number; // rounded, for the terminal "READ" column
 	wordCount: number;
-	/** Lazy loader for the compiled MDX body component. */
-	load: () => Promise<{ default: ComponentType<{ components?: Record<string, ComponentType<unknown>> }> }>;
+	/** The compiled MDX body. Eager (not lazy) so prerendered HTML carries the
+	 *  real article text — Shiki ran at build time, so the body is light JSX. */
+	Body: MDXBody;
 }
 
 type RawModule = string;
-type LazyModule = () => Promise<{ default: ComponentType<{ components?: Record<string, ComponentType<unknown>> }> }>;
 
-// Eager raw source for frontmatter parsing; lazy components for rendering.
+// Both globs eager: raw source for frontmatter/word-count, compiled body for
+// synchronous rendering (crawlable static HTML, no Suspense fallback in SSG).
 const rawFiles = import.meta.glob<RawModule>("/src/blog/**/*.mdx", {
 	query: "?raw",
 	import: "default",
 	eager: true,
 });
-const lazyFiles = import.meta.glob<{ default: ComponentType }>("/src/blog/**/*.mdx");
+const bodyFiles = import.meta.glob<{ default: MDXBody }>("/src/blog/**/*.mdx", {
+	eager: true,
+});
 
 // "/src/blog/devops/ci-cd.mdx" → slug "ci-cd"
 const slugFromPath = (filePath: string): string =>
@@ -60,7 +66,7 @@ function parsePost(filePath: string, raw: string): Post {
 		readingTime: stats.text, // "4 min read"
 		readingMinutes: Math.max(1, Math.round(stats.minutes)),
 		wordCount: stats.words,
-		load: lazyFiles[filePath] as LazyModule,
+		Body: bodyFiles[filePath].default,
 	};
 }
 
