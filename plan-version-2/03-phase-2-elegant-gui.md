@@ -96,10 +96,30 @@ rauno.me · paco.me · leerob.com · emilkowal.ski · antfu.me · [Awwwards mini
 - `src/features/elegant/components/GuiHome.tsx` — wraps everything in `.gui-root`.
 - `src/routes/home.tsx` — `/home` route (route tree regenerated). **Live at `/home`, HTTP 200, typecheck clean.**
 
+## Resume reconciliation — confirmed data decisions (2026-05-31)
+Source: `docs/saddat_hasan_resume_fsd1.md`. Confirmed with user:
+- **Title everywhere:** Full-Stack & DevOps Engineer. Rewrite bio/intro from the resume's Professional Summary.
+- **Skills:** enrich with resume's DevOps/AI set — Terraform, Azure, IAM, Linux, Claude Code, Cursor, GitHub Copilot.
+- **InfinitiBit = promotion history** (3 stacked roles: Frontend SE → Full-stack → Full-stack & DevOps). ⚠️ STILL NEED exact role dates from user.
+- **Talvette dates:** Jun 2023 – Jan 2025 (resume wins over old site's Oct 2023 – Feb 2025).
+- **WPP Production** "(formerly Wunderman Thompson Studios)" — use `formerName`.
+- **DRK-CBD:** PROJECT ONLY — remove the experience entry, keep as a shipped project.
+- **Projects:** add **Ria Medic Shop as the lead** (POS & ERP, medical retail, React + PostgreSQL + RBAC + inventory + dashboards, Nov 2024–Present). Trim the "Current Portfolio Site" self-reference. ⚠️ STILL NEED Ria backend/stack + live link (likely private/no link).
+- **Certificates:** keep all 6. **Phone:** keep OFF the site. **X handle:** keep. **Education dates:** keep 2016–2020.
+
+### Planned data model (`src/data/site.ts`) — typed single source of truth
+- Dates as `"YYYY-MM"` strings + one `formatPeriod()` helper → renders "Feb 2025 – Present".
+- `Company { id, company, formerName?, url?, location?, roles: Role[] }`; `Role { title, start, end|null, type?, highlights?, technologies? }` (promotions = multiple roles).
+- `Project { …, featured?, order? }` controls Selected-work + lead ordering.
+- Existing data files (`heroInfo`/`aboutInfo`/`experiences`/`projects`/`skills`/`certificates`/`contactInfo`) become thin **selectors** off `site.ts` so terminal + GUI keep working unchanged.
+- Upgrade elegant `ExperienceSection` to render stacked promotion roles.
+- **Branch:** `feat/site-data-model`, stacked on `feat/elegant-gui-home`.
+
 ## Session log
 | Date | What got done | Build green? | Handoff note |
 |------|---------------|--------------|--------------|
-| 2026-05-31 | Locked design direction (above). Built scoped design system + editorial Hero + slim Nav + `/home` route as a prototype for user to react to. | typecheck ✓ | Awaiting user's reaction to the live hero before building the remaining pages / Footer / mode-switch banner. Do NOT mass-build pages until the hero look is signed off. |
+| 2026-05-31 | Locked design direction. Built scoped design system + prototype hero. | typecheck ✓ | (superseded below) |
+| 2026-05-31 | Revised to rauno/paco quiet register; **committed dark palette**; wired tokens into tailwind.config. Built full **single-page home** (Hero + About/Work/Experience/Stack/Education/Certificates/Contact) with **data-driven section registry** (`sections.config.tsx` — reorder array → page/numbering/nav all follow). Modular content-only sections + primitives (Reveal/Section/WorkRow). **Committed as `feat/elegant-gui-home`** (off `version-2`). Signed off by user. | typecheck + `vite build` ✓ | NEXT: push `feat/elegant-gui-home` + open PR into `version-2` (awaiting user OK on base/remote). Then `feat/site-data-model` branch — but FIRST get the 2 ⚠️ items above (InfinitiBit role dates, Ria stack/link). |
 
 ## Handoff notes
 **Next session, start here:**
