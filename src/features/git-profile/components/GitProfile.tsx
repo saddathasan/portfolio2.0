@@ -42,7 +42,13 @@ function Shell({ children }: { children: React.ReactNode }) {
 	return (
 		<div className="gui-root gui-dark min-h-screen">
 			<GitTopBar />
-			<main className="mx-auto max-w-[48rem] px-6">{children}</main>
+			<main
+				id="main-content"
+				tabIndex={-1}
+				className="mx-auto max-w-[48rem] px-6 focus:outline-none"
+			>
+				{children}
+			</main>
 		</div>
 	);
 }

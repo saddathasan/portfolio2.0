@@ -87,6 +87,13 @@
 	transform: scaleX(1);
 }
 
+/* Visible keyboard focus across the GUI (mouse clicks stay clean). */
+.gui-root :focus-visible {
+	outline: 2px solid var(--ink-muted);
+	outline-offset: 3px;
+	border-radius: 1px;
+}
+
 /* Smooth anchor scrolling on the single-page GUI (the document is the scroll
    container). Scoped to when the body hosts the GUI to avoid touching the
    terminal. Disabled under reduced-motion. */

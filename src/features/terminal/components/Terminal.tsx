@@ -1,12 +1,57 @@
 import "@fontsource-variable/jetbrains-mono/index.css";
 import { useTerminal } from "@/features/terminal/hooks/useTerminal";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BANNER } from "../banner";
 import { CommandInput } from "./CommandInput";
 import { OutputDisplay } from "./OutputDisplay";
 import { Prompt } from "./Prompt";
 
 const MONO = "'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, monospace";
+
+// If a visitor previously switched to the GUI, offer to take them back —
+// quietly, dismissibly, and NEVER auto-redirect (protects intent + SEO).
+function ReturningVisitorHint({ onOpen }: { onOpen: () => void }) {
+	const [show, setShow] = useState(() => {
+		try {
+			return (
+				localStorage.getItem("preferredMode") === "gui" &&
+				sessionStorage.getItem("rv-dismissed") !== "1"
+			);
+		} catch {
+			return false;
+		}
+	});
+	if (!show) return null;
+	const dismiss = () => {
+		try {
+			sessionStorage.setItem("rv-dismissed", "1");
+		} catch {
+			/* ignore */
+		}
+		setShow(false);
+	};
+	return (
+		<div className="mb-6 flex items-center justify-between gap-3 border border-dashed border-gray-700 px-3 py-2 text-xs text-gray-400">
+			<span>You were last on the visual site.</span>
+			<span className="flex shrink-0 gap-4">
+				<button
+					type="button"
+					onClick={onOpen}
+					className="text-gray-200 underline decoration-gray-700 underline-offset-2 hover:decoration-gray-400"
+				>
+					open gui
+				</button>
+				<button
+					type="button"
+					onClick={dismiss}
+					className="text-gray-500 hover:text-gray-300"
+				>
+					dismiss
+				</button>
+			</span>
+		</div>
+	);
+}
 
 export function Terminal() {
 	const { history, currentPath, fileSystem, executeCommand } = useTerminal();
@@ -45,10 +90,13 @@ export function Terminal() {
 
 	return (
 		<div
+			id="main-content"
 			className="min-h-screen bg-[#0d1117] text-gray-200 p-4 md:p-8 overflow-y-auto cursor-text"
 			style={{ fontFamily: MONO }}
 			onClick={handleContainerClick}
 		>
+			<ReturningVisitorHint onOpen={() => executeCommand("gui")} />
+
 			{/* ASCII Art Banner — dim, decorative, not shouting */}
 			<pre className="text-gray-700 text-[10px] md:text-xs mb-6 leading-tight select-none">
 				{BANNER}

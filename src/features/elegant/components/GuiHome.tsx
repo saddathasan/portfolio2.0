@@ -12,7 +12,11 @@ export function GuiHome() {
 	return (
 		<div id="top" className="gui-root gui-dark">
 			<TopBar />
-			<div className="mx-auto max-w-[44rem] px-6">
+			<main
+				id="main-content"
+				tabIndex={-1}
+				className="mx-auto max-w-[44rem] px-6 focus:outline-none"
+			>
 				<HeroSection />
 				{homeSections.map((s, i) => (
 					<Section
@@ -24,7 +28,7 @@ export function GuiHome() {
 						<s.Component />
 					</Section>
 				))}
-			</div>
+			</main>
 			<footer className="border-t border-line">
 				<div className="mx-auto flex max-w-[44rem] flex-wrap items-center justify-between gap-2 px-6 py-8 text-[0.8rem] text-ink-muted">
 					<span>© 2026 Saddat Hasan</span>

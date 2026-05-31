@@ -127,11 +127,11 @@ Source: `docs/saddat_hasan_resume_fsd1.md`. Confirmed with user:
 | 2026-05-31 | **Branch `feat/terminal-rework`** (terminal output de-slop, Phase 1 follow-up): replaced gradient/emoji/cyan-JSON output with near-monochrome views (about/project/skills/experience/contact); dim chrome; dashed TUI separators; kept JetBrains Mono; removed JsonViewer. | tsc + build ✓ | Merged to version-2. |
 | 2026-05-31 | **Integrated everything into `version-2`** (fast-forward) and pushed to origin. PR #18 merged; #19–#21 closed as merged-by-integration; terminal-rework merged. version-2 tip = `3d6a48e`. | tsc + build ✓ | version-2 holds the entire revamp to date. |
 
-## Remaining to finish Phase 2 (the "what's next" short list)
-- [ ] **Accessibility pass (Task E):** skip-to-content link; wire `useFocusManagement` (exists, unused) to move focus on section/route change; visible focus rings on links/buttons; verify **WCAG AA contrast** on the warm-dark palette; audit landmarks.
-- [ ] **Contact copy-email + `sonner` toast:** `sonner` `<Toaster>` is mounted in `main.tsx` but unused — add copy-to-clipboard on the email + a concise toast.
-- [ ] **Returning-visitor banner:** `preferredMode` is set by the `gui` command but never read. On `/`, if `preferredMode==='gui'`, show a subtle dismissible "continue in GUI" banner — **never auto-redirect**.
-- [ ] **`__root.tsx` `.dark` cleanup:** it still force-adds `.dark` to `<html>` globally; the GUI is immune via `.gui-root .gui-dark`, but tidy this.
+## Remaining to finish Phase 2 — ✅ DONE (branch `feat/phase-2-finishers`, 2026-05-31)
+- [x] **Accessibility:** skip-to-content link (in `__root`); `<main id="main-content" tabIndex=-1>` landmarks on GUI home, git-profile, and terminal container; visible focus rings (`.gui-root :focus-visible` + terminal link focus-visible); WCAG-AA contrast verified on the warm-dark palette (ink-muted ≈ 4.8:1 on paper). _Route-change auto-focus intentionally skipped — it conflicts with the `/home#section` hash scrolling; the skip-link covers the keyboard path._
+- [x] **Contact copy-email + `sonner` toast:** email has a `copy` button → clipboard + "Email copied" toast; Toaster themed dark (bottom-right).
+- [x] **Returning-visitor banner:** on `/`, if `preferredMode==='gui'` and not dismissed this session, a quiet dashed banner offers `open gui` / `dismiss` — never auto-redirects.
+- [x] **`__root.tsx` `.dark` cleanup:** removed the runtime class-juggling effect; `.dark` is set statically in `index.html` (whole site is dark).
 
 ## Handoff notes
 **Phase 2 is ~90% done and fully integrated on `version-2`.** Two intentional, user-chosen deviations from the original doc: the GUI is warm-**dark** editorial (not light), and it's a **single-page** site (not separate pages — `/about|projects|experience|contact` redirect to `/home#section`).

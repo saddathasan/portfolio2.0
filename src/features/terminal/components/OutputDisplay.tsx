@@ -38,7 +38,7 @@ function Link({ href }: { href: string }) {
 			href={href}
 			target={href.startsWith("http") ? "_blank" : undefined}
 			rel={href.startsWith("http") ? "noreferrer" : undefined}
-			className="text-gray-200 underline decoration-gray-700 underline-offset-2 transition-colors hover:text-gray-100 hover:decoration-gray-400"
+			className="text-gray-200 underline decoration-gray-700 underline-offset-2 transition-colors hover:text-gray-100 hover:decoration-gray-400 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-gray-500"
 		>
 			{href.replace(/^https?:\/\//, "")}
 		</a>
