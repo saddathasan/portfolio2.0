@@ -68,12 +68,26 @@ const json = (body: unknown, status: number, extraHeaders: Record<string, string
 		headers: { "content-type": "application/json", ...extraHeaders },
 	});
 
-export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
+export const onRequestGet: PagesFunction<Env> = async ({ env, request }) => {
 	// Trim defensively — a token pasted into the dashboard with a stray newline
 	// or space yields an invalid `authorization` header value, which makes
 	// `fetch` throw a TypeError → an opaque Cloudflare 502. Trimming + the
 	// try/catch below turn that into a readable JSON error instead.
 	const token = env.GITHUB_TOKEN?.trim();
+
+	// Diagnostic: /api/github?diag returns runtime/token status WITHOUT calling
+	// GitHub. Confirms this code is the deployed version and whether the token
+	// is present/clean — never exposes the token value. Safe to leave in.
+	if (new URL(request.url).searchParams.has("diag")) {
+		return json({
+			ok: true,
+			runtime: "pages-function",
+			hasToken: Boolean(token),
+			tokenLength: token?.length ?? 0,
+			rawLength: env.GITHUB_TOKEN?.length ?? 0,
+		}, 200);
+	}
+
 	if (!token) {
 		return json({ error: "Server token not configured (GITHUB_TOKEN)" }, 500);
 	}
