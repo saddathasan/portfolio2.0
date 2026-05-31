@@ -68,60 +68,14 @@ const json = (body: unknown, status: number, extraHeaders: Record<string, string
 		headers: { "content-type": "application/json", ...extraHeaders },
 	});
 
-export const onRequestGet: PagesFunction<Env> = async ({ env, request }) => {
+export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
 	// Trim defensively — a token pasted into the dashboard with a stray newline
 	// or space yields an invalid `authorization` header value, which makes
 	// `fetch` throw a TypeError → an opaque Cloudflare 502. Trimming + the
 	// try/catch below turn that into a readable JSON error instead.
 	const token = env.GITHUB_TOKEN?.trim();
-
-	// Diagnostic: /api/github?diag returns runtime/token status WITHOUT calling
-	// GitHub. Confirms this code is the deployed version and whether the token
-	// is present/clean — never exposes the token value. Safe to leave in.
-	if (new URL(request.url).searchParams.has("diag")) {
-		return json({
-			ok: true,
-			runtime: "pages-function",
-			hasToken: Boolean(token),
-			tokenLength: token?.length ?? 0,
-			rawLength: env.GITHUB_TOKEN?.length ?? 0,
-		}, 200);
-	}
-
 	if (!token) {
 		return json({ error: "Server token not configured (GITHUB_TOKEN)" }, 500);
-	}
-
-	// Probe: /api/github?probe does the GitHub fetch + reads the body, but skips
-	// the JSON.parse / re-stringify, and reports status/timing/size. Isolates a
-	// fetch/network failure from a parse-CPU limit. Returns 200 with diagnostics.
-	if (new URL(request.url).searchParams.has("probe")) {
-		const t0 = Date.now();
-		let res: Response;
-		try {
-			res = await fetch("https://api.github.com/graphql", {
-				method: "POST",
-				headers: {
-					authorization: `bearer ${token}`,
-					"content-type": "application/json",
-					"user-agent": "saddathasan-portfolio",
-				},
-				body: JSON.stringify({
-					query: USER_STATS_QUERY,
-					variables: { username: GITHUB_USERNAME, ...contributionRange() },
-				}),
-			});
-		} catch (e) {
-			return json({ stage: "fetch-threw", ms: Date.now() - t0, message: e instanceof Error ? e.message : String(e) }, 200);
-		}
-		const fetchMs = Date.now() - t0;
-		let text = "";
-		try {
-			text = await res.text();
-		} catch (e) {
-			return json({ stage: "text-threw", ghStatus: res.status, fetchMs, message: e instanceof Error ? e.message : String(e) }, 200);
-		}
-		return json({ stage: "ok", ghStatus: res.status, fetchMs, totalMs: Date.now() - t0, bytes: text.length, sample: text.slice(0, 300) }, 200);
 	}
 
 	try {
