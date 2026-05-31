@@ -1,10 +1,10 @@
 # Cloudflare Pages configuration for React Portfolio
 name = "portfolio-site"
-compatibility_date = "2024-01-01"
+compatibility_date = "2024-11-01"
 
 # Pages configuration
 [env.production]
-compatibility_date = "2024-01-01"
+compatibility_date = "2024-11-01"
 
 # Environment variables (set these in Cloudflare Dashboard)
 # GITHUB_TOKEN = "..."   # Phase 3: server-side git-profile proxy (functions/api/github.ts)
