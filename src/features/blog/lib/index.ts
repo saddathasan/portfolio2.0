@@ -32,18 +32,25 @@ export interface Post {
 	Body: MDXBody;
 }
 
-type RawModule = string;
-
 // Both globs eager: raw source for frontmatter/word-count, compiled body for
 // synchronous rendering (crawlable static HTML, no Suspense fallback in SSG).
-const rawFiles = import.meta.glob<RawModule>("/src/blog/**/*.mdx", {
+// Vite (build) and Vitest differ on whether `?raw` yields the string or the
+// module namespace, so normalise defensively.
+const rawFiles = import.meta.glob("/src/blog/**/*.mdx", {
 	query: "?raw",
-	import: "default",
 	eager: true,
 });
 const bodyFiles = import.meta.glob<{ default: MDXBody }>("/src/blog/**/*.mdx", {
 	eager: true,
 });
+
+const rawSource = (mod: unknown): string => {
+	if (typeof mod === "string") return mod;
+	if (mod && typeof mod === "object" && "default" in mod) {
+		return String((mod as { default: unknown }).default ?? "");
+	}
+	return "";
+};
 
 // "/src/blog/devops/ci-cd.mdx" → slug "ci-cd"
 const slugFromPath = (filePath: string): string =>
@@ -72,7 +79,7 @@ function parsePost(filePath: string, raw: string): Post {
 
 // Build the index once: parse, drop drafts, newest first.
 export const posts: Post[] = Object.entries(rawFiles)
-	.map(([filePath, raw]) => parsePost(filePath, raw))
+	.map(([filePath, raw]) => parsePost(filePath, rawSource(raw)))
 	.filter((p) => !p.frontmatter.draft)
 	.sort(
 		(a, b) =>

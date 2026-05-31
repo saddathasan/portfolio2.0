@@ -3,6 +3,8 @@ import { contactInfo } from "@/data/contact";
 import { experiences } from "@/data/experience";
 import { projects } from "@/data/projects";
 import { skills } from "@/data/skills";
+import { buildBlogDirectory } from "@/features/blog/lib/terminal-fs";
+import type { BlogListingPayload } from "@/features/blog/lib/terminal-fs";
 
 // --- Types ---
 
@@ -13,6 +15,8 @@ export interface FileSystemNode {
 	type: FileType;
 	content?: string | object;
 	children?: Record<string, FileSystemNode>;
+	/** Present on blog directories: the TUI table `ls` renders instead of names. */
+	listing?: BlogListingPayload;
 }
 
 export interface TerminalState {
@@ -78,6 +82,7 @@ export const initialFileSystem: FileSystemNode = {
 			type: "directory",
 			children: buildProjectsDirectory(),
 		},
+		blog: buildBlogDirectory(),
 		"README.md": {
 			name: "README.md",
 			type: "file",
