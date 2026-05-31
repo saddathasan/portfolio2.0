@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Reveal } from "@/features/elegant/components/primitives/Reveal";
+import { SEO } from "@/shared/seo/SEO";
 import { allTags, posts } from "../lib";
 import { BlogShell } from "./BlogShell";
 import { PostRow } from "./PostRow";
@@ -25,7 +26,15 @@ export function BlogList() {
 		}));
 
 	return (
-		<BlogShell>
+		<BlogShell
+			seo={
+				<SEO
+					path="/blog"
+					title="Writing"
+					description="Short, specific posts on React architecture, CI/CD, and the occasional infrastructure post-mortem."
+				/>
+			}
+		>
 			<header className="pt-[14vh] pb-12">
 				<Reveal>
 					<p className="text-[0.72rem] font-medium uppercase tracking-[0.18em] text-ink-muted">

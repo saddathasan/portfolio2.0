@@ -30,9 +30,17 @@ function BlogTopBar() {
 }
 
 // Shared dark warm-paper shell for every blog page (list, category, article).
-export function BlogShell({ children }: { children: React.ReactNode }) {
+// `seo` is rendered here so it covers every page that uses the shell.
+export function BlogShell({
+	children,
+	seo,
+}: {
+	children: React.ReactNode;
+	seo?: React.ReactNode;
+}) {
 	return (
 		<div className="gui-root gui-dark min-h-screen">
+			{seo}
 			<BlogTopBar />
 			<main
 				id="main-content"

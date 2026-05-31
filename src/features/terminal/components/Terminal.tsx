@@ -1,6 +1,8 @@
 import "@fontsource-variable/jetbrains-mono/index.css";
 import { useTerminal } from "@/features/terminal/hooks/useTerminal";
 import { useEffect, useRef, useState } from "react";
+import { SEO } from "@/shared/seo/SEO";
+import { personLd } from "@/shared/seo/jsonld";
 import { BANNER } from "../banner";
 import { CommandInput } from "./CommandInput";
 import { OutputDisplay } from "./OutputDisplay";
@@ -89,6 +91,12 @@ export function Terminal() {
 	};
 
 	return (
+		<>
+		<SEO
+			path="/"
+			description="Saddat Hasan — Full-Stack & DevOps Engineer. A terminal-first portfolio: type 'help' to explore, or 'gui' for the visual site."
+			jsonLd={personLd()}
+		/>
 		<div
 			id="main-content"
 			className="min-h-screen bg-[#0d1117] text-gray-200 p-4 md:p-8 overflow-y-auto cursor-text"
@@ -152,5 +160,6 @@ export function Terminal() {
 
 			<div ref={bottomRef} />
 		</div>
+		</>
 	);
 }

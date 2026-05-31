@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Reveal } from "@/features/elegant/components/primitives/Reveal";
+import { SEO } from "@/shared/seo/SEO";
 import { byCategory } from "../lib";
 import { BlogShell } from "./BlogShell";
 import { PostRow } from "./PostRow";
@@ -9,7 +10,16 @@ export function CategoryView({ category }: { category: string }) {
 	const items = byCategory(category);
 
 	return (
-		<BlogShell>
+		<BlogShell
+			seo={
+				<SEO
+					path={`/blog/${category}`}
+					title={`${category} — Writing`}
+					bare
+					description={`Posts in the ${category} category.`}
+				/>
+			}
+		>
 			<header className="pt-[14vh] pb-10">
 				<Reveal>
 					<Link

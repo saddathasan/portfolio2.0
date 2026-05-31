@@ -2,6 +2,7 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 import { defineConfig } from "vite";
 import { mdxPlugins } from "./mdx.vite";
+import { seoAssets } from "./seo-assets.vite";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -10,6 +11,8 @@ export default defineConfig({
 		// shared factory marks it enforce:"pre"). See mdx.vite.ts.
 		...mdxPlugins(),
 		react({ include: /\.(jsx|js|mdx|md|tsx|ts)$/ }),
+		// Emits sitemap.xml / rss.xml / robots.txt into dist on build.
+		seoAssets(),
 	],
 	resolve: {
 		alias: {

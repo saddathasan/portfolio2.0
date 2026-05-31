@@ -1,6 +1,7 @@
 import "@/features/elegant/elegant.css";
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { SEO } from "@/shared/seo/SEO";
 import { fetchGitHubStats } from "@/features/git-profile/lib/github";
 import { Reveal } from "@/features/elegant/components/primitives/Reveal";
 import { StatCard } from "./StatCard";
@@ -41,6 +42,11 @@ function GitTopBar() {
 function Shell({ children }: { children: React.ReactNode }) {
 	return (
 		<div className="gui-root gui-dark min-h-screen">
+			<SEO
+				path="/git-profile"
+				title="GitHub activity"
+				description="A live snapshot of my public GitHub activity — contributions, languages and projects."
+			/>
 			<GitTopBar />
 			<main
 				id="main-content"

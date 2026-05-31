@@ -1,5 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Reveal } from "@/features/elegant/components/primitives/Reveal";
+import { SEO } from "@/shared/seo/SEO";
+import { blogPostingLd } from "@/shared/seo/jsonld";
 import { posts, type Post } from "../lib";
 import { formatDate } from "../lib/format";
 import { BlogShell } from "./BlogShell";
@@ -15,9 +17,32 @@ function neighbours(slug: string): { prev?: Post; next?: Post } {
 export function Article({ post }: { post: Post }) {
 	const { frontmatter: fm, Body } = post;
 	const { prev, next } = neighbours(post.slug);
+	const path = `/blog/${fm.category}/${post.slug}`;
 
 	return (
-		<BlogShell>
+		<BlogShell
+			seo={
+				<SEO
+					path={path}
+					title={fm.title}
+					description={fm.description}
+					type="article"
+					image={fm.cover}
+					publishedTime={fm.publishedAt}
+					modifiedTime={fm.updatedAt}
+					canonical={fm.canonical}
+					jsonLd={blogPostingLd({
+						title: fm.title,
+						description: fm.description,
+						path,
+						publishedAt: fm.publishedAt,
+						updatedAt: fm.updatedAt,
+						image: fm.cover,
+						tags: fm.tags,
+					})}
+				/>
+			}
+		>
 			<article className="pt-[12vh] pb-10">
 				<header className="border-b border-line pb-9">
 					<Reveal>
