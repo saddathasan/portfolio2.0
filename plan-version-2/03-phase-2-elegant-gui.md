@@ -124,11 +124,16 @@ Source: `docs/saddat_hasan_resume_fsd1.md`. Confirmed with user:
 | 2026-05-31 | **Branch `feat/retire-old-pages`** (stacked): went TRUE single-page. `gui` command + ⌘K palette now target `/home` (+ in-page hashes); removed home's "All work/Full history" deep links; old routes (/about,/projects,/experience,/contact) → **redirects to /home#section**; old `/index` inert; **deleted all of `src/components/` except ErrorBoundary** (20 dead files). Bundle 322→299KB. | tsc + build ✓ | git-profile is the one remaining non-elegant feature (own styling) — ask user if it should be restyled. |
 | 2026-05-31 | Revised to rauno/paco quiet register; **committed dark palette**; wired tokens into tailwind.config. Built full **single-page home** (Hero + About/Work/Experience/Stack/Education/Certificates/Contact) with **data-driven section registry** (`sections.config.tsx` — reorder array → page/numbering/nav all follow). Modular content-only sections + primitives (Reveal/Section/WorkRow). **Committed as `feat/elegant-gui-home`** (off `version-2`). Signed off by user. | typecheck + `vite build` ✓ | NEXT: push `feat/elegant-gui-home` + open PR into `version-2` (awaiting user OK on base/remote). Then `feat/site-data-model` branch — but FIRST get the 2 ⚠️ items above (InfinitiBit role dates, Ria stack/link). |
 
+| 2026-05-31 | **Branch `feat/terminal-rework`** (terminal output de-slop, Phase 1 follow-up): replaced gradient/emoji/cyan-JSON output with near-monochrome views (about/project/skills/experience/contact); dim chrome; dashed TUI separators; kept JetBrains Mono; removed JsonViewer. | tsc + build ✓ | Merged to version-2. |
+| 2026-05-31 | **Integrated everything into `version-2`** (fast-forward) and pushed to origin. PR #18 merged; #19–#21 closed as merged-by-integration; terminal-rework merged. version-2 tip = `3d6a48e`. | tsc + build ✓ | version-2 holds the entire revamp to date. |
+
+## Remaining to finish Phase 2 (the "what's next" short list)
+- [ ] **Accessibility pass (Task E):** skip-to-content link; wire `useFocusManagement` (exists, unused) to move focus on section/route change; visible focus rings on links/buttons; verify **WCAG AA contrast** on the warm-dark palette; audit landmarks.
+- [ ] **Contact copy-email + `sonner` toast:** `sonner` `<Toaster>` is mounted in `main.tsx` but unused — add copy-to-clipboard on the email + a concise toast.
+- [ ] **Returning-visitor banner:** `preferredMode` is set by the `gui` command but never read. On `/`, if `preferredMode==='gui'`, show a subtle dismissible "continue in GUI" banner — **never auto-redirect**.
+- [ ] **`__root.tsx` `.dark` cleanup:** it still force-adds `.dark` to `<html>` globally; the GUI is immune via `.gui-root .gui-dark`, but tidy this.
+
 ## Handoff notes
-**Next session, start here:**
-1. Read the user's feedback on the `/home` hero (look/feel iteration). The design system in `elegant.css` is the single source of truth — tune tokens there, not inline.
-2. Once hero is signed off → build **Footer** (Task B), then redesign **/projects, /about, /experience, /contact** (Task C) reusing `.gui-root` + helper classes. Retarget the terminal `gui` command from `/about` → `/home` (`src/features/terminal/commands/navigation.ts`).
-3. Then mode-switch niceties (Task D), a11y pass (Task E), then the global `.dark` scoping cleanup in `__root.tsx` (currently force-adds `.dark` to `<html>`; the GUI is immune via `.gui-root`, but tidy this when wiring full mode-switch).
-4. Add X handle (`https://x.com/ekjongoru`) to `src/data/contact.ts` (still pending).
-5. Decide whether to self-host a serif (Newsreader/Fraunces) for the `.gui-serif` line.
-_Note: working on branch `feat/privacy-page` currently (not the planned `feat/revamp-phase-2`) — confirm branch strategy with user._
+**Phase 2 is ~90% done and fully integrated on `version-2`.** Two intentional, user-chosen deviations from the original doc: the GUI is warm-**dark** editorial (not light), and it's a **single-page** site (not separate pages — `/about|projects|experience|contact` redirect to `/home#section`).
+**Next session:** knock out the 4 "Remaining to finish Phase 2" items above (≈1 session), then start **Phase 3** ([`04-phase-3-blog-seo-perf.md`](./04-phase-3-blog-seo-perf.md)) — MDX blog + SSG/SEO + CWV + the git-token Pages Function (which also unlocks the full/private GitHub contribution stats). Final step after Phase 3: merge `version-2 → main` to deploy live on Cloudflare Pages (`saddathasan.dev`).
+_Still optional: self-host a serif (Newsreader/Fraunces) for the `.gui-serif` line; fill the InfinitiBit role dates in `site.ts`._
