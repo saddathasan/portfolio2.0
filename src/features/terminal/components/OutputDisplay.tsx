@@ -2,6 +2,11 @@ import type { Project } from "@/shared/types";
 import type { AboutInfo } from "@/data/about";
 import type { Experience, SkillCategory } from "@/data/experience";
 import type { ContactInfo } from "@/data/contact";
+import type {
+	BlogListingPayload,
+	BlogPostPayload,
+} from "@/features/blog/lib/terminal-fs";
+import { terminalMdxComponents } from "@/features/blog/components/terminal-mdx-components";
 
 /* ───────────────────────────────────────────────────────────────────────────
    Terminal output — restrained, near-monochrome presentation.
@@ -177,6 +182,84 @@ function ContactView({ data }: { data: ContactInfo[] }) {
 	);
 }
 
+// `ls /blog` (and category dirs): an aligned, dashed TUI table.
+function BlogListingView({ data }: { data: BlogListingPayload }) {
+	// Desktop: a 4-column table. Mobile: each row stacks — a small meta line
+	// (date · category · read) above the slug · title. `sm:contents` lets the
+	// meta spans become real grid cells on wider screens.
+	const grid = "sm:grid sm:grid-cols-[6rem_6rem_4rem_1fr] sm:gap-x-3";
+	return (
+		<div className="mb-4 max-w-2xl">
+			<SectionLabel>{data.heading}</SectionLabel>
+			{data.rows.length === 0 ? (
+				<div className="text-gray-500">no posts here yet</div>
+			) : (
+				<>
+					<div className="border-y border-dashed border-gray-700">
+						<div className={`hidden py-1.5 text-xs uppercase tracking-[0.14em] text-gray-500 sm:grid sm:grid-cols-[6rem_6rem_4rem_1fr] sm:gap-x-3`}>
+							<span>date</span>
+							<span>category</span>
+							<span>read</span>
+							<span>slug · title</span>
+						</div>
+						{data.rows.map((r) => (
+							<div
+								key={r.slug}
+								className={`border-t border-dashed border-gray-800 py-2 sm:py-1.5 ${grid}`}
+							>
+								<div className="mb-0.5 flex gap-3 text-xs text-gray-500 sm:contents sm:text-sm">
+									<span className="tabular-nums">{r.date}</span>
+									<span className="text-gray-400">{r.category}</span>
+									<span className="tabular-nums">{r.read}</span>
+								</div>
+								<span className="block min-w-0 break-words">
+									{/* The slug is what you `cat` — show it brightly, title dim. */}
+									<span className="text-gray-100">{r.slug}</span>
+									<span className="text-gray-500"> · {r.title}</span>
+								</span>
+							</div>
+						))}
+					</div>
+					<div className="mt-2 text-xs text-gray-600">
+						{data.rows.length} {data.rows.length === 1 ? "post" : "posts"} · type{" "}
+						<span className="text-gray-400">cat {data.rows[0].slug}</span> to read
+						(or <span className="text-gray-400">open {data.rows[0].slug}</span> for
+						the GUI)
+					</div>
+				</>
+			)}
+		</div>
+	);
+}
+
+// `cat <slug>`: the post, fully rendered in terminal style (same compiled MDX
+// body as the GUI, different component map).
+function BlogPostView({ data }: { data: BlogPostPayload }) {
+	const { Body } = data;
+	return (
+		<div className="mb-4 max-w-2xl">
+			<div className="text-gray-100">{data.title}</div>
+			<div className="text-sm text-gray-500">
+				{data.date} · {data.category} · {data.read}
+				{data.updated ? ` · updated ${data.updated}` : ""}
+			</div>
+
+			<div className="mt-4 border-t border-dashed border-gray-800 pt-4">
+				<Body components={terminalMdxComponents} />
+			</div>
+
+			{data.tags.length > 0 ? (
+				<div className="mt-5 text-xs text-gray-600">
+					{data.tags.map((t) => `#${t}`).join("  ")}
+				</div>
+			) : null}
+			<div className="mt-3 border-t border-dashed border-gray-800 pt-3 text-xs text-gray-600">
+				open ↗ read in the GUI — type: open {data.slug}
+			</div>
+		</div>
+	);
+}
+
 // minimal, un-boxed fallback for anything unrecognised
 function Generic({ data }: { data: unknown }) {
 	return (
@@ -220,6 +303,12 @@ export function OutputDisplay({ content }: OutputDisplayProps) {
 		}
 		if (content.displayType === "project") {
 			return <ProjectView data={content as unknown as Project} />;
+		}
+		if (content.displayType === "blog-listing") {
+			return <BlogListingView data={content as unknown as BlogListingPayload} />;
+		}
+		if (content.displayType === "blog-post") {
+			return <BlogPostView data={content as unknown as BlogPostPayload} />;
 		}
 		return <Generic data={content} />;
 	}

@@ -1,14 +1,5 @@
-import { Octokit } from "octokit";
-
 // GitHub username for the portfolio
 const GITHUB_USERNAME = "saddathasan";
-
-// GitHub token from environment variable (required for GraphQL API).
-// NOTE(phase-3): move this behind a Cloudflare Pages Function — never ship a
-// real token to the client bundle.
-const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN;
-
-const octokit = new Octokit({ auth: GITHUB_TOKEN });
 
 export interface GitHubStats {
   totalContributions: number;
@@ -163,53 +154,71 @@ function calculateStreaks(
   return { longest, current };
 }
 
-export async function fetchGitHubStats(): Promise<GitHubStats> {
+// The raw `user` shape returned by the proxy (mirrors the GraphQL query).
+interface RawUser {
+  followers: { totalCount: number };
+  following: { totalCount: number };
+  repositories: {
+    totalCount: number;
+    nodes: {
+      name: string;
+      stargazerCount: number;
+      forkCount: number;
+      languages: { edges: LanguageEdge[] };
+    }[];
+  };
+  pinnedItems: {
+    nodes: {
+      name: string;
+      description: string | null;
+      stargazerCount: number;
+      forkCount: number;
+      primaryLanguage: { name: string } | null;
+      url: string;
+    }[];
+  };
+  contributionsCollection: {
+    contributionCalendar: GitHubStats["contributionCalendar"];
+  };
+}
+
+// Dev-only direct call to GitHub, so `pnpm dev` (plain Vite, no CF function)
+// still works when VITE_GITHUB_TOKEN is set locally. Production NEVER uses this.
+async function fetchRawUserDirect(token: string): Promise<RawUser> {
   const range = getContributionRange();
+  const res = await fetch("https://api.github.com/graphql", {
+    method: "POST",
+    headers: {
+      authorization: `bearer ${token}`,
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      query: USER_STATS_QUERY,
+      variables: { username: GITHUB_USERNAME, from: range.from, to: range.to },
+    }),
+  });
+  if (!res.ok) throw new Error(`GitHub API ${res.status}`);
+  const json = (await res.json()) as { data?: { user?: RawUser } };
+  if (!json.data?.user) throw new Error("GitHub query failed");
+  return json.data.user;
+}
 
+// Production (and any preview): call our server-side proxy, which holds the
+// token. The token is never shipped to the client.
+async function fetchRawUser(): Promise<RawUser> {
+  const devToken = import.meta.env.DEV
+    ? (import.meta.env.VITE_GITHUB_TOKEN as string | undefined)
+    : undefined;
+  if (devToken) return fetchRawUserDirect(devToken);
+
+  const res = await fetch("/api/github");
+  if (!res.ok) throw new Error(`GitHub proxy ${res.status}`);
+  return (await res.json()) as RawUser;
+}
+
+export async function fetchGitHubStats(): Promise<GitHubStats> {
   try {
-    const response = await octokit.graphql<{
-      user: {
-        followers: { totalCount: number };
-        following: { totalCount: number };
-        repositories: {
-          totalCount: number;
-          nodes: {
-            name: string;
-            stargazerCount: number;
-            forkCount: number;
-            languages: { edges: LanguageEdge[] };
-          }[];
-        };
-        pinnedItems: {
-          nodes: {
-            name: string;
-            description: string | null;
-            stargazerCount: number;
-            forkCount: number;
-            primaryLanguage: { name: string } | null;
-            url: string;
-          }[];
-        };
-        contributionsCollection: {
-          contributionCalendar: {
-            totalContributions: number;
-            weeks: {
-              contributionDays: {
-                contributionCount: number;
-                date: string;
-                color: string;
-              }[];
-            }[];
-          };
-        };
-      };
-    }>(USER_STATS_QUERY, {
-      username: GITHUB_USERNAME,
-      from: range.from,
-      to: range.to,
-    });
-
-    const user = response.user;
+    const user = await fetchRawUser();
     const calendar = user.contributionsCollection.contributionCalendar;
     const streaks = calculateStreaks(calendar.weeks);
 

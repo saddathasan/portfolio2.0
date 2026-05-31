@@ -1,4 +1,6 @@
 import "../elegant.css";
+import { SEO } from "@/shared/seo/SEO";
+import { personLd, websiteLd } from "@/shared/seo/jsonld";
 import { homeSections } from "../sections.config";
 import { Section } from "./primitives/Section";
 import { TopBar } from "./TopBar";
@@ -11,6 +13,7 @@ import { HeroSection } from "./sections/HeroSection";
 export function GuiHome() {
 	return (
 		<div id="top" className="gui-root gui-dark">
+			<SEO path="/home" jsonLd={[personLd(), websiteLd()]} />
 			<TopBar />
 			<main
 				id="main-content"

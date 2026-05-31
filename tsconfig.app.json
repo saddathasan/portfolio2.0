@@ -23,8 +23,7 @@
 		"noFallthroughCasesInSwitch": true,
 		"noUncheckedSideEffectImports": true,
 
-		/* Path mapping */
-		"baseUrl": ".",
+		/* Path mapping — no baseUrl needed; paths resolve relative to this file. */
 		"paths": {
 			"@/*": ["./src/*"]
 		}

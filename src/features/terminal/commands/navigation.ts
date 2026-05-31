@@ -32,10 +32,15 @@ export const navigationCommands: Command[] = [
 	},
 	{
 		name: "blog",
-		description: "Read my writing",
+		description: "List my writing (cd /blog + ls)",
 		aliases: ["posts"],
 		group: "Navigation",
-		run: () =>
-			"📝 The blog ships in Phase 3 — it'll live right here in the filesystem (cd /blog, then cat a post).",
+		run: ({ fileSystem, setPath }) => {
+			// Sugar for `cd /blog` + `ls`: move there, then print the table.
+			const blog = fileSystem.children?.blog;
+			if (!blog?.listing) return "blog: no posts found";
+			setPath(["blog"]);
+			return blog.listing;
+		},
 	},
 ];

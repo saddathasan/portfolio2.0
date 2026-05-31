@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
+import { getPathSuggestions } from "../lib/autocomplete";
 import { initialFileSystem, resolvePath } from "../lib/terminal";
 import { commands, findCommand } from "./registry";
 import type { CommandContext } from "./types";
@@ -69,7 +70,7 @@ describe("command run()", () => {
 	it("gui navigates to the visual site", () => {
 		const ctx = makeCtx();
 		findCommand("gui")!.run(ctx);
-		expect(ctx.navigate).toHaveBeenCalledWith("/about");
+		expect(ctx.navigate).toHaveBeenCalledWith("/home");
 	});
 
 	it("git profile opens the git profile route", () => {
@@ -88,5 +89,57 @@ describe("command run()", () => {
 		const out = findCommand("help")!.run(makeCtx()) as string;
 		expect(out).toContain("NAVIGATION");
 		expect(out).toContain("help");
+	});
+});
+
+describe("blog (terminal)", () => {
+	it("mounts posts as FS nodes under /blog with category subdirs", () => {
+		const blog = resolvePath([], "/blog", initialFileSystem).node;
+		expect(blog?.type).toBe("directory");
+		expect(blog?.listing?.displayType).toBe("blog-listing");
+		expect((blog?.listing?.rows.length ?? 0)).toBeGreaterThan(0);
+		// hello-world lives in the general category
+		const general = resolvePath([], "/blog/general", initialFileSystem).node;
+		expect(general?.children?.["hello-world.md"]?.type).toBe("file");
+	});
+
+	it("`blog` cds to /blog and returns the listing table", () => {
+		const ctx = makeCtx();
+		const out = findCommand("blog")!.run(ctx) as { displayType: string };
+		expect(ctx.setPath).toHaveBeenCalledWith(["blog"]);
+		expect(out.displayType).toBe("blog-listing");
+	});
+
+	it("`cat <slug>` resolves with .md optional and yields a blog-post", () => {
+		const ctx = makeCtx({
+			args: ["hello-world"],
+			argStr: "hello-world",
+			currentPath: ["blog", "general"],
+		});
+		const out = findCommand("cat")!.run(ctx) as { displayType: string; slug: string };
+		expect(out.displayType).toBe("blog-post");
+		expect(out.slug).toBe("hello-world");
+	});
+
+	it("`cat <slug>` works from /blog even though posts are nested in categories", () => {
+		const ctx = makeCtx({
+			args: ["hello-world"],
+			argStr: "hello-world",
+			currentPath: ["blog"], // sitting at /blog, post is in /blog/general
+		});
+		const out = findCommand("cat")!.run(ctx) as { displayType: string; slug: string };
+		expect(out.displayType).toBe("blog-post");
+		expect(out.slug).toBe("hello-world");
+	});
+
+	it("autocomplete offers post slugs while in /blog", () => {
+		const names = getPathSuggestions("hel", ["blog"], initialFileSystem);
+		expect(names).toContain("hello-world.md");
+	});
+
+	it("`open <slug>` navigates to the GUI article", () => {
+		const ctx = makeCtx({ args: ["hello-world"], argStr: "hello-world" });
+		findCommand("open")!.run(ctx);
+		expect(ctx.navigate).toHaveBeenCalledWith("/blog/general/hello-world");
 	});
 });

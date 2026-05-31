@@ -3,6 +3,8 @@ import { contactInfo } from "@/data/contact";
 import { experiences } from "@/data/experience";
 import { projects } from "@/data/projects";
 import { skills } from "@/data/skills";
+import { buildBlogDirectory } from "@/features/blog/lib/terminal-fs";
+import type { BlogListingPayload } from "@/features/blog/lib/terminal-fs";
 
 // --- Types ---
 
@@ -13,6 +15,8 @@ export interface FileSystemNode {
 	type: FileType;
 	content?: string | object;
 	children?: Record<string, FileSystemNode>;
+	/** Present on blog directories: the TUI table `ls` renders instead of names. */
+	listing?: BlogListingPayload;
 }
 
 export interface TerminalState {
@@ -78,6 +82,7 @@ export const initialFileSystem: FileSystemNode = {
 			type: "directory",
 			children: buildProjectsDirectory(),
 		},
+		blog: buildBlogDirectory(),
 		"README.md": {
 			name: "README.md",
 			type: "file",
@@ -130,6 +135,32 @@ export const resolvePath = (
 	}
 
 	return { node: currentNode, newPath: finalParts };
+};
+
+// Blog posts live nested under /blog/<category>/<slug>.md, but the `blog`
+// listing presents them as one flat table — so `cat <slug>` and post-name
+// autocomplete need to look across all categories, not just the cwd.
+
+/** Find a post node by bare slug (`.md` optional) anywhere under /blog. */
+export const findBlogPostNode = (
+	fileSystem: FileSystemNode,
+	slug: string
+): FileSystemNode | null => {
+	const name = `${slug.replace(/\.md$/, "")}.md`;
+	const categories = fileSystem.children?.blog?.children;
+	if (!categories) return null;
+	for (const category of Object.values(categories)) {
+		const hit = category.children?.[name];
+		if (hit) return hit;
+	}
+	return null;
+};
+
+/** All post filenames (`<slug>.md`) across every blog category. */
+export const blogPostFileNames = (fileSystem: FileSystemNode): string[] => {
+	const categories = fileSystem.children?.blog?.children;
+	if (!categories) return [];
+	return Object.values(categories).flatMap((c) => Object.keys(c.children ?? {}));
 };
 
 export const getDirectoryContents = (

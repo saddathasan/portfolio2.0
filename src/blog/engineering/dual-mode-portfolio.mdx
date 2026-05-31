@@ -1,0 +1,73 @@
+---
+title: "Designing a dual-mode portfolio"
+description: "Why I built a terminal-first site with an elegant GUI escape hatch, and how one data model feeds both."
+publishedAt: "2026-05-30"
+category: "engineering"
+tags: ["react", "architecture", "design", "typescript"]
+---
+
+Most developer portfolios pick a lane: either a slick marketing page or a cute
+terminal gimmick. I wanted both, without maintaining two of everything. This is
+how that shook out.
+
+## Two front doors, one house
+
+The site boots into a **terminal** at `/`. Type `gui` and you land on `/home` —
+a quiet, single-column, near-monochrome site. Two interfaces, two audiences:
+recruiters skim the GUI; engineers poke at the terminal. The trick is that
+neither is a reskin of the other — they're different *renderers* over the same
+content.
+
+The single source of truth is one typed file:
+
+```ts
+// src/data/site.ts
+export const siteData: SiteData = {
+  profile: { name: "Saddat Hasan", title: "Full-stack & DevOps Engineer" /* … */ },
+  experience: [ /* companies, each with a roles[] timeline */ ],
+  projects: [ /* … */ ],
+};
+```
+
+Everything downstream — the GUI sections, the terminal's `about`/`experience`
+commands, even SEO JSON-LD — selects off this. Change a job title once; it's
+correct everywhere.
+
+## Modelling promotions, not just jobs
+
+The detail I'm proud of: a company isn't a single role, it's a *timeline* of
+them. I was promoted three times at one company, and flattening that to a single
+line would have erased the story.
+
+```ts
+interface Company {
+  name: string;
+  roles: Role[]; // chronological: most recent last
+}
+```
+
+So the rendered period spans the earliest start to the latest end across roles,
+while each role keeps its own dates. One shape, honest history.
+
+> The data model is the design. Get the types right and the components mostly
+> write themselves.
+
+## Why not Tailwind everywhere?
+
+I do use Tailwind — but the GUI's palette lives in scoped CSS custom properties
+under `.gui-root`, wired into the Tailwind config as utilities (`bg-paper`,
+`text-ink`, `border-line`). That keeps component markup plain Tailwind while the
+*tokens* stay in one place, fully independent of the terminal's theme. Light and
+dark are a single class flip, no runtime juggling.
+
+## The payoff
+
+| Concern        | Where it's solved          |
+| -------------- | -------------------------- |
+| Content        | one typed `site.ts`        |
+| Section order  | a data-driven registry     |
+| Theme          | scoped CSS variables       |
+| Blog           | MDX, rendered two ways     |
+
+Next up: making both modes prerender to static HTML so the whole thing is
+crawlable and fast. That's a post for another day.

@@ -1,6 +1,8 @@
 import "@fontsource-variable/jetbrains-mono/index.css";
 import { useTerminal } from "@/features/terminal/hooks/useTerminal";
 import { useEffect, useRef, useState } from "react";
+import { SEO } from "@/shared/seo/SEO";
+import { personLd } from "@/shared/seo/jsonld";
 import { BANNER } from "../banner";
 import { CommandInput } from "./CommandInput";
 import { OutputDisplay } from "./OutputDisplay";
@@ -89,16 +91,28 @@ export function Terminal() {
 	};
 
 	return (
+		<>
+		<SEO
+			path="/"
+			description="Saddat Hasan — Full-Stack & DevOps Engineer. A terminal-first portfolio: type 'help' to explore, or 'gui' for the visual site."
+			jsonLd={personLd()}
+		/>
 		<div
 			id="main-content"
-			className="min-h-screen bg-[#0d1117] text-gray-200 p-4 md:p-8 overflow-y-auto cursor-text"
+			className="min-h-screen overflow-x-hidden overflow-y-auto cursor-text break-words bg-[#0d1117] p-4 text-gray-200 md:p-8"
 			style={{ fontFamily: MONO }}
 			onClick={handleContainerClick}
 		>
 			<ReturningVisitorHint onOpen={() => executeCommand("gui")} />
 
-			{/* ASCII Art Banner — dim, decorative, not shouting */}
-			<pre className="text-gray-700 text-[10px] md:text-xs mb-6 leading-tight select-none">
+			{/* ASCII Art Banner — dim, decorative. The art is ~78 chars wide, so
+			    its font-size scales with the viewport to always fit one line
+			    (it would otherwise clip off-screen on phones), capped at 0.75rem
+			    on desktop. */}
+			<pre
+				className="mb-6 select-none overflow-hidden leading-tight text-gray-700"
+				style={{ fontSize: "clamp(5px, 1.85vw, 0.75rem)" }}
+			>
 				{BANNER}
 			</pre>
 
@@ -110,28 +124,26 @@ export function Terminal() {
 					Type <span className="text-gray-300">help</span> for commands, or{" "}
 					<span className="text-gray-300">ls</span> to explore.
 				</p>
-				<p className="text-gray-500 text-xs mt-1 flex items-center gap-2">
-					<span>
-						Not a developer? Type <span className="text-gray-300">gui</span> for the
-						visual site.
-					</span>
-					<button
-						type="button"
-						onClick={() => executeCommand("gui")}
-						className="px-2 py-0.5 border border-gray-700 text-gray-300 hover:border-gray-500 hover:text-gray-100 transition-colors"
-					>
-						gui mode
-					</button>
+				<p className="text-gray-500 text-xs mt-3">
+					Not a developer? Type <span className="text-gray-300">gui</span> for the
+					visual site:
 				</p>
+				<button
+					type="button"
+					onClick={() => executeCommand("gui")}
+					className="mt-2 inline-flex items-center gap-1.5 border border-dashed border-gray-700 px-3 py-1.5 text-xs text-gray-300 transition-colors hover:border-gray-500 hover:text-gray-100"
+				>
+					gui mode <span aria-hidden>→</span>
+				</button>
 			</div>
 
 			{/* History (terminal log) */}
 			<div className="space-y-2" role="log" aria-live="polite" aria-label="Terminal output">
 				{history.map((entry, index) => (
 					<div key={index} className="space-y-1">
-						<div className="flex items-center gap-2 text-sm md:text-base">
+						<div className="flex flex-wrap items-center gap-2 text-sm md:text-base">
 							<Prompt path={entry.path} />
-							<span className="text-gray-100">{entry.command}</span>
+							<span className="break-all text-gray-100">{entry.command}</span>
 						</div>
 						<div className="pl-0 md:pl-4">
 							<OutputDisplay content={entry.output} />
@@ -152,5 +164,6 @@ export function Terminal() {
 
 			<div ref={bottomRef} />
 		</div>
+		</>
 	);
 }

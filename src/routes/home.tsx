@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { GuiHome } from "@/features/elegant/components/GuiHome";
 
-export const Route = createFileRoute("/home")({
-	component: GuiHome,
-});
+// Component lives in home.lazy.tsx so the elegant GUI code-splits out of the
+// terminal landing's initial bundle.
+export const Route = createFileRoute("/home")({});

@@ -159,7 +159,7 @@ export const CommandInput = forwardRef<HTMLInputElement, CommandInputProps>(
 
 		return (
 			<div className="w-full">
-				<div className="flex items-center gap-2 w-full text-sm md:text-base">
+				<div className="flex flex-wrap items-center gap-2 w-full text-sm md:text-base">
 					<Prompt path={pathString} />
 					<input
 						ref={inputRef}
@@ -167,7 +167,7 @@ export const CommandInput = forwardRef<HTMLInputElement, CommandInputProps>(
 						value={input}
 						onChange={(e) => setInput(e.target.value)}
 						onKeyDown={handleKeyDown}
-						className="flex-1 bg-transparent border-none outline-none text-white caret-white"
+						className="min-w-[8rem] flex-1 bg-transparent border-none outline-none text-white caret-white"
 						autoFocus
 						spellCheck={false}
 						autoComplete="off"

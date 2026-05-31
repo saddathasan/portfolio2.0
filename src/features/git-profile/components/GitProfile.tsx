@@ -1,6 +1,8 @@
 import "@/features/elegant/elegant.css";
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { rememberMode } from "@/shared/lib/mode";
+import { SEO } from "@/shared/seo/SEO";
 import { fetchGitHubStats } from "@/features/git-profile/lib/github";
 import { Reveal } from "@/features/elegant/components/primitives/Reveal";
 import { StatCard } from "./StatCard";
@@ -17,7 +19,7 @@ let statsPromise: Promise<GitHubStats> | null = null;
 // Slim top bar — wordmark + the two escape hatches (home / terminal).
 function GitTopBar() {
 	return (
-		<div className="sticky top-0 z-20 border-b border-line bg-paper/95">
+		<div className="sticky top-0 z-20 border-b border-line bg-[var(--surface-nav)] backdrop-blur-md">
 			<nav className="mx-auto flex max-w-[48rem] items-center justify-between px-6 py-3.5 text-[0.85rem]">
 				<Link
 					to="/home"
@@ -29,7 +31,11 @@ function GitTopBar() {
 					<Link to="/home" className="gui-link text-ink-soft">
 						← Home
 					</Link>
-					<Link to="/" className="gui-link text-ink-muted">
+					<Link
+						to="/"
+						onClick={() => rememberMode("terminal")}
+						className="gui-link text-ink-muted"
+					>
 						terminal ↗
 					</Link>
 				</div>
@@ -41,6 +47,11 @@ function GitTopBar() {
 function Shell({ children }: { children: React.ReactNode }) {
 	return (
 		<div className="gui-root gui-dark min-h-screen">
+			<SEO
+				path="/git-profile"
+				title="GitHub activity"
+				description="A live snapshot of my public GitHub activity — contributions, languages and projects."
+			/>
 			<GitTopBar />
 			<main
 				id="main-content"

@@ -1,3 +1,4 @@
+import { getBySlug } from "@/features/blog/lib";
 import { BANNER } from "../banner";
 import type { Command, CommandGroup } from "../engine/types";
 
@@ -65,16 +66,23 @@ export const systemCommands: Command[] = [
 	},
 	{
 		name: "open",
-		description: "Open a URL in a new tab",
-		usage: "open <url>",
+		description: "Open a URL in a new tab, or a blog post in the GUI",
+		usage: "open <url|post-slug>",
 		group: "System",
-		run: ({ argStr, openUrl }) => {
+		run: ({ argStr, openUrl, navigate }) => {
 			if (!argStr) return "open: missing operand";
 			if (argStr.startsWith("http") || argStr.startsWith("/")) {
 				openUrl(argStr);
 				return `Opening ${argStr}…`;
 			}
-			return `open: ${argStr}: invalid URL`;
+			// Otherwise treat it as a blog slug → the GUI article.
+			const slug = argStr.replace(/\.md$/, "");
+			const post = getBySlug(slug);
+			if (post) {
+				navigate(`/blog/${post.frontmatter.category}/${post.slug}`);
+				return `Opening "${post.frontmatter.title}" in the GUI…`;
+			}
+			return `open: ${argStr}: not a URL or known post`;
 		},
 	},
 	{

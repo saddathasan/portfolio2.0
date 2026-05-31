@@ -1,4 +1,4 @@
-import { resolvePath } from "../lib/terminal";
+import { findBlogPostNode, resolvePath } from "../lib/terminal";
 import type { Command, TerminalOutput } from "../engine/types";
 
 export const filesystemCommands: Command[] = [
@@ -12,6 +12,9 @@ export const filesystemCommands: Command[] = [
 			const { node } = resolvePath(currentPath, target, fileSystem);
 			if (!node) return `ls: cannot access '${target}': No such file or directory`;
 			if (node.type === "file") return node.name;
+			// Blog directories print a TUI table (date · category · read · title)
+			// instead of bare names — see OutputDisplay's BlogListingView.
+			if (node.listing) return node.listing;
 			if (!node.children) return "";
 			return Object.values(node.children)
 				.map((child) => (child.type === "directory" ? `${child.name}/` : child.name))
@@ -39,7 +42,17 @@ export const filesystemCommands: Command[] = [
 		group: "Filesystem",
 		run: ({ argStr, currentPath, fileSystem }) => {
 			if (!argStr) return "cat: missing operand";
-			const { node } = resolvePath(currentPath, argStr, fileSystem);
+			let { node } = resolvePath(currentPath, argStr, fileSystem);
+			// `.md` is optional for posts: `cat hello-world` finds hello-world.md.
+			if (!node && !argStr.endsWith(".md")) {
+				node = resolvePath(currentPath, `${argStr}.md`, fileSystem).node;
+			}
+			// Blog posts are nested under /blog/<category>/, but the listing is
+			// flat — so a bare slug resolves to the post from anywhere (e.g.
+			// `cat hello-world` while sitting in /blog). Slugs are unique.
+			if (!node) {
+				node = findBlogPostNode(fileSystem, argStr);
+			}
 			if (!node) return `cat: ${argStr}: No such file or directory`;
 			if (node.type === "directory") return `cat: ${argStr}: Is a directory`;
 			return node.content as TerminalOutput;

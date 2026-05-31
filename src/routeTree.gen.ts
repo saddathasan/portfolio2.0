@@ -16,7 +16,10 @@ import { Route as ExperienceRouteImport } from './routes/experience'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as IbExtensionPrivacyPolicyRouteImport } from './routes/ib-extension/privacy-policy'
+import { Route as BlogCategoryIndexRouteImport } from './routes/blog.$category.index'
+import { Route as BlogCategorySlugRouteImport } from './routes/blog.$category.$slug'
 
 const ProjectsRoute = ProjectsRouteImport.update({
   id: '/projects',
@@ -27,12 +30,12 @@ const HomeRoute = HomeRouteImport.update({
   id: '/home',
   path: '/home',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any).lazy(() => import('./routes/home.lazy').then((d) => d.Route))
 const GitProfileRoute = GitProfileRouteImport.update({
   id: '/git-profile',
   path: '/git-profile',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any).lazy(() => import('./routes/git-profile.lazy').then((d) => d.Route))
 const ExperienceRoute = ExperienceRouteImport.update({
   id: '/experience',
   path: '/experience',
@@ -53,12 +56,31 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() => import('./routes/blog.index.lazy').then((d) => d.Route))
 const IbExtensionPrivacyPolicyRoute =
   IbExtensionPrivacyPolicyRouteImport.update({
     id: '/ib-extension/privacy-policy',
     path: '/ib-extension/privacy-policy',
     getParentRoute: () => rootRouteImport,
   } as any)
+const BlogCategoryIndexRoute = BlogCategoryIndexRouteImport.update({
+  id: '/blog/$category/',
+  path: '/blog/$category/',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() =>
+  import('./routes/blog.$category.index.lazy').then((d) => d.Route),
+)
+const BlogCategorySlugRoute = BlogCategorySlugRouteImport.update({
+  id: '/blog/$category/$slug',
+  path: '/blog/$category/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() =>
+  import('./routes/blog.$category.$slug.lazy').then((d) => d.Route),
+)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -69,6 +91,9 @@ export interface FileRoutesByFullPath {
   '/home': typeof HomeRoute
   '/projects': typeof ProjectsRoute
   '/ib-extension/privacy-policy': typeof IbExtensionPrivacyPolicyRoute
+  '/blog': typeof BlogIndexRoute
+  '/blog/$category/$slug': typeof BlogCategorySlugRoute
+  '/blog/$category': typeof BlogCategoryIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -79,6 +104,9 @@ export interface FileRoutesByTo {
   '/home': typeof HomeRoute
   '/projects': typeof ProjectsRoute
   '/ib-extension/privacy-policy': typeof IbExtensionPrivacyPolicyRoute
+  '/blog': typeof BlogIndexRoute
+  '/blog/$category/$slug': typeof BlogCategorySlugRoute
+  '/blog/$category': typeof BlogCategoryIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -90,6 +118,9 @@ export interface FileRoutesById {
   '/home': typeof HomeRoute
   '/projects': typeof ProjectsRoute
   '/ib-extension/privacy-policy': typeof IbExtensionPrivacyPolicyRoute
+  '/blog/': typeof BlogIndexRoute
+  '/blog/$category/$slug': typeof BlogCategorySlugRoute
+  '/blog/$category/': typeof BlogCategoryIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -102,6 +133,9 @@ export interface FileRouteTypes {
     | '/home'
     | '/projects'
     | '/ib-extension/privacy-policy'
+    | '/blog'
+    | '/blog/$category/$slug'
+    | '/blog/$category'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -112,6 +146,9 @@ export interface FileRouteTypes {
     | '/home'
     | '/projects'
     | '/ib-extension/privacy-policy'
+    | '/blog'
+    | '/blog/$category/$slug'
+    | '/blog/$category'
   id:
     | '__root__'
     | '/'
@@ -122,6 +159,9 @@ export interface FileRouteTypes {
     | '/home'
     | '/projects'
     | '/ib-extension/privacy-policy'
+    | '/blog/'
+    | '/blog/$category/$slug'
+    | '/blog/$category/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -133,6 +173,9 @@ export interface RootRouteChildren {
   HomeRoute: typeof HomeRoute
   ProjectsRoute: typeof ProjectsRoute
   IbExtensionPrivacyPolicyRoute: typeof IbExtensionPrivacyPolicyRoute
+  BlogIndexRoute: typeof BlogIndexRoute
+  BlogCategorySlugRoute: typeof BlogCategorySlugRoute
+  BlogCategoryIndexRoute: typeof BlogCategoryIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -186,11 +229,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/ib-extension/privacy-policy': {
       id: '/ib-extension/privacy-policy'
       path: '/ib-extension/privacy-policy'
       fullPath: '/ib-extension/privacy-policy'
       preLoaderRoute: typeof IbExtensionPrivacyPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/$category/': {
+      id: '/blog/$category/'
+      path: '/blog/$category'
+      fullPath: '/blog/$category'
+      preLoaderRoute: typeof BlogCategoryIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/$category/$slug': {
+      id: '/blog/$category/$slug'
+      path: '/blog/$category/$slug'
+      fullPath: '/blog/$category/$slug'
+      preLoaderRoute: typeof BlogCategorySlugRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -205,6 +269,9 @@ const rootRouteChildren: RootRouteChildren = {
   HomeRoute: HomeRoute,
   ProjectsRoute: ProjectsRoute,
   IbExtensionPrivacyPolicyRoute: IbExtensionPrivacyPolicyRoute,
+  BlogIndexRoute: BlogIndexRoute,
+  BlogCategorySlugRoute: BlogCategorySlugRoute,
+  BlogCategoryIndexRoute: BlogCategoryIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
