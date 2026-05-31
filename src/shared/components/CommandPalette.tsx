@@ -26,16 +26,18 @@ export function CommandPalette() {
 	const [active, setActive] = useState(0);
 	const listRef = useRef<HTMLUListElement>(null);
 
-	const go = (to: string) => () => navigate({ to: to as never });
+	const go = (to: string, hash?: string) => () =>
+		navigate({ to: to as never, hash });
 	const openUrl = (url: string) => () => window.open(url, "_blank", "noopener,noreferrer");
 
 	const actions: Action[] = useMemo(
 		() => [
 			{ group: "Go to", label: "Terminal", hint: "/", perform: go("/") },
-			{ group: "Go to", label: "About", perform: go("/about") },
-			{ group: "Go to", label: "Projects", perform: go("/projects") },
-			{ group: "Go to", label: "Experience", perform: go("/experience") },
-			{ group: "Go to", label: "Contact", perform: go("/contact") },
+			{ group: "Go to", label: "Home", hint: "/home", perform: go("/home") },
+			{ group: "Go to", label: "About", perform: go("/home", "about") },
+			{ group: "Go to", label: "Work", perform: go("/home", "work") },
+			{ group: "Go to", label: "Experience", perform: go("/home", "experience") },
+			{ group: "Go to", label: "Contact", perform: go("/home", "contact") },
 			{ group: "Go to", label: "Git Profile", perform: go("/git-profile") },
 			{ group: "Actions", label: "Download résumé", perform: openUrl("/resume.pdf") },
 			{ group: "Actions", label: "Email me", perform: openUrl(`mailto:${EMAIL}`) },

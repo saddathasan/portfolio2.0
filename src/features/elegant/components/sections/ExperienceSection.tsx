@@ -1,4 +1,3 @@
-import { Link } from "@tanstack/react-router";
 import {
 	experience,
 	companyPeriod,
@@ -87,18 +86,10 @@ function CompanyItem({ company }: { company: Company }) {
 // Content only — Section shell applied by the registry.
 export function ExperienceSection() {
 	return (
-		<>
-			<div>
-				{experience.map((company) => (
-					<CompanyItem key={company.id} company={company} />
-				))}
-			</div>
-			<Link
-				to="/experience"
-				className="gui-link mt-6 inline-block text-[0.92rem] text-ink-muted"
-			>
-				Full history →
-			</Link>
-		</>
+		<div>
+			{experience.map((company) => (
+				<CompanyItem key={company.id} company={company} />
+			))}
+		</div>
 	);
 }

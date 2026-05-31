@@ -12,9 +12,8 @@ export const navigationCommands: Command[] = [
 			} catch {
 				/* ignore storage errors */
 			}
-			// TODO(phase-2): retarget to "/home" once the GUI landing page exists.
-			navigate("/about");
-			return "Launching the visual site… use the nav (or the ⌘K palette) to return to the terminal.";
+			navigate("/home");
+			return "Launching the visual site… type 'terminal' in the nav (or the ⌘K palette) to return.";
 		},
 	},
 	{
