@@ -1,5 +1,5 @@
 import { WorkRow } from "../primitives/WorkRow";
-import { certificates } from "@/data/certificates";
+import { certificates } from "@/data/site";
 
 // Content only — reuses WorkRow (title + issuer + date, links to credential).
 export function CertificatesSection() {
@@ -11,11 +11,7 @@ export function CertificatesSection() {
 						title={c.name}
 						note={c.issuer}
 						meta={c.issuingDate}
-						href={
-							c.credentialUrl && c.credentialUrl !== "N/A"
-								? c.credentialUrl
-								: undefined
-						}
+						href={c.credentialUrl}
 					/>
 				</li>
 			))}

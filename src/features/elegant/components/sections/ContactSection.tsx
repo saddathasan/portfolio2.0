@@ -1,10 +1,8 @@
-const EMAIL = "saddathasan94@gmail.com";
+import { profile, social } from "@/data/site";
 
 const elsewhere = [
-	{ label: "GitHub", href: "https://github.com/saddathasan" },
-	{ label: "LinkedIn", href: "https://linkedin.com/in/saddathasan" },
-	{ label: "X", href: "https://x.com/ekjongoru" },
-	{ label: "Résumé", href: "/resume.pdf" },
+	...social.filter((s) => s.inContact),
+	{ label: "Résumé", href: profile.resumeUrl },
 ];
 
 // Content only — Section shell applied by the registry.
@@ -17,10 +15,10 @@ export function ContactSection() {
 			</p>
 
 			<a
-				href={`mailto:${EMAIL}`}
+				href={`mailto:${profile.email}`}
 				className="gui-link mt-7 inline-block font-display text-[clamp(1.4rem,4vw,2rem)] font-medium tracking-[-0.01em] text-ink"
 			>
-				{EMAIL}
+				{profile.email}
 			</a>
 
 			<div className="mt-9 flex flex-wrap gap-x-6 gap-y-2 text-[0.95rem]">

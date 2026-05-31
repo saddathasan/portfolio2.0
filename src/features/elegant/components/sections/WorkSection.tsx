@@ -1,13 +1,12 @@
 import { Link } from "@tanstack/react-router";
 import { WorkRow } from "../primitives/WorkRow";
-import { projects } from "@/data/projects";
+import { projects } from "@/data/site";
 
-// First clause of a description — terse, list-friendly.
-const note = (description: string) => description.split(/[.—]/)[0].trim();
+// Featured projects, in lead order (Ria first). Content only.
+const featured = projects
+	.filter((p) => p.featured)
+	.sort((a, b) => a.order - b.order);
 
-const featured = projects.slice(0, 4);
-
-// Content only — Section shell applied by the registry.
 export function WorkSection() {
 	return (
 		<>
@@ -16,8 +15,8 @@ export function WorkSection() {
 					<li key={p.id}>
 						<WorkRow
 							title={p.title}
-							note={note(p.description)}
-							meta={p.impact?.split(",")[0]}
+							note={p.tagline}
+							meta={p.period ?? p.impact.split(/[,•]/)[0].trim()}
 							href={p.liveUrl ?? p.sourceUrl ?? undefined}
 						/>
 					</li>

@@ -1,22 +1,19 @@
-import { skills } from "@/data/skills";
+import { skillGroups } from "@/data/site";
 
-// Terse stack — grouped as label + inline skill list. No badges, no soup.
-// Uses the fuller skills set (incl. Cloud/DevOps + AI/ML). Content only.
+// Terse stack — label + inline skill list. No badges, no soup. Content only.
 export function StackSection() {
 	return (
 		<dl className="space-y-1">
-			{skills.map((cat) => (
+			{skillGroups.map((group) => (
 				<div
-					key={cat.id}
-					className="grid grid-cols-[8rem_1fr] items-baseline gap-x-4 gap-y-1 border-t border-line py-3.5 sm:grid-cols-[10rem_1fr]"
+					key={group.id}
+					className="grid grid-cols-[8rem_1fr] items-baseline gap-x-4 gap-y-1 border-t border-line py-3.5 sm:grid-cols-[11rem_1fr]"
 				>
 					<dt className="text-[0.82rem] uppercase tracking-[0.12em] text-ink-muted">
-						{cat.title}
+						{group.title}
 					</dt>
 					<dd className="text-[0.98rem] text-ink-soft">
-						{cat.skills
-							.map((s) => (typeof s === "string" ? s : s.name))
-							.join("  ·  ")}
+						{group.skills.map((s) => s.name).join("  ·  ")}
 					</dd>
 				</div>
 			))}
