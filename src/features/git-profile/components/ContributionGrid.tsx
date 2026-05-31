@@ -1,52 +1,60 @@
-import { motion } from "framer-motion";
+import { Reveal } from "@/features/elegant/components/primitives/Reveal";
 
 interface ContributionGridProps {
-  calendar: {
-    weeks: {
-      contributionDays: {
-        contributionCount: number;
-        date: string;
-        color: string;
-      }[];
-    }[];
-  };
-  delay?: number;
+	calendar: {
+		totalContributions?: number;
+		weeks: {
+			contributionDays: {
+				contributionCount: number;
+				date: string;
+				color: string;
+			}[];
+		}[];
+	};
+	delay?: number;
+}
+
+// Warm-ink monochrome intensity scale (glows on the dark paper) — replaces the
+// GitHub-green palette so the heatmap matches the design system. The ink token
+// is warm off-white; increasing opacity = more contributions.
+function levelStyle(count: number): React.CSSProperties {
+	const opacity =
+		count === 0 ? 0 : count < 3 ? 0.22 : count < 6 ? 0.42 : count < 10 ? 0.66 : 0.92;
+	return {
+		backgroundColor: count === 0 ? "var(--paper-sunk)" : `rgb(236 230 218 / ${opacity})`,
+	};
 }
 
 export function ContributionGrid({ calendar, delay = 0 }: ContributionGridProps) {
-  // Take last 20 weeks for display
-  const recentWeeks = calendar.weeks.slice(-20);
+	const recentWeeks = calendar.weeks.slice(-20);
 
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay }}
-      className="contribution-grid-container"
-    >
-      <h3 className="contribution-title">Contribution Activity</h3>
-      <div className="contribution-grid">
-        {recentWeeks.map((week, weekIndex) => (
-          <div key={weekIndex} className="contribution-week">
-            {week.contributionDays.map((day, dayIndex) => (
-              <motion.div
-                key={day.date}
-                className="contribution-day"
-                style={{
-                  backgroundColor: day.contributionCount > 0 ? day.color : "var(--contribution-empty)",
-                }}
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{
-                  duration: 0.2,
-                  delay: delay + weekIndex * 0.02 + dayIndex * 0.01,
-                }}
-                title={`${day.date}: ${day.contributionCount} contributions`}
-              />
-            ))}
-          </div>
-        ))}
-      </div>
-    </motion.div>
-  );
+	return (
+		<Reveal delay={delay}>
+			<div className="flex items-baseline justify-between gap-4">
+				<h2 className="text-[0.72rem] font-medium uppercase tracking-[0.18em] text-ink-muted">
+					Contribution activity
+				</h2>
+				{calendar.totalContributions != null ? (
+					<span className="text-[0.82rem] tabular-nums text-ink-muted">
+						{calendar.totalContributions.toLocaleString()} this year
+					</span>
+				) : null}
+			</div>
+
+			<div className="mt-5 flex gap-[3px] overflow-x-auto pb-1">
+				{recentWeeks.map((week, weekIndex) => (
+					<div key={weekIndex} className="flex flex-col gap-[3px]">
+						{week.contributionDays.map((day) => (
+							<div
+								key={day.date}
+								className="h-[11px] w-[11px] rounded-[2px]"
+								style={levelStyle(day.contributionCount)}
+								title={`${day.date}: ${day.contributionCount} contributions`}
+							/>
+						))}
+					</div>
+				))}
+			</div>
+		</Reveal>
+	);
 }
