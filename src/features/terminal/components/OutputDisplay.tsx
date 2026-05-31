@@ -184,7 +184,10 @@ function ContactView({ data }: { data: ContactInfo[] }) {
 
 // `ls /blog` (and category dirs): an aligned, dashed TUI table.
 function BlogListingView({ data }: { data: BlogListingPayload }) {
-	const cols = "grid grid-cols-[6rem_6rem_4rem_1fr] gap-x-3";
+	// Desktop: a 4-column table. Mobile: each row stacks — a small meta line
+	// (date · category · read) above the slug · title. `sm:contents` lets the
+	// meta spans become real grid cells on wider screens.
+	const grid = "sm:grid sm:grid-cols-[6rem_6rem_4rem_1fr] sm:gap-x-3";
 	return (
 		<div className="mb-4 max-w-2xl">
 			<SectionLabel>{data.heading}</SectionLabel>
@@ -193,7 +196,7 @@ function BlogListingView({ data }: { data: BlogListingPayload }) {
 			) : (
 				<>
 					<div className="border-y border-dashed border-gray-700">
-						<div className={`${cols} py-1.5 text-xs uppercase tracking-[0.14em] text-gray-500`}>
+						<div className={`hidden py-1.5 text-xs uppercase tracking-[0.14em] text-gray-500 sm:grid sm:grid-cols-[6rem_6rem_4rem_1fr] sm:gap-x-3`}>
 							<span>date</span>
 							<span>category</span>
 							<span>read</span>
@@ -202,12 +205,14 @@ function BlogListingView({ data }: { data: BlogListingPayload }) {
 						{data.rows.map((r) => (
 							<div
 								key={r.slug}
-								className={`${cols} border-t border-dashed border-gray-800 py-1.5`}
+								className={`border-t border-dashed border-gray-800 py-2 sm:py-1.5 ${grid}`}
 							>
-								<span className="tabular-nums text-gray-500">{r.date}</span>
-								<span className="text-gray-400">{r.category}</span>
-								<span className="tabular-nums text-gray-500">{r.read}</span>
-								<span className="min-w-0">
+								<div className="mb-0.5 flex gap-3 text-xs text-gray-500 sm:contents sm:text-sm">
+									<span className="tabular-nums">{r.date}</span>
+									<span className="text-gray-400">{r.category}</span>
+									<span className="tabular-nums">{r.read}</span>
+								</div>
+								<span className="block min-w-0 break-words">
 									{/* The slug is what you `cat` — show it brightly, title dim. */}
 									<span className="text-gray-100">{r.slug}</span>
 									<span className="text-gray-500"> · {r.title}</span>

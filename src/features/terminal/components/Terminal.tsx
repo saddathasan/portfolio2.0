@@ -99,14 +99,15 @@ export function Terminal() {
 		/>
 		<div
 			id="main-content"
-			className="min-h-screen bg-[#0d1117] text-gray-200 p-4 md:p-8 overflow-y-auto cursor-text"
+			className="min-h-screen overflow-x-hidden overflow-y-auto cursor-text break-words bg-[#0d1117] p-4 text-gray-200 md:p-8"
 			style={{ fontFamily: MONO }}
 			onClick={handleContainerClick}
 		>
 			<ReturningVisitorHint onOpen={() => executeCommand("gui")} />
 
-			{/* ASCII Art Banner — dim, decorative, not shouting */}
-			<pre className="text-gray-700 text-[10px] md:text-xs mb-6 leading-tight select-none">
+			{/* ASCII Art Banner — dim, decorative. Scrolls within itself on narrow
+			    screens so the wide art never pushes the page sideways. */}
+			<pre className="mb-6 select-none overflow-x-auto text-[10px] leading-tight text-gray-700 md:text-xs">
 				{BANNER}
 			</pre>
 
