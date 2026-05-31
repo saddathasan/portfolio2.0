@@ -2,6 +2,7 @@ import mdx from "@mdx-js/rollup";
 import type { Plugin } from "vite";
 import rehypePrettyCode from "rehype-pretty-code";
 import remarkFrontmatter from "remark-frontmatter";
+import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import remarkGfm from "remark-gfm";
 
 /* The MDX + supporting plugins, shared by vite.config.ts and vitest.config.ts
@@ -18,7 +19,11 @@ import remarkGfm from "remark-gfm";
    MDX compiler, which strips the frontmatter before gray-matter can read it. */
 export function mdxPlugins(): Plugin[] {
 	const base = mdx({
-		remarkPlugins: [remarkGfm, remarkFrontmatter],
+		// remark-frontmatter parses the `---` block into a node; remark-mdx-
+		// frontmatter then EXPORTS it as `export const frontmatter = {…}` from
+		// the compiled module — so the browser never runs gray-matter (which
+		// needs Node's Buffer). Order matters: frontmatter before mdx-frontmatter.
+		remarkPlugins: [remarkGfm, remarkFrontmatter, [remarkMdxFrontmatter, { name: "frontmatter" }]],
 		rehypePlugins: [[rehypePrettyCode, { theme: "github-dark-dimmed", keepBackground: false }]],
 		providerImportSource: "@mdx-js/react",
 	}) as Plugin;

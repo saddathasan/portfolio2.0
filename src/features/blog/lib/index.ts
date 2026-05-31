@@ -1,4 +1,3 @@
-import matter from "gray-matter";
 import type { MDXComponents } from "mdx/types";
 import type { ComponentType } from "react";
 import { frontmatterSchema, type Frontmatter } from "./schema";
@@ -16,17 +15,23 @@ function readingStats(content: string): { words: number; minutes: number } {
 /* ───────────────────────────────────────────────────────────────────────────
    Build-time blog index.
 
-   Two globs over the same files:
-   • `?raw`  → raw source, fed to gray-matter for frontmatter + word count.
-   • lazy    → the compiled MDX component, loaded on demand when an article
-               (GUI) or `cat` (terminal) actually renders it.
+   Two eager globs over the same files:
+   • module → the compiled MDX body PLUS its `frontmatter` export. Frontmatter
+              is parsed at build by remark-mdx-frontmatter (Node), so the
+              browser never runs gray-matter (which needs Node's `Buffer`).
+   • `?raw` → the raw source string, used ONLY to count words for reading time
+              (no YAML parsing, no Buffer).
 
-   Single source of truth: `src/blog/<category>/<slug>.mdx`. The frontmatter is
-   validated by Zod at module-eval — a malformed known field throws here, which
-   surfaces during `vite build` (the index is imported by prerendered routes).
+   Single source of truth: `src/blog/<category>/<slug>.mdx`. Frontmatter is
+   validated by Zod at module-eval — a malformed known field throws here.
    ─────────────────────────────────────────────────────────────────────────── */
 
 export type MDXBody = ComponentType<{ components?: MDXComponents }>;
+
+interface MDXModule {
+	default: MDXBody;
+	frontmatter?: unknown;
+}
 
 export interface Post {
 	slug: string;
@@ -49,7 +54,7 @@ const rawFiles = import.meta.glob("/src/blog/**/*.mdx", {
 	query: "?raw",
 	eager: true,
 });
-const bodyFiles = import.meta.glob<{ default: MDXBody }>("/src/blog/**/*.mdx", {
+const bodyFiles = import.meta.glob<MDXModule>("/src/blog/**/*.mdx", {
 	eager: true,
 });
 
@@ -65,16 +70,19 @@ const rawSource = (mod: unknown): string => {
 const slugFromPath = (filePath: string): string =>
 	filePath.split("/").pop()!.replace(/\.mdx$/, "");
 
-function parsePost(filePath: string, raw: string): Post {
-	const { data, content } = matter(raw);
-	const result = frontmatterSchema.safeParse(data);
+// Strip the leading `---…---` frontmatter block so it isn't counted as prose.
+const stripFrontmatter = (raw: string): string =>
+	raw.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, "");
+
+function parsePost(filePath: string, mod: MDXModule, raw: string): Post {
+	const result = frontmatterSchema.safeParse(mod.frontmatter ?? {});
 	if (!result.success) {
 		const issues = result.error.issues
 			.map((i) => `  • ${i.path.join(".") || "(root)"}: ${i.message}`)
 			.join("\n");
 		throw new Error(`Invalid frontmatter in ${filePath}:\n${issues}`);
 	}
-	const stats = readingStats(content);
+	const stats = readingStats(stripFrontmatter(raw));
 	const minutes = Math.max(1, Math.ceil(stats.minutes));
 	return {
 		slug: slugFromPath(filePath),
@@ -83,13 +91,13 @@ function parsePost(filePath: string, raw: string): Post {
 		readingTime: `${minutes} min read`,
 		readingMinutes: minutes,
 		wordCount: stats.words,
-		Body: bodyFiles[filePath].default,
+		Body: mod.default,
 	};
 }
 
 // Build the index once: parse, drop drafts, newest first.
-export const posts: Post[] = Object.entries(rawFiles)
-	.map(([filePath, raw]) => parsePost(filePath, rawSource(raw)))
+export const posts: Post[] = Object.entries(bodyFiles)
+	.map(([filePath, mod]) => parsePost(filePath, mod, rawSource(rawFiles[filePath])))
 	.filter((p) => !p.frontmatter.draft)
 	.sort(
 		(a, b) =>
