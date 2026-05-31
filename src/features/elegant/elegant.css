@@ -26,6 +26,12 @@
 	--line: #e9e4da; /* hairline rules */
 	--line-strong: #dcd5c8;
 
+	/* Sticky-nav surface: near-opaque paper used WITH backdrop-blur. Defined as
+	   an explicit rgba because Tailwind can't apply an `/alpha` modifier to the
+	   var(--paper) color (so `bg-paper/95` silently produced no background — the
+	   bar was fully transparent). */
+	--surface-nav: rgb(250 248 245 / 0.82);
+
 	/* Type */
 	--font-display: "Clash Display Variable", system-ui, sans-serif;
 	--font-body: "Uncut Sans Variable", system-ui, sans-serif;
@@ -55,6 +61,8 @@
 
 	--line: #2c2820; /* hairline rules */
 	--line-strong: #3b352b;
+
+	--surface-nav: rgb(26 22 18 / 0.82); /* warm-dark paper @ 82%, for the blurred bar */
 }
 
 /* Considered selection, not default browser blue */

@@ -9,7 +9,7 @@ const navItems = homeSections.filter((s) => s.navLabel);
 // paper background + a hairline (no glassy blur). Quiet by design.
 export function TopBar() {
 	return (
-		<div className="sticky top-0 z-20 border-b border-line bg-paper/95">
+		<div className="sticky top-0 z-20 border-b border-line bg-[var(--surface-nav)] backdrop-blur-md">
 			<nav className="mx-auto flex max-w-[44rem] items-center justify-between px-6 py-3.5 text-[0.85rem]">
 				<a
 					href="#top"

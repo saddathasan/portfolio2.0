@@ -5,7 +5,7 @@ import { Link } from "@tanstack/react-router";
 // the secondary pages feel like one site. Solid paper + hairline, no glass.
 function BlogTopBar() {
 	return (
-		<div className="sticky top-0 z-20 border-b border-line bg-paper/95">
+		<div className="sticky top-0 z-20 border-b border-line bg-[var(--surface-nav)] backdrop-blur-md">
 			<nav className="mx-auto flex max-w-[44rem] items-center justify-between px-6 py-3.5 text-[0.85rem]">
 				<Link
 					to="/home"
