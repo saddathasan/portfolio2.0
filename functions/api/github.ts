@@ -62,50 +62,55 @@ function contributionRange() {
 	return { from: from.toISOString(), to: to.toISOString() };
 }
 
-export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
-	if (!env.GITHUB_TOKEN) {
-		return new Response(JSON.stringify({ error: "Server token not configured" }), {
-			status: 500,
-			headers: { "content-type": "application/json" },
-		});
-	}
-
-	const { from, to } = contributionRange();
-
-	const ghRes = await fetch("https://api.github.com/graphql", {
-		method: "POST",
-		headers: {
-			authorization: `bearer ${env.GITHUB_TOKEN}`,
-			"content-type": "application/json",
-			"user-agent": "saddathasan-portfolio",
-		},
-		body: JSON.stringify({
-			query: USER_STATS_QUERY,
-			variables: { username: GITHUB_USERNAME, from, to },
-		}),
+const json = (body: unknown, status: number, extraHeaders: Record<string, string> = {}) =>
+	new Response(JSON.stringify(body), {
+		status,
+		headers: { "content-type": "application/json", ...extraHeaders },
 	});
 
-	if (!ghRes.ok) {
-		return new Response(JSON.stringify({ error: `GitHub API ${ghRes.status}` }), {
-			status: 502,
-			headers: { "content-type": "application/json" },
-		});
+export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
+	// Trim defensively — a token pasted into the dashboard with a stray newline
+	// or space yields an invalid `authorization` header value, which makes
+	// `fetch` throw a TypeError → an opaque Cloudflare 502. Trimming + the
+	// try/catch below turn that into a readable JSON error instead.
+	const token = env.GITHUB_TOKEN?.trim();
+	if (!token) {
+		return json({ error: "Server token not configured (GITHUB_TOKEN)" }, 500);
 	}
 
-	const payload = (await ghRes.json()) as { data?: { user?: unknown }; errors?: unknown };
-	if (payload.errors || !payload.data?.user) {
-		return new Response(JSON.stringify({ error: "GitHub query failed", details: payload.errors }), {
-			status: 502,
-			headers: { "content-type": "application/json" },
-		});
-	}
+	try {
+		const { from, to } = contributionRange();
 
-	return new Response(JSON.stringify(payload.data.user), {
-		status: 200,
-		headers: {
-			"content-type": "application/json",
+		const ghRes = await fetch("https://api.github.com/graphql", {
+			method: "POST",
+			headers: {
+				authorization: `bearer ${token}`,
+				"content-type": "application/json",
+				"user-agent": "saddathasan-portfolio",
+			},
+			body: JSON.stringify({
+				query: USER_STATS_QUERY,
+				variables: { username: GITHUB_USERNAME, from, to },
+			}),
+		});
+
+		if (!ghRes.ok) {
+			const detail = await ghRes.text().catch(() => "");
+			return json({ error: `GitHub API ${ghRes.status}`, detail: detail.slice(0, 300) }, 502);
+		}
+
+		const payload = (await ghRes.json()) as { data?: { user?: unknown }; errors?: unknown };
+		if (payload.errors || !payload.data?.user) {
+			return json({ error: "GitHub query failed", details: payload.errors }, 502);
+		}
+
+		return json(payload.data.user, 200, {
 			// Cache at the edge for an hour; allow a stale day while revalidating.
 			"cache-control": "public, max-age=3600, stale-while-revalidate=86400",
-		},
-	});
+		});
+	} catch (err) {
+		// Never let the Worker throw uncaught (that becomes a bare CF 502 with no
+		// useful body). Surface the message so the failure is diagnosable.
+		return json({ error: "Proxy crashed", message: err instanceof Error ? err.message : String(err) }, 500);
+	}
 };
