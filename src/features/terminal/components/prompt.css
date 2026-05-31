@@ -11,8 +11,8 @@
 
 	display: inline-flex;
 	align-items: stretch;
-	height: 1.7em;
-	line-height: 1.7em;
+	height: 1.2em;        /* overall pill height — top/bottom thickness. Lower = slimmer. */
+	line-height: 1.2em;   /* keep equal to height so text stays vertically centered */
 	font-weight: 600;
 	user-select: none;
 	vertical-align: middle;
