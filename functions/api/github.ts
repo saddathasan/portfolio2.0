@@ -142,12 +142,14 @@ export const onRequestGet: PagesFunction<Env> = async ({ env, request }) => {
 
 		if (!ghRes.ok) {
 			const detail = await ghRes.text().catch(() => "");
-			return json({ error: `GitHub API ${ghRes.status}`, detail: detail.slice(0, 300) }, 502);
+			// 424 (not 502): Cloudflare's edge replaces a 502 response body with its
+			// own generic error page, hiding this message. 4xx passes through.
+			return json({ error: `GitHub API ${ghRes.status}`, detail: detail.slice(0, 300) }, 424);
 		}
 
 		const payload = (await ghRes.json()) as { data?: { user?: unknown }; errors?: unknown };
 		if (payload.errors || !payload.data?.user) {
-			return json({ error: "GitHub query failed", details: payload.errors }, 502);
+			return json({ error: "GitHub query failed", details: payload.errors }, 424);
 		}
 
 		return json(payload.data.user, 200, {
