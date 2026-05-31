@@ -63,6 +63,13 @@
 	color: var(--paper);
 }
 
+/* Clash Display headings carry tight negative letter-spacing (tracking), which
+   also pulls the word gaps in and makes multi-word headlines hard to read.
+   Letter-spacing stays as-is; nudge only the WORD spacing back out. */
+.gui-root :is(h1, h2).font-display {
+	word-spacing: 0.12em;
+}
+
 /* Text link: ink, with a hairline underline that wipes in on hover.
    Pseudo-element + transform — awkward to express as inline Tailwind. */
 .gui-link {
