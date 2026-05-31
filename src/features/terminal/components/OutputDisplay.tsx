@@ -113,11 +113,11 @@ function SkillsView({ data }: { data: SkillCategory[] }) {
 	return (
 		<div className="mb-4 max-w-2xl">
 			<SectionLabel>skills</SectionLabel>
-			<div className="border-y border-gray-800">
+			<div className="border-y border-dashed border-gray-700">
 				{data.map((cat) => (
 					<div
 						key={cat.title}
-						className="grid grid-cols-[6rem_1fr] gap-x-3 border-b border-gray-800 py-1.5 last:border-b-0 sm:grid-cols-[8rem_1fr]"
+						className="grid grid-cols-[6rem_1fr] gap-x-3 border-b border-dashed border-gray-800 py-1.5 last:border-b-0 sm:grid-cols-[8rem_1fr]"
 					>
 						<span className="text-gray-500">{cat.title.toLowerCase()}</span>
 						<span className="text-gray-300">{skillNames(cat.skills)}</span>

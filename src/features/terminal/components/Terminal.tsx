@@ -55,7 +55,7 @@ export function Terminal() {
 			</pre>
 
 			{/* Welcome + escape hatch — monochrome, quiet */}
-			<div className="mb-8 text-sm md:text-base border-l border-gray-800 pl-4">
+			<div className="mb-8 text-sm md:text-base border-l border-dashed border-gray-700 pl-4">
 				<p className="text-gray-200">Saddat Hasan</p>
 				<p className="text-gray-500">Full-Stack &amp; DevOps Engineer · Dhaka</p>
 				<p className="text-gray-500 text-xs mt-3">
