@@ -1,12 +1,13 @@
 # Cloudflare Pages serves real static files (/assets/*, /fonts/*, favicon,
-# sitemap.xml, rss.xml, robots.txt, …) and Functions (/api/*) directly — these
-# rules only apply to paths with NO matching file/function.
+# sitemap.xml, rss.xml, robots.txt, …) and Functions (/api/*) directly. This
+# file only applies to paths with NO matching file/function.
 
-# A missing hashed asset must return a real 404, never the SPA shell. Otherwise
-# a transient miss gets served as 200 text/html and — because assets are cached
-# `immutable` — that wrong-MIME HTML is pinned at the edge and white-screens the
-# whole app. (This is the bug that blanked desktop.)
-/assets/* /404.html 404
-
-# SPA fallback for application routes.
+# SPA fallback for application routes (/home, /blog, /git-profile, …).
+#
+# NOTE: `_redirects` only supports 200 (rewrite) and 3xx (redirect) statuses —
+# a `... 404` rule is INVALID and makes Cloudflare reject the whole file, which
+# silently disables this SPA fallback (every deep link then 404s). So we do NOT
+# try to force-404 missing /assets/* here. Stale/missing hashed chunks are
+# handled instead by content-hashed filenames + the `vite:preloadError` reload
+# in src/main.tsx.
 /* /index.html 200
