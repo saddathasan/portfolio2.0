@@ -49,29 +49,30 @@ export function Terminal() {
 			style={{ fontFamily: MONO }}
 			onClick={handleContainerClick}
 		>
-			{/* ASCII Art Banner */}
-			<pre className="text-cyan-400 text-[10px] md:text-xs mb-6 leading-tight select-none">
+			{/* ASCII Art Banner — dim, decorative, not shouting */}
+			<pre className="text-gray-700 text-[10px] md:text-xs mb-6 leading-tight select-none">
 				{BANNER}
 			</pre>
 
-			{/* Welcome + escape hatch */}
-			<div className="mb-8 text-sm md:text-base border-l-2 border-cyan-500 pl-4">
-				<p className="text-cyan-400 font-bold">Portfolio Terminal v2.0.0</p>
-				<p className="text-gray-400">Saddat Hasan — Full-Stack &amp; DevOps Engineer</p>
-				<p className="text-gray-500 text-xs mt-2">
-					Type <span className="text-yellow-400">'help'</span> for commands, or{" "}
-					<span className="text-yellow-400">'ls'</span> to explore.
+			{/* Welcome + escape hatch — monochrome, quiet */}
+			<div className="mb-8 text-sm md:text-base border-l border-gray-800 pl-4">
+				<p className="text-gray-200">Saddat Hasan</p>
+				<p className="text-gray-500">Full-Stack &amp; DevOps Engineer · Dhaka</p>
+				<p className="text-gray-500 text-xs mt-3">
+					Type <span className="text-gray-300">help</span> for commands, or{" "}
+					<span className="text-gray-300">ls</span> to explore.
 				</p>
-				<p className="text-gray-500 text-xs mt-1">
-					Not a developer? Type{" "}
-					<span className="text-yellow-400">'gui'</span> and press Enter for the visual site
-					{" "}
+				<p className="text-gray-500 text-xs mt-1 flex items-center gap-2">
+					<span>
+						Not a developer? Type <span className="text-gray-300">gui</span> for the
+						visual site.
+					</span>
 					<button
 						type="button"
 						onClick={() => executeCommand("gui")}
-						className="ml-1 px-2 py-0.5 rounded border border-cyan-500/40 text-cyan-300 hover:bg-cyan-500/10 transition-colors"
+						className="px-2 py-0.5 border border-gray-700 text-gray-300 hover:border-gray-500 hover:text-gray-100 transition-colors"
 					>
-						[ GUI mode ]
+						gui mode
 					</button>
 				</p>
 			</div>
