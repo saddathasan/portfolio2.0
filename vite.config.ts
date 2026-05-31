@@ -25,7 +25,9 @@ export default defineConfig({
 				manualChunks: {
 					vendor: ["react", "react-dom"],
 					router: ["@tanstack/react-router"],
-					ui: ["framer-motion", "lucide-react"],
+					// Renamed from "ui" to bust a stale Cloudflare edge cache that had
+					// pinned the old ui-*.js path as wrong-MIME HTML (see public/_redirects).
+					libs: ["framer-motion", "lucide-react"],
 				},
 			},
 		},
