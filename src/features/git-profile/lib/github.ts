@@ -102,8 +102,13 @@ interface LanguageEdge {
   node: { name: string; color: string | null };
 }
 
-// Language composition by BYTES of code across non-fork repos (this is how
-// GitHub computes it), aggregated and reduced to the top 6.
+// A single language exceeding this in ONE repo is almost certainly committed
+// dependencies / generated code (e.g. a 13 MB Python venv), not hand-written
+// source — GitHub's raw byte counts include those, which wildly skews the mix.
+const VENDORED_BLOB_BYTES = 2_000_000;
+
+// Language composition by BYTES of code across non-fork repos (GitHub's method),
+// but skipping vendored/generated blobs so one committed venv can't dominate.
 function calculateLanguages(
   repos: { languages: { edges: LanguageEdge[] } }[]
 ): { name: string; percentage: number; color: string }[] {
@@ -111,6 +116,7 @@ function calculateLanguages(
 
   for (const repo of repos) {
     for (const { size, node } of repo.languages?.edges ?? []) {
+      if (size > VENDORED_BLOB_BYTES) continue;
       if (!bytes[node.name]) {
         bytes[node.name] = { size: 0, color: node.color || "#8b8b8b" };
       }

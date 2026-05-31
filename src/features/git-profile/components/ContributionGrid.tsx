@@ -18,9 +18,10 @@ interface ContributionGridProps {
 // GitHub-green palette so the heatmap matches the design system. The ink token
 // is warm off-white; increasing opacity = more contributions.
 function levelStyle(count: number): React.CSSProperties {
-	// Empty days get a faint tint so the grid is still legible; busier days glow.
+	// Big jump from empty → any contribution so even single-contribution days are
+	// clearly visible (they were getting lost before), then graded intensity.
 	const opacity =
-		count === 0 ? 0.06 : count < 3 ? 0.24 : count < 6 ? 0.45 : count < 10 ? 0.68 : 0.92;
+		count === 0 ? 0.05 : count < 3 ? 0.38 : count < 5 ? 0.58 : count < 10 ? 0.78 : 0.98;
 	return { backgroundColor: `rgb(236 230 218 / ${opacity})` };
 }
 
