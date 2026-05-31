@@ -2,6 +2,8 @@ import "@/features/elegant/elegant.css";
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { rememberMode } from "@/shared/lib/mode";
+import { guiRootClass, useGuiTheme } from "@/features/elegant/lib/gui-theme";
+import { ThemeToggle } from "@/features/elegant/components/ThemeToggle";
 import { SEO } from "@/shared/seo/SEO";
 import { fetchGitHubStats } from "@/features/git-profile/lib/github";
 import { Reveal } from "@/features/elegant/components/primitives/Reveal";
@@ -38,6 +40,7 @@ function GitTopBar() {
 					>
 						terminal ↗
 					</Link>
+					<ThemeToggle className="-mr-1" />
 				</div>
 			</nav>
 		</div>
@@ -45,8 +48,9 @@ function GitTopBar() {
 }
 
 function Shell({ children }: { children: React.ReactNode }) {
+	const theme = useGuiTheme();
 	return (
-		<div className="gui-root gui-dark min-h-screen">
+		<div className={guiRootClass(theme, "min-h-screen")}>
 			<SEO
 				path="/git-profile"
 				title="GitHub activity"
