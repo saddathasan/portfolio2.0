@@ -1,8 +1,17 @@
 import matter from "gray-matter";
 import type { MDXComponents } from "mdx/types";
-import readingTime from "reading-time";
 import type { ComponentType } from "react";
 import { frontmatterSchema, type Frontmatter } from "./schema";
+
+// Reading time, computed locally (~200 wpm). Done inline rather than via the
+// `reading-time` package, whose index pulls a Node stream module (util.inherits)
+// that Vite's dev dep-bundler can't shim. Plain whitespace word count is plenty
+// for prose.
+const WORDS_PER_MIN = 200;
+function readingStats(content: string): { words: number; minutes: number } {
+	const words = content.trim().split(/\s+/).filter(Boolean).length;
+	return { words, minutes: words / WORDS_PER_MIN };
+}
 
 /* ───────────────────────────────────────────────────────────────────────────
    Build-time blog index.
@@ -65,13 +74,14 @@ function parsePost(filePath: string, raw: string): Post {
 			.join("\n");
 		throw new Error(`Invalid frontmatter in ${filePath}:\n${issues}`);
 	}
-	const stats = readingTime(content);
+	const stats = readingStats(content);
+	const minutes = Math.max(1, Math.ceil(stats.minutes));
 	return {
 		slug: slugFromPath(filePath),
 		filePath,
 		frontmatter: result.data,
-		readingTime: stats.text, // "4 min read"
-		readingMinutes: Math.max(1, Math.round(stats.minutes)),
+		readingTime: `${minutes} min read`,
+		readingMinutes: minutes,
 		wordCount: stats.words,
 		Body: bodyFiles[filePath].default,
 	};
