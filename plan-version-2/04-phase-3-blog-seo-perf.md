@@ -60,6 +60,7 @@
 - [ ] Wire the existing `web-vitals` dep to report LCP/INP/CLS (console in dev, optional endpoint in prod). Keep Sentry for errors.
 
 ## Task group F — Git-profile token proxy
+> **Also unlocks the full contribution count.** Investigated 2026-05-31: the client token (correctly `saddathasan`) only sees PUBLIC activity (634/yr) — private & org work (InfinitiBit; the real ~1,521) is invisible because a `repo`/`read:org` SSO-authorized token can't be shipped to the browser. The git-profile is currently labelled "public activity" honestly. A server-side token here will let it show the true totals (use a `repo` + `read:org` PAT, SSO-authorized for the orgs; then drop the "public only" disclaimers in git-profile).
 - [ ] Create a Cloudflare Pages Function in `functions/api/github.ts` that holds the GitHub token (env var in CF dashboard) and proxies the GraphQL query. Client calls the function, not GitHub directly.
 - [ ] Remove any `VITE_GITHUB_TOKEN` from client code/env.
 - [ ] Add a build-time cached fallback (SSG snapshot) so the page renders even if the API rate-limits.
