@@ -9,9 +9,9 @@ export const SITE = {
 	name: profile.name,
 	title: `${profile.name} — ${profile.title}`,
 	description: profile.summary,
-	// Fallback social-card image (favicon for now). Replace /public with a
-	// designed 1200×630 og.png and point this at it.
-	ogImage: "/favicon.png",
+	// Branded 1200×630 social card (public/og.png — editorial warm-paper card
+	// generated to match the GUI). Per-post overrides flow through SEO `image`.
+	ogImage: "/og.png",
 	twitter: "@ekjongoru",
 	locale: "en_US",
 	author: profile.name,

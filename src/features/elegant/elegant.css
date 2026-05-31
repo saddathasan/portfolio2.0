@@ -15,22 +15,22 @@
 .gui-root {
 	/* ── LIGHT palette (warm paper) — default. ──
 	   "paper" = page surface, "ink" = what's written on it. */
-	--paper: #faf8f5; /* barely-warm off-white, never #fff */
-	--paper-raised: #ffffff;
-	--paper-sunk: #f3f1ec;
+	--paper: #f9f4ea; /* warm ivory / cream, never #fff */
+	--paper-raised: #fffdf6; /* warm white (not pure) for raised surfaces */
+	--paper-sunk: #f0ebdd; /* slightly deeper ivory for sunk wells */
 
 	--ink: #1a1714; /* warm near-black, never #000 */
 	--ink-soft: #4b463f; /* body copy */
 	--ink-muted: #8c847a; /* labels, captions, secondary */
 
-	--line: #e9e4da; /* hairline rules */
-	--line-strong: #dcd5c8;
+	--line: #e8e0cf; /* hairline rules, tuned to the ivory */
+	--line-strong: #dad0bb;
 
 	/* Sticky-nav surface: near-opaque paper used WITH backdrop-blur. Defined as
 	   an explicit rgba because Tailwind can't apply an `/alpha` modifier to the
 	   var(--paper) color (so `bg-paper/95` silently produced no background — the
 	   bar was fully transparent). */
-	--surface-nav: rgb(250 248 245 / 0.82);
+	--surface-nav: rgb(249 244 234 / 0.82);
 
 	/* Type */
 	--font-display: "Clash Display Variable", system-ui, sans-serif;
@@ -51,18 +51,18 @@
    terminal's cool #0d1117 — this is an elegant warm dark, easy on the eyes
    (no pure black, no pure white). Same names: paper = surface, ink = text. */
 .gui-root.gui-dark {
-	--paper: #1a1612;
-	--paper-raised: #221e18;
-	--paper-sunk: #131009;
+	--paper: #1a1c23; /* cool charcoal slate (faint blue cast), never pure black */
+	--paper-raised: #22252e;
+	--paper-sunk: #14161c;
 
-	--ink: #ece6da; /* warm off-white text, not pure #fff */
-	--ink-soft: #c3bcae; /* body copy */
-	--ink-muted: #8f8979; /* labels, captions, secondary */
+	--ink: #e9ebef; /* cool off-white text, not pure #fff */
+	--ink-soft: #b6bac3; /* body copy */
+	--ink-muted: #7e828c; /* labels, captions, secondary */
 
-	--line: #2c2820; /* hairline rules */
-	--line-strong: #3b352b;
+	--line: #2a2d36; /* hairline rules */
+	--line-strong: #393d48;
 
-	--surface-nav: rgb(26 22 18 / 0.82); /* warm-dark paper @ 82%, for the blurred bar */
+	--surface-nav: rgb(26 28 35 / 0.82); /* cool slate @ 82%, for the blurred bar */
 }
 
 /* Considered selection, not default browser blue */
@@ -102,11 +102,18 @@
 	transform: scaleX(1);
 }
 
-/* Visible keyboard focus across the GUI (mouse clicks stay clean). */
+/* Visible keyboard focus across the GUI (mouse clicks stay clean) — for links
+   and form fields, where an outline reads fine. */
 .gui-root :focus-visible {
 	outline: 2px solid var(--ink-muted);
 	outline-offset: 3px;
 	border-radius: 1px;
+}
+
+/* …but GUI buttons get no focus box at all — a subtle press (see index.css) is
+   their only feedback. Higher specificity than the rule above so it wins. */
+.gui-root button:focus-visible {
+	outline: none;
 }
 
 /* Smooth anchor scrolling on the single-page GUI (the document is the scroll

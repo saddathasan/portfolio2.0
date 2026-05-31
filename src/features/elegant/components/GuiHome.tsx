@@ -1,6 +1,7 @@
 import "../elegant.css";
 import { SEO } from "@/shared/seo/SEO";
 import { personLd, websiteLd } from "@/shared/seo/jsonld";
+import { guiRootClass, useGuiTheme } from "../lib/gui-theme";
 import { homeSections } from "../sections.config";
 import { Section } from "./primitives/Section";
 import { TopBar } from "./TopBar";
@@ -11,8 +12,9 @@ import { HeroSection } from "./sections/HeroSection";
 // global `.dark` theme. Section order/numbering/nav are all driven by
 // sections.config.tsx — reorder that array and everything below follows.
 export function GuiHome() {
+	const theme = useGuiTheme();
 	return (
-		<div id="top" className="gui-root gui-dark">
+		<div id="top" className={guiRootClass(theme)}>
 			<SEO path="/home" jsonLd={[personLd(), websiteLd()]} />
 			<TopBar />
 			<main

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { rememberMode } from "@/shared/lib/mode";
 import { homeSections } from "../sections.config";
+import { ThemeToggle } from "./ThemeToggle";
 
 // Nav items derive from the same registry — any section with a `navLabel`
 // appears here, in the registry's order. Reorder once, updates everywhere.
@@ -68,30 +69,34 @@ export function TopBar() {
 					Saddat Hasan
 				</a>
 
-				{/* Desktop: inline links */}
+				{/* Desktop: inline links + theme toggle */}
 				<div className="hidden items-center gap-x-5 sm:flex">
 					<NavLinks />
+					<ThemeToggle className="-mr-1" />
 				</div>
 
-				{/* Mobile: a menu toggle */}
-				<button
-					type="button"
-					aria-label={open ? "Close menu" : "Open menu"}
-					aria-expanded={open}
-					aria-controls="mobile-nav"
-					onClick={() => setOpen((v) => !v)}
-					className="flex h-9 w-9 items-center justify-center text-ink sm:hidden"
-				>
-					{open ? (
-						<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden fill="none">
-							<path d="M4 4l10 10M14 4L4 14" stroke="currentColor" strokeWidth="1.4" />
-						</svg>
-					) : (
-						<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden fill="none">
-							<path d="M2 5h14M2 9h14M2 13h14" stroke="currentColor" strokeWidth="1.4" />
-						</svg>
-					)}
-				</button>
+				{/* Mobile: theme toggle + menu toggle */}
+				<div className="flex items-center gap-1 sm:hidden">
+					<ThemeToggle />
+					<button
+						type="button"
+						aria-label={open ? "Close menu" : "Open menu"}
+						aria-expanded={open}
+						aria-controls="mobile-nav"
+						onClick={() => setOpen((v) => !v)}
+						className="flex h-9 w-9 items-center justify-center text-ink"
+					>
+						{open ? (
+							<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden fill="none">
+								<path d="M4 4l10 10M14 4L4 14" stroke="currentColor" strokeWidth="1.4" />
+							</svg>
+						) : (
+							<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden fill="none">
+								<path d="M2 5h14M2 9h14M2 13h14" stroke="currentColor" strokeWidth="1.4" />
+							</svg>
+						)}
+					</button>
+				</div>
 			</nav>
 
 			{/* Mobile panel */}

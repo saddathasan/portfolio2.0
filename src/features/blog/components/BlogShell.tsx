@@ -1,6 +1,8 @@
 import "@/features/elegant/elegant.css";
 import { Link } from "@tanstack/react-router";
 import { rememberMode } from "@/shared/lib/mode";
+import { guiRootClass, useGuiTheme } from "@/features/elegant/lib/gui-theme";
+import { ThemeToggle } from "@/features/elegant/components/ThemeToggle";
 
 // Slim top bar — wordmark + escape hatches. Mirrors the git-profile chrome so
 // the secondary pages feel like one site. Solid paper + hairline, no glass.
@@ -28,6 +30,7 @@ function BlogTopBar() {
 					>
 						terminal ↗
 					</Link>
+					<ThemeToggle className="-mr-1" />
 				</div>
 			</nav>
 		</div>
@@ -43,8 +46,9 @@ export function BlogShell({
 	children: React.ReactNode;
 	seo?: React.ReactNode;
 }) {
+	const theme = useGuiTheme();
 	return (
-		<div className="gui-root gui-dark min-h-screen">
+		<div className={guiRootClass(theme, "min-h-screen")}>
 			{seo}
 			<BlogTopBar />
 			<main
